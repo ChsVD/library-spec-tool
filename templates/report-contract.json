@@ -1,0 +1,29 @@
+{
+  "coverage": {
+    "openssl": {"mapped_areas": "主要区域及对应模块", "unread_areas": "未读、不完整区域及影响", "configuration_unknowns": "配置及版本未知项"},
+    "sm2": {"mapped_areas": "主要区域及对应模块", "unread_areas": "未读、不完整区域及影响", "configuration_unknowns": "配置及版本未知项"},
+    "mini-gmp": {"mapped_areas": "主要区域及对应模块", "unread_areas": "未读、不完整区域及影响", "configuration_unknowns": "配置及版本未知项"}
+  },
+  "modules": [
+    {
+      "id": "unique-module-id",
+      "library": "openssl",
+      "title": "模块标题",
+      "depth": "brief",
+      "sections": {
+        "模块职责与边界": "说明及证据位置",
+        "相关领域知识": "必需概念与出处，区分材料和解释",
+        "核心数据与表示": "类型、表示、长度/容量/范围或待确认",
+        "主要操作及联系": "入口及协作关系，不生成完整函数规约",
+        "对外依赖与使用关系": "已确认依赖与未知关系",
+        "已有规约与证明材料": "已有入口、性质、前提、验证证据或缺失说明",
+        "阅读依据与待确认问题": "未读、冲突、材料陈述与解释的区分"
+      },
+      "evidence": [{"path": "openssl/实际读取的文件", "start": 1, "end": 1}]
+    }
+  ],
+  "comparisons": [
+    {"id": "unique-comparison-id", "target": "目标模块id", "reference": "参考模块id", "relation": "candidate", "basis": "参考理由与两边证据", "differences": "已知差异", "unknowns": "未确认事项", "evidence": [{"path": "openssl/实际读取的文件", "start": 1, "end": 1}, {"path": "sm2/实际读取的文件", "start": 1, "end": 1}]}
+  ],
+  "recommendation": {"confidence": "unable", "primary": null, "alternatives": [], "comparisons": [], "rationale": "比较理由；无法推荐时解释原因", "scope": "具体文件与函数，或尚不能确定的原因", "dependencies": "范围之外需阅读的依赖", "reference_entries": "参考材料入口或缺失", "blockers": "阻碍、未知、待用户确认问题"}
+}

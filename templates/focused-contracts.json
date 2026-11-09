@@ -1,0 +1,172 @@
+{
+  "planner": {
+    "coverage": {
+      "openssl": {
+        "mapped_areas": "主要区域及归属",
+        "unread_areas": "未读或不完整部分",
+        "configuration_unknowns": "配置未知"
+      },
+      "sm2": {
+        "mapped_areas": "主要区域及归属",
+        "unread_areas": "未读部分",
+        "configuration_unknowns": "未知"
+      },
+      "mini-gmp": {
+        "mapped_areas": "主要区域及归属",
+        "unread_areas": "未读部分",
+        "configuration_unknowns": "未知"
+      }
+    },
+    "modules": [
+      {
+        "id": "unique-id",
+        "library": "openssl",
+        "title": "模块名",
+        "scope": [
+          "openssl/真实路径"
+        ],
+        "questions": "该模块子agent需要理解和核对的问题",
+        "responsibilities": "模块解决什么问题",
+        "boundary": "包含与排除的职责；与相邻模块分工",
+        "dependency_status": "unknown",
+        "dependency_notes": "核对依赖的范围、证据和缺口；空列表不等于无依赖",
+        "dependencies": [
+          {
+            "prerequisite": null,
+            "external": "尚未定位的外部先决条件",
+            "kind": "call",
+            "certainty": "unknown",
+            "reason": "为什么需要此条件",
+            "evidence": [
+              {
+                "path": "本库实际原文",
+                "start": 1,
+                "end": 2
+              }
+            ]
+          }
+        ],
+        "evidence": [
+          {
+            "path": "本库实际原文",
+            "start": 1,
+            "end": 2
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "path": "实际读取文件",
+        "start": 1,
+        "end": 2
+      }
+    ]
+  },
+  "module": {
+    "id": "assigned-id",
+    "library": "assigned-library",
+    "title": "模块名",
+    "depth": "detailed",
+    "sections": {
+      "模块职责与边界": "职责与范围",
+      "相关领域知识": "概念和出处",
+      "核心数据与表示": "表示、长度、容量、范围",
+      "主要操作及联系": "入口和协作",
+      "对外依赖与使用关系": "依赖与未知",
+      "已有规约与证明材料": "已有陈述、条件和验证依据",
+      "阅读依据与待确认问题": "证据与缺口"
+    },
+    "evidence": [
+      {
+        "path": "实际读取文件",
+        "start": 1,
+        "end": 2
+      }
+    ],
+    "dependency_check": {
+      "status": "unknown",
+      "notes": "深读是否支持规划依赖与边界，是否发现新先决条件"
+    }
+  },
+  "review": {
+    "verdict": "needs_revision",
+    "coverage_checked": [
+      "本次指定深读模块id"
+    ],
+    "findings": [
+      {
+        "id": "finding-id",
+        "severity": "blocking",
+        "description": "具体问题与证据解释",
+        "module_ids": [
+          "相关id"
+        ],
+        "evidence": [
+          {
+            "path": "审查者实际读取原文",
+            "start": 1,
+            "end": 2
+          }
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "path": "本次所选模块与参考的独立核对原文",
+        "start": 1,
+        "end": 2
+      }
+    ]
+  },
+  "selection": {
+    "status": "unable",
+    "primary": null,
+    "rationale": "从依赖候选中选择的理由或无法选择的原因",
+    "scope": "具体范围",
+    "blockers": "未知与仍需人审的条件",
+    "evidence": [
+      {
+        "path": "目标原文",
+        "start": 1,
+        "end": 2
+      }
+    ]
+  },
+  "screening": {
+    "target": "选定目标id",
+    "candidates": [
+      {
+        "reference": "参考id",
+        "decision": "unknown",
+        "reason": "仅基于职责与边界的理由或信息缺口"
+      }
+    ]
+  },
+  "comparison": {
+    "id": "comparison-id",
+    "target": "目标模块id",
+    "reference": "参考模块id",
+    "relation": "candidate",
+    "basis": "实际关联",
+    "differences": "表示/前提/边界差异",
+    "unknowns": "未确认事项",
+    "evidence": [
+      {
+        "path": "目标原文",
+        "start": 1,
+        "end": 2
+      },
+      {
+        "path": "参考原文",
+        "start": 1,
+        "end": 2
+      }
+    ],
+    "representation": "表示与数学含义是否对应",
+    "preconditions": "长度、容量、范围、别名、配置等前提",
+    "dependencies": "需要的公共定义与辅助引理",
+    "proof_status": "原材料证明状态及未核验事项",
+    "adaptation": "可参考、需修改、需补充或不可用的理由；不生成新内容"
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "version": 1,
+  "description": "自然规约生成用目录与关注点；可组合、可扩展，不是正确性基准或固定规约答案。",
+  "general_requirements": [
+    {
+      "id": "purpose",
+      "title": "职责与需求",
+      "guidance": "结合模块职责、实现和所有已给定调用场景，明确本次承诺；需求与实现冲突时记录，不自行选择有利解释。"
+    },
+    {
+      "id": "inputs",
+      "title": "输入域与前提",
+      "guidance": "前提须有安全性、配置或调用需求依据；不为便于证明排除合法输入。"
+    },
+    {
+      "id": "outputs",
+      "title": "结果与入口状态",
+      "guidance": "说明结果如何关联入口输入和旧值；确定性运算给出明确计算含义，非确定行为明确允许范围，不强求具体表示唯一。"
+    },
+    {
+      "id": "resources",
+      "title": "资源与副作用",
+      "guidance": "识别读取、写入、共享、保留与归还的资源及状态，写入 Require/Ensure；无此类资源也要说明，不臆造内存条件。"
+    },
+    {
+      "id": "coverage",
+      "title": "场景与边界",
+      "guidance": "由实际分支、调用点、类型和任务目标识别边界与失败行为；多个场景分开表达，不把它们的前提简单合取。"
+    },
+    {
+      "id": "evidence",
+      "title": "依据与未知",
+      "guidance": "区分实现事实、需求、参考建议和未知。缺少谓词、边界引理或调用者材料时明确缺口；需要前端、调用或证明实测的问题不得在本阶段报通过。"
+    }
+  ],
+  "domains": [
+    {
+      "id": "integer_array",
+      "title": "整数与数组运算",
+      "when_relevant": "任意长整数、字数组、缓冲区算术",
+      "points": [
+        {
+          "id": "bounds",
+          "guidance": "检查零长、长度单位、元素范围、字宽、符号性、溢出及进位/借位；具体适用情况由实现和调用决定。"
+        },
+        {
+          "id": "aliasing",
+          "guidance": "检查原地、分离和部分重叠的实际支持范围；空数组不自动推出任意指针合法，不预定零长必须使用析取或独立规约。"
+        },
+        {
+          "id": "address_units",
+          "guidance": "区分 C 指针和逻辑整数地址，注明偏移按元素还是字节计；实际 QCP 缩放和匹配留待形式化检查。"
+        }
+      ]
+    },
+    {
+      "id": "linked_structure",
+      "title": "链式与递归数据结构",
+      "when_relevant": "链表、树、图、节点容器",
+      "points": [
+        {
+          "id": "shape",
+          "guidance": "检查空结构、结构不变量、共享节点、环和终止条件；不要默认所有结构无环。"
+        },
+        {
+          "id": "ownership",
+          "guidance": "检查分配、释放、节点所有权转移及未改变部分；逻辑可达性不等于拥有全部节点。"
+        }
+      ]
+    },
+    {
+      "id": "numerical",
+      "title": "数值与浮点计算",
+      "when_relevant": "浮点运算、近似计算、数值算法",
+      "points": [
+        {
+          "id": "error",
+          "guidance": "区分精确数学结果和计算结果，按任务要求说明舍入、误差与适用域。"
+        },
+        {
+          "id": "special_values",
+          "guidance": "根据类型与实现考虑 NaN、无穷、带符号零、溢出和下溢；迭代算法核对收敛前提，不凭领域名称添加保证。"
+        }
+      ]
+    },
+    {
+      "id": "state_protocol",
+      "title": "状态机与协议",
+      "when_relevant": "解析、协议、事务、生命周期接口",
+      "points": [
+        {
+          "id": "transitions",
+          "guidance": "检查合法入口状态、状态转换、消息/操作顺序和重复调用。"
+        },
+        {
+          "id": "failure_state",
+          "guidance": "明确失败、取消、部分成功时的返回和状态；是否回滚、幂等或重试安全须有依据。"
+        }
+      ]
+    },
+    {
+      "id": "concurrency",
+      "title": "并发与同步",
+      "when_relevant": "共享状态、原子操作、锁和并发容器",
+      "points": [
+        {
+          "id": "interference",
+          "guidance": "识别线程共享资源、锁持有条件和环境干扰假设。"
+        },
+        {
+          "id": "observable",
+          "guidance": "按任务目标明确原子性、一致性或允许行为；不自动承诺无死锁、公平性或顺序一致性。"
+        }
+      ]
+    },
+    {
+      "id": "io_environment",
+      "title": "输入输出与外部环境",
+      "when_relevant": "文件、网络、设备、持久化",
+      "points": [
+        {
+          "id": "partial_io",
+          "guidance": "考虑短读写、结束、错误、阻塞及取消，区分返回数量和预期请求数量。"
+        },
+        {
+          "id": "environment",
+          "guidance": "区分可控制资源与外部环境假设，明确句柄生命周期和可见副作用。"
+        }
+      ]
+    },
+    {
+      "id": "encoding_parser",
+      "title": "编码与解析",
+      "when_relevant": "字符串、二进制格式、编解码",
+      "points": [
+        {
+          "id": "representation",
+          "guidance": "明确编码、长度单位、终止符、有效输入域和输出表示。"
+        },
+        {
+          "id": "malformed",
+          "guidance": "考虑截断、非法输入、容量不足、部分消费和失败后缓冲区状态。"
+        }
+      ]
+    },
+    {
+      "id": "cryptography",
+      "title": "密码接口",
+      "when_relevant": "密码原语、密钥处理和密码协议",
+      "points": [
+        {
+          "id": "functional_domain",
+          "guidance": "明确数学对象、参数合法性、表示和失败结果，不从函数名推定全部密码性质。"
+        },
+        {
+          "id": "security_scope",
+          "guidance": "恒定时间、随机性、保密性和密钥清除只有在任务要求且证据支持时纳入；功能正确性不能替代安全性证明。"
+        }
+      ]
+    }
+  ]
+}

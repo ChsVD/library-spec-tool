@@ -1,0 +1,28 @@
+{
+  "planner": {
+    "coverage": {"openssl": {"mapped_areas": "主要区域及归属", "unread_areas": "未读或不完整部分", "configuration_unknowns": "配置未知"}, "sm2": {"mapped_areas": "主要区域及归属", "unread_areas": "未读部分", "configuration_unknowns": "未知"}, "mini-gmp": {"mapped_areas": "主要区域及归属", "unread_areas": "未读部分", "configuration_unknowns": "未知"}},
+    "modules": [{"id": "unique-id", "library": "openssl", "title": "模块名", "scope": ["openssl/真实路径"], "questions": "该模块子agent需要理解和核对的问题"}],
+    "evidence": [{"path": "实际读取文件", "start": 1, "end": 2}]
+  },
+  "module": {
+    "id": "assigned-id", "library": "assigned-library", "title": "模块名", "depth": "detailed",
+    "sections": {"模块职责与边界": "职责与范围", "相关领域知识": "概念和出处", "核心数据与表示": "表示、长度、容量、范围", "主要操作及联系": "入口和协作", "对外依赖与使用关系": "依赖与未知", "已有规约与证明材料": "已有陈述、条件和验证依据", "阅读依据与待确认问题": "证据与缺口"},
+    "evidence": [{"path": "实际读取文件", "start": 1, "end": 2}]
+  },
+  "aggregate": {
+    "module_ids": ["所有已规划模块id"],
+    "coverage": {"openssl": {"mapped_areas": "区域及归属", "unread_areas": "未读部分", "configuration_unknowns": "未知"}, "sm2": {"mapped_areas": "区域及归属", "unread_areas": "未读部分", "configuration_unknowns": "未知"}, "mini-gmp": {"mapped_areas": "区域及归属", "unread_areas": "未读部分", "configuration_unknowns": "未知"}},
+    "gaps": [{"kind": "conflict", "description": "遗漏/重复/冲突/未知以及影响", "module_ids": ["相关id"], "blocking": true}],
+    "rework": [{"module_id": "需要返工id", "reason": "具体补读问题"}],
+    "readiness": "incomplete", "evidence": []
+  },
+  "comparison": {
+    "comparisons": [{"id": "comparison-id", "target": "目标模块id", "reference": "参考模块id", "relation": "candidate", "basis": "实际关联", "differences": "表示/前提/边界差异", "unknowns": "未确认事项", "evidence": [{"path": "目标原文", "start": 1, "end": 2}, {"path": "参考原文", "start": 1, "end": 2}]}],
+    "recommendation": {"confidence": "unable", "primary": null, "alternatives": [], "comparisons": [], "rationale": "比较理由或无法推荐原因", "scope": "具体文件和函数或不能界定原因", "dependencies": "范围外依赖", "reference_entries": "参考入口或缺失", "blockers": "阻碍或未知"}
+  },
+  "review": {
+    "verdict": "needs_revision", "coverage_checked": ["全部模块id"],
+    "findings": [{"id": "finding-id", "severity": "blocking", "description": "具体问题与证据解释", "module_ids": ["相关id"], "evidence": [{"path": "审查者实际读取原文", "start": 1, "end": 2}]}],
+    "evidence": [{"path": "审查者独立抽查的三库和首选模块原文", "start": 1, "end": 2}]
+  }
+}

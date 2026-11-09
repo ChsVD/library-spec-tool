@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "scope_decision": "用户于2026-10-18认可阶段1首选局部范围并要求开始阶段2开发。仅非__e2k__ BN_num_bits_word；不扩展BN整体。",
+  "input_snapshot": {
+    "path": "../../runs/stage1-continue-sol61-high-20261018-06/input_snapshot.json",
+    "sha256": "25a17cc2ba7dcc7f9fc942e36e64047588da2e97367dd839227c065e93a7d2f3"
+  },
+  "materials": {
+    "target-module": {
+      "path": "../../runs/stage1-real-sol61-high-20261018-03/modules/openssl-bn.md",
+      "sha256": "0c6774531f4685d0f42366c5e001fbd3f747fba9ffcbe26af523f6d58102a15f"
+    },
+    "selection": {
+      "path": "../../runs/stage1-continue-sol61-high-20261018-06/selection.md",
+      "sha256": "2eab45000be9e582311efd23892e2235eac23fb708beeba31dd4e63d84cb7815"
+    },
+    "sm2-comparison": {
+      "path": "../../runs/stage1-continue-sol61-high-20261018-04/comparisons/sm2-basic-model.md",
+      "sha256": "e5417a8fb542088e1efa8107923df40a18916a7d9f281052ee80ae3162d25d41"
+    },
+    "gmp-comparison": {
+      "path": "../../runs/stage1-continue-sol61-high-20261018-04/comparisons/mini-gmp-limb.md",
+      "sha256": "f9f540223cfab8efb595ecd7cb538469fb35eaa14b588ace034f728fcaae9191"
+    },
+    "sm2-module": {
+      "path": "../../runs/stage1-real-sol61-high-20261018-03/modules/sm2-basic-model.md",
+      "sha256": "4ee6f580501f74ef77b49dd619c5e6085ad51eb1f1a0ca20fdcfa630af743e56"
+    },
+    "gmp-module": {
+      "path": "../../runs/stage1-real-sol61-high-20261018-03/modules/mini-gmp-limb.md",
+      "sha256": "af591976bc956d1873e20c1902ccdd4d9b6ec686fad71cbfe87f716efaa94bcf"
+    }
+  },
+  "functions": [
+    {
+      "id": "openssl-bn-num-bits-word-generic",
+      "symbol": "BN_num_bits_word",
+      "configuration": "非__e2k__通用C分支；32/64位配置分别说明，实际ABI与宏配置未确定；排除常量时间安全性证明",
+      "source": {
+        "path": "openssl/crypto/bn/bn_lib.c",
+        "start": 92,
+        "end": 136
+      },
+      "materials": [
+        "target-module",
+        "selection",
+        "sm2-comparison",
+        "gmp-comparison",
+        "sm2-module",
+        "gmp-module"
+      ]
+    }
+  ]
+}

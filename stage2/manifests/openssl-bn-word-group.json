@@ -1,0 +1,37 @@
+{
+  "input_snapshot": {
+    "path": "../../runs/stage1-continue-sol61-high-20261018-06/input_snapshot.json",
+    "sha256": "25a17cc2ba7dcc7f9fc942e36e64047588da2e97367dd839227c065e93a7d2f3"
+  },
+  "materials": {
+    "target-module": {
+      "path": "../../runs/stage1-real-sol61-high-20261018-03/modules/openssl-bn.md",
+      "sha256": "0c6774531f4685d0f42366c5e001fbd3f747fba9ffcbe26af523f6d58102a15f"
+    },
+    "sm2-module": {
+      "path": "../../runs/stage1-real-sol61-high-20261018-03/modules/sm2-basic-model.md",
+      "sha256": "4ee6f580501f74ef77b49dd619c5e6085ad51eb1f1a0ca20fdcfa630af743e56"
+    },
+    "gmp-module": {
+      "path": "../../runs/stage1-real-sol61-high-20261018-03/modules/mini-gmp-limb.md",
+      "sha256": "af591976bc956d1873e20c1902ccdd4d9b6ec686fad71cbfe87f716efaa94bcf"
+    }
+  },
+  "version": 2,
+  "scope_decision": "按用户要求以模块或函数组为选择单位。本清单为openssl-bn的单字算术函数组，覆盖bn_word.c全部函数；不是整个BN模块完成声明。",
+  "selection": {
+    "id": "openssl-bn-word-arithmetic",
+    "module_id": "openssl-bn",
+    "kind": "function_group",
+    "paths": [
+      "openssl/crypto/bn/bn_word.c"
+    ],
+    "configuration": "按源码分别保留BN_LLONG、32/64位及调试宏分支；实际ABI与构建配置待核对",
+    "materials": [
+      "target-module",
+      "sm2-module",
+      "gmp-module"
+    ],
+    "exclude_files": []
+  }
+}
