@@ -157,23 +157,18 @@ int main(void) {
     invoke(&a, SX_OPT_ALL, NULL, &baseline);
     CHECK(baseline.rational_status == SX_Q_FEASIBLE && baseline.integer_status == SX_Z_SAT);
     for (unsigned flags = 0; flags <= SX_OPT_ALL; flags++) {
-        SxSolverLimits l = {0};
-        l.collect_matrix_stats = 1;
-        invoke(&a, flags, &l, &r);
+        invoke(&a, flags, NULL, &r);
         CHECK(r.error == SX_OK && r.rational_status == baseline.rational_status &&
               r.integer_status == baseline.integer_status && r.witness_length == 5 &&
               r.stats.verified_rows == 7);
         for (size_t i = 0; i < 5; i++)
             eq(&r.witness[i], &baseline.witness[i]);
         CHECK(r.stats.input_nonzeros == 4 && r.stats.input_cells == 35);
-        CHECK(r.stats.matrix_snapshots == r.stats.pivots + 1 &&
-              r.stats.matrix_cells_scanned >= r.stats.table_cells);
         if (!flags) {
             CHECK(r.stats.active_rows == 4 && r.stats.active_variables == 2 &&
                   r.stats.dropped_true_rows == 3 && r.stats.removed_variables == 3 &&
                   r.stats.gcd_reduced_rows == 4);
         }
-        CHECK(r.stats.arithmetic.rat_import > 0 && r.stats.arithmetic.big_gcd > 0);
         sx_result_clear(&r);
     }
     sx_result_clear(&baseline);
@@ -254,8 +249,7 @@ int main(void) {
     a = make(1, 1, identity);
     invoke(&a, 0, NULL, &r);
     CHECK(r.error == SX_OK && r.stats.preprocess_coefficients_scanned == 2 &&
-          r.stats.gcd_reduced_rows == 0 && r.stats.matrix_snapshots == 0 &&
-          r.stats.matrix_cells_scanned == 0);
+          r.stats.gcd_reduced_rows == 0);
     sx_result_clear(&r);
     SxSolverLimits bad = {0};
     bad.disable_optimizations = 16;

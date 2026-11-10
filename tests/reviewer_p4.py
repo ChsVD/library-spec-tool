@@ -82,16 +82,12 @@ def main():
     rows=[[-7,0,0,0],[12,0,-6,0],[0,0,0,0]]
     for mask in range(16):
         opts=['--disable-opts',str(mask)]
-        off=run(rows,3,opts); on=run(rows,3,[*opts,'--matrix-stats','1'])
-        validate(off,rows,3,'FEASIBLE'); validate(on,rows,3,'FEASIBLE')
-        a,b=off['optimization'],on['optimization']
-        assert a['matrix_cells_scanned']==a['matrix_snapshots']==0
+        result=run(rows,3,opts)
+        validate(result,rows,3,'FEASIBLE')
+        b=result['optimization']
         assert b['input_nonzeros']==b['active_nonzeros']==1 and b['input_cells']==9
         assert b['active_rows']==(3 if mask&1 else 1) and b['active_variables']==(3 if mask&4 else 1)
         assert b['active_cells']==b['active_rows']*b['active_variables']
-        assert b['matrix_snapshots']==on['stats']['pivots']+1 and b['table_nonzeros']==1
-        assert b['matrix_cells_scanned']==b['matrix_snapshots']*b['table_cells']
-        assert off['work']==on['work'] and off['witness']==on['witness']
     print(f'Independent P4 original-row checks passed: {cases} cases x {len(modes)} modes.')
 
 

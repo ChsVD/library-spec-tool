@@ -11,7 +11,7 @@ for case in ['dense','sparse']:
 result={'comparison':'Current P4 preprocessing flags 0 versus 15; common counters and zero verification skip in both paths',
  'clock':'CLOCK_MONOTONIC, nanoseconds; one untimed warmup; no CPU affinity pinning',
  'timing_scope':'Only sx_check_qcp call, including input validation/preprocessing, table build/check/pivots, original witness verification, internal cleanup and output construction; excludes input creation, result init/clear, JSON/process setup',
- 'matrix_statistics':'Additional untimed call with collect_matrix_stats=1; timed calls use 0. All other limits/settings identical',
+ 'solver_statistics':'Solver and preprocessing counters from the final timed call',
  'compiler':subprocess.check_output(['cc','--version'],text=True).splitlines()[0],
  'flags':'-std=c11 -O2 -g (Makefile ordinary default; clean build required)',
  'platform':platform.platform(),

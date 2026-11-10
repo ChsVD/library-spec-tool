@@ -71,7 +71,7 @@ EOF
 
 stdin为m n再接每行constant c1..cn；CLI 构造原布局链表并调用 sx_check_qcp，stdout单JSON。上例2x=1拆两行，返回Q FEASIBLE、Z UNKNOWN及1/2。选项包括`--pivots --ms --bytes --limbs --arith-bytes --fail-at`各接无符号整数。NUL、坏格式、读取错误拒绝发布JSON。
 
-P4默认四项预处理全开；disable_optimizations的1/2/4/8位分别禁用真常数行删除、常数矛盾快判、未用变量压缩、整行正GCD约分，SX_OPT_ALL=15全关；CLI `--disable-opts 15`。先验证整个输入，见证/冲突始终恢复原行列及尺度。collect_matrix_stats默认0，显式CLI `--matrix-stats 1`才做额外O(mN)扫描。
+P4默认四项预处理全开；disable_optimizations的1/2/4/8位分别禁用真常数行删除、常数矛盾快判、未用变量压缩、整行正GCD约分，SX_OPT_ALL=15全关；CLI `--disable-opts 15`。先验证整个输入，见证/冲突始终恢复原行列及尺度。本修订移除了矩阵快照、算术操作次数和最大操作数长度统计；limb 上限、空间预算、换基与时间限制仍生效。CLI 不再输出 work 字段。使用 C 接口的程序需和静态库一同重新编译。
 
 ```sh
 make benchmark

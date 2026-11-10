@@ -61,12 +61,6 @@ static int checkpoint(Solve *w) {
     SxError e = sx_scope_checkpoint();
     return numeric(w, e, w->scope.reason);
 }
-static void *memory(Solve *w, size_t n) {
-    void *p = sx_scope_alloc(n);
-    if (!p)
-        numeric(w, w->scope.error, w->scope.reason);
-    return p;
-}
 static int op(Solve *w, SxRat *q, char c, const SxRat *a, const SxRat *b) {
     SxStats s;
     SxError e = sx_rat_op(q, c, a, b, &w->limits.arithmetic, &s);
@@ -121,12 +115,6 @@ static int table_result(Solve *w, SxError e, const SxTableStats *s) {
         return stop(w, SX_INTERNAL, SX_REASON_INTERNAL, SX_D_INVARIANT);
     }
 }
-static SxTableLimits table_limits(const Solve *w) {
-    SxTableLimits l = {0};
-    l.arithmetic = w->limits.arithmetic;
-    l.max_table_bytes = w->limits.max_table_bytes;
-    return l;
-}
 static int enabled(const Solve *w, unsigned int bit) {
     return !(w->limits.disable_optimizations & bit);
 }
@@ -165,11 +153,16 @@ static void prepared_clear(Prepared *p) {
     prepared_init(p);
 }
 static void *array(Solve *w, size_t count, size_t element) {
+    if (!count)
+        return NULL;
     if (count > SIZE_MAX / element) {
         stop(w, SX_LIMIT, SX_REASON_SIZE_OVERFLOW, SX_D_OVERFLOW);
         return NULL;
     }
-    return count ? memory(w, count * element) : NULL;
+    void *p = sx_scope_alloc(count * element);
+    if (!p)
+        numeric(w, w->scope.error, w->scope.reason);
+    return p;
 }
 static const SxRat *scale(const Prepared *p, size_t original_row) {
     return p->scales && p->scales[original_row].num._mp_size ? &p->scales[original_row] : &p->unit;
@@ -369,35 +362,6 @@ static int input_observe(Solve *w, const Source *source) {
     w->result.stats.active_nonzeros = w->result.stats.input_nonzeros;
     return 1;
 }
-static size_t limbs(mpz_srcptr z) {
-    return (size_t)(z->_mp_size < 0 ? -z->_mp_size : z->_mp_size);
-}
-static int table_observe(Solve *w) {
-    if (!w->limits.collect_matrix_stats)
-        return 1;
-    size_t m = sx_table_rows(w->table), n = sx_table_variables(w->table);
-    w->result.stats.table_cells = m * n;
-    w->result.stats.table_nonzeros = 0;
-    addstat(&w->result.stats.matrix_snapshots, 1);
-    for (size_t i = 0; i < m; i++) {
-        if (!checkpoint(w))
-            return 0;
-        const SxRat *b = sx_table_beta(w->table, i);
-        size_t largest = limbs(&b->num) > limbs(&b->den) ? limbs(&b->num) : limbs(&b->den);
-        for (size_t j = 0; j < n; j++) {
-            const SxRat *q = sx_table_coefficient(w->table, i, j);
-            addstat(&w->result.stats.matrix_cells_scanned, 1);
-            if (q->num._mp_size)
-                addstat(&w->result.stats.table_nonzeros, 1);
-            size_t l = limbs(&q->num) > limbs(&q->den) ? limbs(&q->num) : limbs(&q->den);
-            if (l > largest)
-                largest = l;
-        }
-        if (largest > w->result.stats.max_coefficient_limbs)
-            w->result.stats.max_coefficient_limbs = largest;
-    }
-    return 1;
-}
 static size_t original_variable(const Solve *w, size_t variable, size_t original_n) {
     size_t n = w->prep.variables;
     return variable < n ? w->prep.colmap[variable] : original_n + w->prep.rowmap[variable - n];
@@ -527,13 +491,9 @@ static int conflict(Solve *w, size_t row, int lower, size_t original_n) {
         if (sx_table_nonbasic_column(w->table, v) != SIZE_MAX &&
             sx_table_coefficient(w->table, row, v)->num._mp_size)
             count++;
-    if (count > SIZE_MAX / sizeof(SxBlocker))
-        return stop(w, SX_LIMIT, SX_REASON_SIZE_OVERFLOW, SX_D_OVERFLOW);
-    if (count) {
-        c->blockers = memory(w, count * sizeof(SxBlocker));
-        if (!c->blockers)
-            return 0;
-    }
+    c->blockers = array(w, count, sizeof(*c->blockers));
+    if (count && !c->blockers)
+        return 0;
     c->row = row;
     c->basic_variable = sx_table_basic(w->table, row);
     c->bound_source_row = source(w, c->basic_variable);
@@ -602,13 +562,9 @@ done:
 }
 static int feasible(Solve *w, const Source *p) {
     size_t n = p->variables;
-    if (n > SIZE_MAX / sizeof(SxRat))
-        return stop(w, SX_LIMIT, SX_REASON_SIZE_OVERFLOW, SX_D_OVERFLOW);
-    if (n) {
-        w->result.witness = memory(w, n * sizeof(SxRat));
-        if (!w->result.witness)
-            return 0;
-    }
+    w->result.witness = array(w, n, sizeof(*w->result.witness));
+    if (n && !w->result.witness)
+        return 0;
     int integral = 1;
     size_t active_column = 0;
     for (size_t v = 0; v < n; v++) {
@@ -758,8 +714,11 @@ void sx_check_qcp(const struct InequList *head, size_t variables, const SxSolver
             goto done;
         }
     }
+    const SxTableLimits tl = {
+        .arithmetic = w.limits.arithmetic,
+        .max_table_bytes = w.limits.max_table_bytes,
+    };
     {
-        SxTableLimits tl = table_limits(&w);
         SxTableStats ts;
         SxError e = w.prep.enabled ? sx_table_create(&w.table, &w.prep.problem, &tl, &ts)
                     : sx_table_create_validated_list(&w.table, source.head, source.rows,
@@ -769,8 +728,6 @@ void sx_check_qcp(const struct InequList *head, size_t variables, const SxSolver
     }
     prepared_coefficients_clear(&w.prep);
     if (!preprocess && !input_observe(&w, &source))
-        goto done;
-    if (!table_observe(&w))
         goto done;
     while (checkpoint(&w)) {
         size_t row, enter;
@@ -796,15 +753,12 @@ void sx_check_qcp(const struct InequList *head, size_t variables, const SxSolver
             goto done;
         }
         {
-            SxTableLimits tl = table_limits(&w);
             SxTableStats ts;
             SxError e = sx_table_pivot(&w.table, row, enter, lower, &tl, &ts);
             if (!table_result(&w, e, &ts))
                 goto done;
         }
         w.result.stats.pivots++;
-        if (!table_observe(&w))
-            goto done;
     }
 done:
     sx_table_destroy(w.table);
@@ -814,7 +768,6 @@ done:
         checkpoint(&w);
     w.result.stats.allocations = w.scope.attempts;
     w.result.stats.peak_bytes = w.scope.peak;
-    w.result.stats.arithmetic = w.scope.work;
     sx_scope_end(&w.scope);
     solving = 0;
 publish:

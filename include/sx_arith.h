@@ -24,15 +24,12 @@ typedef enum {
     SX_AR_CLOCK
 } SxArithReason;
 typedef struct {
-    size_t rat_add, rat_sub, rat_mul, rat_div, rat_compare, rat_import;
-    size_t big_add, big_sub, big_mul, big_gcd, big_divexact;
-    size_t max_operand_limbs;
-} SxWorkStats;
-typedef struct {
     size_t allocations, peak_bytes;
     SxArithReason reason;
 } SxStats;
 /* Owning objects: initialize once; no shallow copies; clear is idempotent.
+   Arithmetic operands are canonical (positive denominator, coprime, zero = 0/1).
+   Use init/set/import or a successful operation to construct them.
    All operands same thread, valid initialized objects; out may alias either input.
    Failure leaves out unchanged. Limits NULL selects defaults; zero means default.
    max_bytes bounds transaction payload, max_limbs bounds each backend buffer.

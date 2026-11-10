@@ -14,50 +14,6 @@ static _Thread_local size_t live_blocks;
 static unsigned int one = 1;
 static _Thread_local size_t owned_bytes;
 static _Thread_local SxScope *scope;
-void sx_scope_work(SxWorkKind kind, size_t limbs) {
-    for (SxScope *s = scope; s; s = s->parent) {
-        size_t *counter = NULL;
-        switch (kind) {
-        case SX_W_ADD:
-            counter = &s->work.rat_add;
-            break;
-        case SX_W_SUB:
-            counter = &s->work.rat_sub;
-            break;
-        case SX_W_MUL:
-            counter = &s->work.rat_mul;
-            break;
-        case SX_W_DIV:
-            counter = &s->work.rat_div;
-            break;
-        case SX_W_CMP:
-            counter = &s->work.rat_compare;
-            break;
-        case SX_W_IMPORT:
-            counter = &s->work.rat_import;
-            break;
-        case SX_W_BIG_ADD:
-            counter = &s->work.big_add;
-            break;
-        case SX_W_BIG_SUB:
-            counter = &s->work.big_sub;
-            break;
-        case SX_W_BIG_MUL:
-            counter = &s->work.big_mul;
-            break;
-        case SX_W_BIG_GCD:
-            counter = &s->work.big_gcd;
-            break;
-        case SX_W_BIG_DIVEXACT:
-            counter = &s->work.big_divexact;
-            break;
-        }
-        if (counter && *counter < SIZE_MAX)
-            ++*counter;
-        if (limbs > s->work.max_operand_limbs)
-            s->work.max_operand_limbs = limbs;
-    }
-}
 static SxError clock_ms(unsigned long long *out) {
     struct timespec now;
     if (clock_gettime(CLOCK_MONOTONIC, &now) != 0 || now.tv_sec < 0)
@@ -309,14 +265,11 @@ void sx_rat_init(SxRat *q) {
     q->den._mp_size = 1;
     q->den._mp_d = &one;
 }
-static void zclear(mpz_ptr z) {
-    if (z->_mp_alloc)
-        release(z->_mp_d);
-    mpz_init(z);
-}
 void sx_rat_clear(SxRat *q) {
-    zclear(&q->num);
-    zclear(&q->den);
+    if (q->num._mp_alloc)
+        release(q->num._mp_d);
+    if (q->den._mp_alloc)
+        release(q->den._mp_d);
     sx_rat_init(q);
 }
 void sx_string_free(char *p) {
@@ -331,13 +284,11 @@ static void bound(size_t n) {
 }
 static void mul(mpz_ptr z, mpz_srcptr a, mpz_srcptr b) {
     bound(length(a) + length(b));
-    sx_scope_work(SX_W_BIG_MUL, length(a) > length(b) ? length(a) : length(b));
     mpz_mul(z, a, b);
 }
 static void add(mpz_ptr z, mpz_srcptr a, mpz_srcptr b, int sub) {
     size_t x = length(a), y = length(b);
     bound((x > y ? x : y) + 1);
-    sx_scope_work(sub ? SX_W_BIG_SUB : SX_W_BIG_ADD, x > y ? x : y);
     if (sub)
         mpz_sub(z, a, b);
     else
@@ -346,14 +297,12 @@ static void add(mpz_ptr z, mpz_srcptr a, mpz_srcptr b, int sub) {
 static void gcd(mpz_ptr z, mpz_srcptr a, mpz_srcptr b) {
     size_t x = length(a), y = length(b);
     bound((x > y ? x : y) + 2);
-    sx_scope_work(SX_W_BIG_GCD, x > y ? x : y);
     mpz_gcd(z, a, b);
 }
 static void divexact(mpz_ptr z, mpz_srcptr a, mpz_srcptr b) {
     if (!b->_mp_size)
         die(SX_INTERNAL, SX_AR_BAD_ARGUMENT);
     bound(length(a) + 1);
-    sx_scope_work(SX_W_BIG_DIVEXACT, length(a) > length(b) ? length(a) : length(b));
     mpz_divexact(z, a, b);
 }
 static void parse(mpz_ptr z, const char *s) {
@@ -450,6 +399,10 @@ static void calculate(SxRat *q, char op, const SxRat *a, const SxRat *b) {
         divexact(&x, &a->den, &h);
         divexact(&y, bd, &g);
         mul(&q->den, &x, &y);
+        /* For canonical operands the two cross gcds remove every common
+           factor. A product also has a positive denominator. */
+        if (op == '*')
+            return;
     } else
         die(SX_INVALID, SX_AR_BAD_DECIMAL);
     normalize(q);
@@ -510,28 +463,6 @@ static SxError run(SxRat *out, int *cmp, char **str, char op, const SxRat *a, co
           op == 'x') &&
          !valid(b)))
         return early(stats, SX_INVALID, SX_AR_BAD_ARGUMENT);
-    switch (op) {
-    case '+':
-        sx_scope_work(SX_W_ADD, 0);
-        break;
-    case '-':
-        sx_scope_work(SX_W_SUB, 0);
-        break;
-    case '*':
-        sx_scope_work(SX_W_MUL, 0);
-        break;
-    case '/':
-        sx_scope_work(SX_W_DIV, 0);
-        break;
-    case 'c':
-        sx_scope_work(SX_W_CMP, 0);
-        break;
-    case 'i':
-        sx_scope_work(SX_W_IMPORT, length(imported));
-        break;
-    default:
-        break;
-    }
     size_t max = l && l->max_limbs ? l->max_limbs : 1048576;
     if (max > (size_t)INT_MAX / 64 || max < 4)
         return early(stats, SX_INVALID, SX_AR_BAD_ARGUMENT);

@@ -92,31 +92,23 @@ int main(int argc, char **argv) {
             return 3;
         times[i] = elapsed(&start, &end);
         mean += times[i];
-        sx_result_clear(&result);
+        if (i + 1 < repeat)
+            sx_result_clear(&result);
     }
     qsort(times, repeat, sizeof(*times), cmp);
     double median =
         repeat % 2 ? times[repeat / 2] : (times[repeat / 2 - 1] + times[repeat / 2]) / 2;
-    l.collect_matrix_stats = 1;
-    sx_check_qcp(nodes, n, &l, &result);
-    if (result.error || result.rational_status != SX_Q_FEASIBLE)
-        return 3;
     const SxSolverStats *s = &result.stats;
-    const SxWorkStats *w = &s->arithmetic;
     printf("{\"case\":\"%s\",\"disable_opts\":%u,\"entry\":\"%s\",\"repeats\":%zu,\"mean_ns\":%.0f,"
            "\"median_ns\":%.0f,\"min_ns\":%.0f,\"max_ns\":%.0f,\"rows\":%zu,\"variables\":%zu,"
            "\"active_rows\":%zu,\"active_variables\":%zu,\"input_nonzeros\":%zu,\"input_cells\":%"
-           "zu,\"active_nonzeros\":%zu,\"active_cells\":%zu,\"table_nonzeros\":%zu,\"table_cells\":"
-           "%zu,\"max_coefficient_limbs\":%zu,\"pivots\":%zu,\"allocations\":%zu,\"peak_bytes\":%"
-           "zu,\"rat_add\":%zu,\"rat_sub\":%zu,\"rat_mul\":%zu,\"rat_div\":%zu,\"rat_compare\":%zu,"
-           "\"rat_import\":%zu,\"big_gcd\":%zu,\"big_divexact\":%zu,\"max_operand_limbs\":%zu,"
+           "zu,\"active_nonzeros\":%zu,\"active_cells\":%zu,\"pivots\":%zu,\"allocations\":%zu,\"peak_bytes\":%"
+           "zu,"
            "\"preprocess_coefficients_scanned\":%zu,\"verification_coefficients_skipped\":%zu}\n",
            argv[1], flags, "qcp", repeat, mean / (double)repeat, median, times[0],
            times[repeat - 1], m, n, s->active_rows, s->active_variables, s->input_nonzeros,
-           s->input_cells, s->active_nonzeros, s->active_cells, s->table_nonzeros, s->table_cells,
-           s->max_coefficient_limbs, s->pivots, s->allocations, s->peak_bytes, w->rat_add,
-           w->rat_sub, w->rat_mul, w->rat_div, w->rat_compare, w->rat_import, w->big_gcd,
-           w->big_divexact, w->max_operand_limbs, s->preprocess_coefficients_scanned,
+           s->input_cells, s->active_nonzeros, s->active_cells, s->pivots, s->allocations, s->peak_bytes,
+           s->preprocess_coefficients_scanned,
            s->verification_coefficients_skipped);
     sx_result_clear(&result);
     for (size_t k = 0; k < count; k++)

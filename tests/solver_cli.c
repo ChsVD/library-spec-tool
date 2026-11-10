@@ -140,22 +140,13 @@ static void print_result(const SxResult *r) {
         ",\"optimization\":{\"input_rows\":%zu,\"input_variables\":%zu,\"active_rows\":%zu,"
         "\"active_variables\":%zu,\"input_nonzeros\":%zu,\"input_cells\":%zu,\"active_nonzeros\":%"
         "zu,\"active_cells\":%zu,\"dropped_true_rows\":%zu,\"removed_variables\":%zu,\"gcd_reduced_"
-        "rows\":%zu,\"constant_conflicts\":%zu,\"matrix_snapshots\":%zu,\"matrix_cells_scanned\":%"
-        "zu,\"table_nonzeros\":%zu,\"table_cells\":%zu,\"max_coefficient_limbs\":%zu,\"preprocess_"
-        "coefficients_scanned\":%zu,\"verification_coefficients_skipped\":%zu},",
+        "rows\":%zu,\"constant_conflicts\":%zu,\"preprocess_"
+        "coefficients_scanned\":%zu,\"verification_coefficients_skipped\":%zu}}\n",
         r->stats.input_rows, r->stats.input_variables, r->stats.active_rows,
         r->stats.active_variables, r->stats.input_nonzeros, r->stats.input_cells,
         r->stats.active_nonzeros, r->stats.active_cells, r->stats.dropped_true_rows,
         r->stats.removed_variables, r->stats.gcd_reduced_rows, r->stats.constant_conflicts,
-        r->stats.matrix_snapshots, r->stats.matrix_cells_scanned, r->stats.table_nonzeros,
-        r->stats.table_cells, r->stats.max_coefficient_limbs,
         r->stats.preprocess_coefficients_scanned, r->stats.verification_coefficients_skipped);
-    const SxWorkStats *w = &r->stats.arithmetic;
-    printf("\"work\":{\"rat_add\":%zu,\"rat_sub\":%zu,\"rat_mul\":%zu,\"rat_div\":%zu,\"rat_"
-           "compare\":%zu,\"rat_import\":%zu,\"big_add\":%zu,\"big_sub\":%zu,\"big_mul\":%zu,\"big_"
-           "gcd\":%zu,\"big_divexact\":%zu,\"max_operand_limbs\":%zu}}\n",
-           w->rat_add, w->rat_sub, w->rat_mul, w->rat_div, w->rat_compare, w->rat_import,
-           w->big_add, w->big_sub, w->big_mul, w->big_gcd, w->big_divexact, w->max_operand_limbs);
 }
 struct InequList { mpz_ptr coef; struct InequList *next; };
 int main(int argc, char **argv) {
@@ -176,10 +167,6 @@ int main(int argc, char **argv) {
                 if (x > SX_OPT_ALL)
                     return 2;
                 limits.disable_optimizations = (unsigned int)x;
-            } else if (!strcmp(argv[i], "--matrix-stats")) {
-                if (x > 1)
-                    return 2;
-                limits.collect_matrix_stats = (int)x;
             } else if (!strcmp(argv[i], "--pivots"))
                 limits.max_pivots = x;
             else if (!strcmp(argv[i], "--bytes"))

@@ -33,7 +33,6 @@ typedef struct {
     unsigned long long max_milliseconds;
     size_t fail_at; /* Unified full-call allocation injection; arithmetic.fail_at must be 0. */
     unsigned int disable_optimizations;
-    int collect_matrix_stats; /* Explicit optional O(mN) snapshots; default off. */
 } SxSolverLimits;
 typedef struct {
     size_t pivots, allocations, peak_bytes;
@@ -42,9 +41,6 @@ typedef struct {
     size_t input_nonzeros, input_cells, active_nonzeros, active_cells;
     size_t dropped_true_rows, removed_variables, gcd_reduced_rows, constant_conflicts;
     size_t preprocess_coefficients_scanned, verification_coefficients_skipped;
-    size_t matrix_snapshots, matrix_cells_scanned, table_nonzeros, table_cells;
-    size_t max_coefficient_limbs;
-    SxWorkStats arithmetic;
 } SxSolverStats;
 typedef enum {
     SX_D_NONE,

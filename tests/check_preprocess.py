@@ -12,7 +12,7 @@ for n,rows in cases:
  data=f'{len(rows)} {n}\n'+'\n'.join(' '.join(map(str,row)) for row in rows)+'\n'
  reference=None
  for mask in [15,*range(15)]:
-  p=subprocess.run(['./build/solver_cli','--disable-opts',str(mask),'--matrix-stats','1'],input=data,text=True,capture_output=True,check=True)
+  p=subprocess.run(['./build/solver_cli','--disable-opts',str(mask)],input=data,text=True,capture_output=True,check=True)
   r=json.loads(p.stdout);assert r['error']=='OK' and r['q'] in ['FEASIBLE','UNSAT'],r
   if reference is None:reference=r
   assert r['q']==reference['q'] and r['z']==reference['z']
@@ -28,8 +28,6 @@ for n,rows in cases:
     for j in range(n+1):rhs[j]+=Fraction(b['coefficient'])*rows[b['source_row']][j]
    assert rhs==list(map(Fraction,rows[c['bound_source_row']]))
    assert Fraction(c['attainable'])>Fraction(c['required'])
-  if r['optimization']['matrix_snapshots']:
-   assert r['optimization']['matrix_cells_scanned']>=r['optimization']['table_cells']
   count+=1
 p=subprocess.run(['./build/solver_cli','--disable-opts','16'],input='0 0',text=True,capture_output=True)
 assert p.returncode==2 and not p.stdout
