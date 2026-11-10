@@ -2,6 +2,17 @@
 
 唯一顶层求解入口 `sx_check_qcp` 接受 FME 的 NULL 终止 coef/next 链表，使用精确有理数修复核心。整数系数约束为`constant+sum cj*xj<=0`。Q FEASIBLE的全整数见证对应Z SAT，分数见证对应Z UNKNOWN；Q UNSAT对应Z UNSAT。资源耗尽为Q/Z UNKNOWN，输入/OOM/内部错误单独报告。
 
+## 源码组织
+
+工程采用 ISO C11。公开声明、模块私有表示和函数实现分开放置，是本项目为代码审查和 QCP 验证采用的目录约定。C11 本身允许在翻译单元内定义结构体。作用域、内部链接与头文件包含的语言依据见 [WG14 N1570，§6.2.1、§6.2.2、§6.10.2](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf)。
+
+| 位置 | 内容 |
+|---|---|
+| `include/sx_solver_contract.h`、`include/sx_arith.h`、`include/sx_table.h` | 对调用方公开的声明和类型。链表节点只作前向声明，表以不透明类型 `SxTable` 暴露。 |
+| `src/arith_types.h`、`src/table_types.h`、`src/solver_types.h` | 各模块自己的表示，包括算术事务、表布局、预处理及求解状态。仅相应实现包含这些头文件。 |
+| `src/table_internal.h`、`src/runtime_scope.h`、`src/integer_ops.h`、`src/backend.h` | 跨模块使用的内部契约与后端声明。原 QCP 节点布局只在 `table_internal.h` 中维护。 |
+| `src/arith.c`、`src/table.c`、`src/solver.c` | 分别实现算术、表操作与求解控制。私有函数保持 `static`，线程局部对象由所属实现定义。 |
+
 ## 从源码包到可运行例子
 
 需要Linux/WSL、C11编译器、ar、GNU make和Python 3.9+标准库（本轮GCC 13.3/Python 3.12）。要求32位unsigned int limb；不链接系统GMP、不联网、不需要原QCP路径或格式化工具。
@@ -42,7 +53,7 @@ sx_check_qcp(head, original_variable_count, &limits, &result);
 sx_result_clear(&result);
 ```
 
-`head == NULL` 表示空合取；`n == 0` 时每行仍有一个常数整数。无环链表和每行 n+1 个整数必须保持可读；NULL coef 和可读环链有独立诊断。`SxProblem` 与数组建表接口仅见 `sx_table.h`，用于内部压缩建表及 P2 独立底层测试，不属于顶层求解入口。
+`head == NULL` 表示空合取；`n == 0` 时每行仍有一个常数整数。无环链表和每行 n+1 个整数必须保持可读；NULL coef 和可读环链有独立诊断。`SxProblem` 与数组建表接口仅见 `sx_table.h`，用于内部压缩建表及 P2 独立底层测试，不属于顶层求解入口。链表判环、计数和 NULL coef 检查统一由顶层 `source_validate` 完成；内部建表接收已验证的 head、行数和变量数，不再重复扫描链表结构。原 `sx_table_create_qcp` 独立公开入口已移除，P2 调用方使用数组建表接口；内部仍检查整数表示、算术/尺寸预算、分配和表不变量。
 
 所有输入只读，调用方保留节点/系数/limb所有权，结果拥有独立见证/局部冲突分数。result须初始化、复用前clear，clear可重复；禁止浅拷贝拥有者。对象同线程创建/使用/清理，真实节点和每行n+1项必须可读，裸指针无法检测任意悬空地址/实际数组长度。raw MiniGMP分配函数不是公共API，外部项目整数可用`sx_rat_import`深复制。
 

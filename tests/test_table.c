@@ -4,10 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-struct InequList {
-    mpz_ptr coef;
-    struct InequList *next;
-};
 #define CHECK(x)                                                                                   \
     do {                                                                                           \
         if (!(x)) {                                                                                \
@@ -253,25 +249,15 @@ int main(void) {
         eq(sx_table_value(t, 0), "1/1");
         sx_table_destroy(t);
     }
-    /* QCP NULL and cycles are independent of capacities. */
-    struct InequList second = {a + 3, NULL}, first = {a, &second};
-    t = NULL;
-    CHECK(sx_table_create_qcp(&t, &first, 2, NULL, NULL) == SX_OK);
-    sx_table_destroy(t);
-    second.next = &first;
-    t = NULL;
-    CHECK(sx_table_create_qcp(&t, &first, 2, NULL, &st) == SX_INVALID && st.reason == SX_T_CYCLE);
-    second.next = NULL;
-    first.coef = NULL;
-    CHECK(sx_table_create_qcp(&t, &first, 2, NULL, &st) == SX_INVALID && t == NULL);
-    first.coef = a;
     SxProblem empty = {0, 0, NULL};
+    t = NULL;
     CHECK(sx_table_create(&t, &empty, NULL, NULL) == SX_OK);
     CHECK(sx_table_check(t, NULL, NULL) == SX_OK);
     CHECK(sx_table_recompute(&t, NULL, NULL) == SX_OK);
     sx_table_destroy(t);
     t = NULL;
-    CHECK(sx_table_create_qcp(&t, NULL, 9, NULL, NULL) == SX_OK);
+    SxProblem freevars = {0, 9, NULL};
+    CHECK(sx_table_create(&t, &freevars, NULL, NULL) == SX_OK);
     CHECK(sx_table_variables(t) == 9);
     sx_table_destroy(t);
     t = NULL;

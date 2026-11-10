@@ -1,33 +1,19 @@
 #define _POSIX_C_SOURCE 200809L
+#include "arith_types.h"
+#include "integer_ops.h"
 #include "backend.h"
 #include "runtime_scope.h"
+#include <limits.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 #include <time.h>
 _Static_assert(UINT_MAX == 4294967295U, "requires 32-bit unsigned int limbs");
-typedef union Block Block;
-union Block {
-    max_align_t align;
-    struct {
-        Block *prev, *next;
-        size_t bytes;
-        int attached;
-    } h;
-};
-typedef struct {
-    jmp_buf jump;
-    Block *head;
-    size_t live, peak, attempt, maxbytes, maxlimbs, fail;
-    SxError error;
-    SxArithReason reason;
-} Tx;
 static _Thread_local Tx *active;
 static _Thread_local size_t live_blocks;
 static unsigned int one = 1;
 static _Thread_local size_t owned_bytes;
 static _Thread_local SxScope *scope;
-typedef union {
-    max_align_t align;
-    size_t bytes;
-} Storage;
 void sx_scope_work(SxWorkKind kind, size_t limbs) {
     for (SxScope *s = scope; s; s = s->parent) {
         size_t *counter = NULL;

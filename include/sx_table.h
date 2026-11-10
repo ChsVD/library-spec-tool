@@ -10,7 +10,6 @@ typedef struct {
     const __mpz_struct *coefficients;
 } SxProblem;
 typedef struct SxTable SxTable;
-struct InequList;
 typedef enum {
     SX_T_NONE,
     SX_T_ARGUMENT,
@@ -38,11 +37,8 @@ typedef struct {
 } SxTableStats;
 /* Create requires *out==NULL. Flat input rows are [constant,x0,...].
    All row/limb storage must really be readable; pointers cannot prove length.
-   QCP nodes have original fields mpz_ptr coef; struct InequList *next.
-   Every coef has variables+1 readable initialized integers, no extra metadata. */
+   Linked inputs are accepted only by the top-level sx_check_qcp solver. */
 SxError sx_table_create(SxTable **out, const SxProblem *, const SxTableLimits *, SxTableStats *);
-SxError sx_table_create_qcp(SxTable **out, const struct InequList *, size_t variables,
-                            const SxTableLimits *, SxTableStats *);
 void sx_table_destroy(SxTable *);
 /* Mutations replace *table on success only. Every borrowed pointer is invalid
    after successful mutation/destroy. Failed calls preserve table and pointers.

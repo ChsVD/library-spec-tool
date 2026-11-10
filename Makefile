@@ -10,10 +10,10 @@ build/vendor:
 	mkdir -p build/vendor
 build/vendor/%.o: vendor/gmp/minigmp/%.c vendor/gmp/minigmp/gmp_def.h | build/vendor
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
-build/arith.o: src/arith.c src/backend.h src/runtime_scope.h include/sx_arith.h | build/vendor
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) -c $< -o $@
-build/solver.o: src/solver.c src/integer_ops.h src/runtime_scope.h include/sx_solver_contract.h include/sx_table.h | build/vendor
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) -c $< -o $@
+build/arith.o: src/arith.c src/arith_types.h | build/vendor
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) -MMD -MP -c $< -o $@
+build/solver.o: src/solver.c src/solver_types.h | build/vendor
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) -MMD -MP -c $< -o $@
 build/libsx_solver.a: build/solver.o build/table.o build/arith.o $(OBJECTS)
 	$(AR) rcs $@ $^
 build/solver_cli: tests/solver_cli.c build/libsx_solver.a
@@ -33,8 +33,8 @@ build/test_preprocess: tests/test_preprocess.c build/libsx_solver.a
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) $< build/libsx_solver.a -o $@
 build/test_solver: tests/test_solver.c build/libsx_solver.a
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) $< build/libsx_solver.a -o $@
-build/table.o: src/table.c src/runtime_scope.h include/sx_table.h include/sx_solver_contract.h include/sx_arith.h | build/vendor
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) -c $< -o $@
+build/table.o: src/table.c src/table_types.h | build/vendor
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(OWNFLAGS) -MMD -MP -c $< -o $@
 build/libsx_table.a: build/table.o build/arith.o $(OBJECTS)
 	$(AR) rcs $@ $^
 build/test_table: tests/test_table.c build/libsx_table.a
@@ -64,5 +64,7 @@ sanitize:
 	$(MAKE) clean
 	$(MAKE) CFLAGS="-std=c11 -O1 -g -fsanitize=address,undefined -fno-omit-frame-pointer" test
 clean:
-	rm -f build/arith_cli build/test_arith build/arith.o build/table.o build/libsx_arith.a build/libsx_table.a build/test_table build/vendor/*.o build/solver.o build/libsx_solver.a build/solver_cli build/test_solver build/test_preprocess build/bench_preprocess build/qcp_example
+	rm -f build/arith.d build/table.d build/solver.d build/arith_cli build/test_arith build/arith.o build/table.o build/libsx_arith.a build/libsx_table.a build/test_table build/vendor/*.o build/solver.o build/libsx_solver.a build/solver_cli build/test_solver build/test_preprocess build/bench_preprocess build/qcp_example
+-include build/arith.d build/table.d build/solver.d
+
 .PHONY: all test sanitize clean benchmark normal examples

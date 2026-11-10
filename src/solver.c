@@ -1,40 +1,11 @@
 #include "integer_ops.h"
-#include "runtime_scope.h"
-#include "sx_table.h"
+#include "solver_types.h"
+#include "table_internal.h"
 #include <limits.h>
 #include <stdint.h>
 #include <string.h>
 
-/* Exact original QCP node layout, no casts or new metadata. */
-struct InequList {
-    mpz_ptr coef;
-    struct InequList *next;
-};
-typedef struct {
-    const struct InequList *head;
-    size_t rows, variables;
-} Source;
-typedef struct {
-    int enabled, scanned;
-    size_t rows, variables, *rowmap, *colmap;
-    unsigned char *used;
-    SxRat *scales, *coefficients, unit, contradiction;
-    size_t scales_initialized, coefficients_initialized, contradiction_row;
-    __mpz_struct *view;
-    SxProblem problem;
-} Prepared;
 static _Thread_local int solving;
-typedef struct {
-    SxScope scope;
-    SxSolverLimits limits;
-    SxResult result;
-    SxTable *table;
-    Prepared prep;
-    SxError error;
-    SxReason reason;
-    SxDiagnostic diagnostic;
-    SxArithReason arithmetic_reason;
-} Solve;
 void sx_result_init(SxResult *r) {
     memset(r, 0, sizeof(*r));
     sx_rat_init(&r->conflict.constant);
@@ -212,7 +183,6 @@ static int integer_op(Solve *w, SxRat *out, const SxRat *a, const SxRat *b, int 
 static int prepare(Solve *w, const Source *source) {
     Prepared *p = &w->prep;
     p->enabled = 1;
-    p->scanned = 1;
     size_t m = source->rows, n = source->variables;
     unsigned int limb = 1;
     __mpz_struct unit = {0, 1, &limb};
@@ -310,7 +280,6 @@ static int prepare(Solve *w, const Source *source) {
         }
         if (!changed) {
             prepared_clear(p);
-            p->scanned = 1;
             ok = 1;
             goto done;
         }
@@ -780,7 +749,8 @@ void sx_check_qcp(const struct InequList *head, size_t variables, const SxSolver
     w.result.stats.active_variables = source.variables;
     w.result.stats.input_cells = source.rows * source.variables;
     w.result.stats.active_cells = w.result.stats.input_cells;
-    if (w.limits.disable_optimizations != SX_OPT_ALL) {
+    const int preprocess = w.limits.disable_optimizations != SX_OPT_ALL;
+    if (preprocess) {
         if (!prepare(&w, &source))
             goto done;
         if (w.prep.contradiction_row != SIZE_MAX && enabled(&w, SX_OPT_CONSTANT_CONFLICT)) {
@@ -792,12 +762,13 @@ void sx_check_qcp(const struct InequList *head, size_t variables, const SxSolver
         SxTableLimits tl = table_limits(&w);
         SxTableStats ts;
         SxError e = w.prep.enabled ? sx_table_create(&w.table, &w.prep.problem, &tl, &ts)
-                    : sx_table_create_qcp(&w.table, source.head, source.variables, &tl, &ts);
+                    : sx_table_create_validated_list(&w.table, source.head, source.rows,
+                                                     source.variables, &tl, &ts);
         if (!table_result(&w, e, &ts))
             goto done;
     }
     prepared_coefficients_clear(&w.prep);
-    if (!w.prep.enabled && !w.prep.scanned && !input_observe(&w, &source))
+    if (!preprocess && !input_observe(&w, &source))
         goto done;
     if (!table_observe(&w))
         goto done;

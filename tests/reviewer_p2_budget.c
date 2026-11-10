@@ -6,8 +6,6 @@
 
 #define REQUIRE(x) do { if (!(x)) { fprintf(stderr, "line %d: %s\n", __LINE__, #x); exit(1); } } while (0)
 
-struct InequList { mpz_ptr coef; struct InequList *next; };
-
 static void equals(const SxRat *value, const char *expected) {
     char *text = NULL;
     REQUIRE(value && sx_rat_string(&text, value, NULL, NULL) == SX_OK);
@@ -54,15 +52,9 @@ int main(void) {
     }
     SxProblem p = {2,1,flat};
     budget_probe(&p);
-    struct InequList last = {flat+2, NULL}, head = {flat, &last};
     SxTable *t = NULL;
     SxTableStats st;
-    last.next = &last;
-    REQUIRE(sx_table_create_qcp(&t, &head, 1, NULL, &st) == SX_INVALID);
-    REQUIRE(st.reason == SX_T_CYCLE && !t && last.next == &last);
-    last.next = NULL;
-    REQUIRE(sx_table_create_qcp(&t, &head, 1, NULL, &st) == SX_OK);
-    REQUIRE(head.next == &last && !last.next && head.coef == flat && last.coef == flat+2);
+    REQUIRE(sx_table_create(&t, &p, NULL, &st) == SX_OK);
     REQUIRE(sx_table_rows(t) == 2);
     equals(sx_table_beta(t,1), "0/1");
     equals(sx_table_coefficient(t,1,0), "1/1");
@@ -85,6 +77,6 @@ int main(void) {
     sx_table_destroy(t);
     for (size_t i = 0; i < 4; ++i) sx_rat_clear(&nums[i]);
     REQUIRE(sx_live_blocks() == 0);
-    puts("Independent peak budget boundary, pivot rollback, QCP cycle and ownership passed.");
+    puts("Independent peak budget boundary, pivot rollback and array-table ownership passed.");
     return 0;
 }

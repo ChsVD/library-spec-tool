@@ -1,27 +1,9 @@
-#include "runtime_scope.h"
-#include "sx_table.h"
+#include "table_types.h"
+#include "table_internal.h"
 #include <limits.h>
 #include <stdint.h>
 #include <string.h>
 
-/* Matches original fme_gmp.c, not an extended node format. */
-struct InequList {
-    mpz_ptr coef;
-    struct InequList *next;
-};
-struct SxTable {
-    size_t m, n, total, rat_count, original_count, coefficient_count;
-    SxRat *rats, *original, *beta, *coeff, *value, *lower, *upper;
-    size_t *indices, *basic, *nonbasic, *row, *column;
-    unsigned char *flags;
-};
-typedef struct {
-    SxScope scope;
-    SxLimits arith;
-    SxError error;
-    SxTableReason reason;
-    SxArithReason ar;
-} Work;
 static SxError fail(Work *w, SxError e, SxTableReason r) {
     w->error = e;
     w->reason = r;
@@ -537,10 +519,6 @@ static SxError create(SxTable **out, const SxProblem *input, const struct InequL
     const struct InequList *node = list;
     for (size_t i = 0; i < rows; i++) {
         mpz_srcptr data = qcp ? node->coef : input->coefficients + i * (vars + 1);
-        if (!data) {
-            fail(&w, SX_INVALID, SX_T_OBJECT);
-            break;
-        }
         for (size_t j = 0; j <= vars; j++)
             if (!import(&w, &t->original[i * (vars + 1) + j], &data[j]))
                 break;
@@ -574,24 +552,11 @@ SxError sx_table_create(SxTable **out, const SxProblem *p, const SxTableLimits *
         return badstats(s, SX_T_ARGUMENT);
     return create(out, p, NULL, p->rows, p->variables, 0, l, s);
 }
-SxError sx_table_create_qcp(SxTable **out, const struct InequList *head, size_t n,
-                            const SxTableLimits *l, SxTableStats *s) {
-    const struct InequList *slow = head, *fast = head;
-    while (fast && fast->next) {
-        slow = slow->next;
-        fast = fast->next->next;
-        if (slow == fast)
-            return badstats(s, SX_T_CYCLE);
-    }
-    size_t m = 0;
-    for (const struct InequList *p = head; p; p = p->next) {
-        if (m == SIZE_MAX)
-            return badstats(s, SX_T_DIMENSION);
-        m++;
-    }
-    return create(out, NULL, head, m, n, 1, l, s);
+SxError sx_table_create_validated_list(SxTable **out, const struct InequList *head,
+                                       size_t rows, size_t variables,
+                                       const SxTableLimits *l, SxTableStats *s) {
+    return create(out, NULL, head, rows, variables, 1, l, s);
 }
-typedef enum { MUT_BOUNDS, MUT_MOVE, MUT_PIVOT, MUT_RECOMPUTE } Mutation;
 static SxError mutate(SxTable **pt, size_t v, size_t row, Mutation mode, int lower, const SxRat *a,
                       const SxRat *b, const SxTableLimits *l, SxTableStats *s) {
     if (!pt || !*pt)

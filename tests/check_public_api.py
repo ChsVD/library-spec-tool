@@ -14,9 +14,13 @@ header = '#include "sx_solver_contract.h"\n'
 assert compiles(header + 'void probe(void) { (void)&sx_check_qcp; }\n')
 assert not compiles(header + 'void probe(void) { (void)&sx_check; }\n')
 assert not compiles(header + 'SxProblem problem;\n')
-assert compiles('#include "sx_table.h"\nSxProblem problem;\n')
+table_header = '#include "sx_table.h"\n'
+assert compiles(table_header + 'SxProblem problem;\n')
+assert not compiles(table_header + 'void probe(void) { (void)&sx_table_create_qcp; }\n')
+assert not compiles(table_header + 'void probe(void) { (void)&sx_table_create_validated_list; }\n')
 symbols = subprocess.check_output(['nm', '-g', '--defined-only', 'build/libsx_solver.a'],
                                   cwd=ROOT, text=True)
 exported = {line.split()[-1] for line in symbols.splitlines() if len(line.split()) >= 3}
 assert 'sx_check_qcp' in exported and 'sx_check' not in exported
-print('Public API boundary passed: list-only solver header and exported entry; P2 arrays retained')
+assert 'sx_table_create_qcp' not in exported
+print('Public API boundary passed: list-only solver header and exported entry; P2 arrays retained; validated list handoff stays private')

@@ -228,6 +228,18 @@ int main(void) {
         sx_result_clear(&r);
     }
     a.view[4] = save;
+    /* Structural errors belong to the top-level validator in every mode,
+       including the uncompressed path handed to the private table builder. */
+    mpz_ptr saved_coef = a.nodes[1].coef;
+    a.nodes[1].coef = NULL;
+    for (unsigned flags = 0; flags <= SX_OPT_ALL; flags++) {
+        invoke(&a, flags, NULL, &r);
+        CHECK(r.error == SX_INVALID && r.rational_status == SX_Q_NOT_RUN &&
+              r.diagnostic == SX_D_OBJECT);
+        none(&r);
+        sx_result_clear(&r);
+    }
+    a.nodes[1].coef = saved_coef;
     a.nodes[1].next = &a.nodes[0];
     for (unsigned flags = 0; flags <= SX_OPT_ALL; flags++) {
         invoke(&a, flags, NULL, &r);
