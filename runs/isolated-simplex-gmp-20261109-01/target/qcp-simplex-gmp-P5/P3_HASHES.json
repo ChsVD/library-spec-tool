@@ -1,0 +1,21 @@
+{
+  "DEVELOPMENT_PLAN.md": "3fcbd16ea7bd13ab85dbc9520d1ae5222f6965f37e6c6c841745282afe809324",
+  "Makefile": "7f2df895f58ff67d61c8dd3fd8071cc3b300822d870d96027a7d2d1810ee13a9",
+  "P3_START_HASHES.json": "9bf61e0e376503201f7b1f0f267867edb1de155035640b808c3759a4d9b95612",
+  "README.md": "f1b38c01e34363da589b886e7762e29556d5fb2e532c1bc6e83331fb6fa9613b",
+  "docs/ACCEPTANCE_P3.md": "33c4d7ee1e0c8cad508e0f914792e396c8cefc4c9876216cbc25f09bdd6186c7",
+  "docs/P3_CONTRACT.md": "78917a26c8ca805248b07e3c4ea6dd647245b1c6519321fabfd6b8aabb4a3354",
+  "docs/P3_REPORT.md": "e6364d526f684584c44eddbdbf26f9e5fb31e4f959c7a6aa5caf8c7a070b20d7",
+  "include/sx_arith.h": "ab5634303aabb43ba120bfd085f7158c3fbb1a0afe61dffdd5dd63e1ba64ca03",
+  "include/sx_solver_contract.h": "2a03fe9a0d069a21840b583d165979afd8e9ad0504c2da2532d9c366c6ff542e",
+  "src/arith.c": "10611cae86a3e79d5f605e298a00b0dc4c782ea377cf7854db9cda5baa6608a4",
+  "src/runtime_scope.h": "f9224f1d6c8d6c0ae5f7e2461a64b12813790340373f98539e0c51ee107f065c",
+  "src/solver.c": "2a50b0e202cf6d2e01a40451e28537a8a4e0f7af9dc9533689f505d5c3340176",
+  "tests/check_solver.py": "1c062019154a774bca02b8fe5ed008a86a50e11e5be8231236d304a8421e7dd9",
+  "tests/reviewer_p3.py": "919e5e1de76949c9b29ea1a3c536b8369dfd8549b54d0441fb6f064e4be6cfe6",
+  "tests/reviewer_p3_acceptance.py": "5ea2a3ef67101ca7f679f96af24e4cc254ffea084c67da3e4046fc38d58015f9",
+  "tests/reviewer_p3_driver.c": "3bfbd6e29ea8e9cd8e0545492d07e6742b8a14baa2e94a7879e3b40d6d3c67d2",
+  "tests/reviewer_p3_exit.c": "cd4146551513ef23b64c7dabc90c52b2e5931004685252c23d4bcde36cec94b6",
+  "tests/solver_cli.c": "d5410e4a9004b56b49abb1bd63579da9b13af6a34bbae6ff34e3761a51e0cae1",
+  "tests/test_solver.c": "7e1809bd7ee22ad4179b9544d89f74e7132456e0432f50944652b018bbdbd072"
+}
