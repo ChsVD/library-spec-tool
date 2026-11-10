@@ -1,0 +1,9 @@
+{
+  "repository": "/home/maxu/Projects/qcp-v2.2.0",
+  "commit": "2e547f79fc778a99434114aed110e99045d8c6d8",
+  "source_path": "LICENSE",
+  "copied_to": "vendor/QCP_LICENSE",
+  "sha256": "590186baef137f40c833998f701deaf74845cd48fbc446a98af9c5c3efaa506d",
+  "bytes": 1074,
+  "scope": "Notice retained for the adopted upstream project materials; does not assign a new license to newly authored code."
+}

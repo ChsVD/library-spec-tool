@@ -1,0 +1,19 @@
+{
+  "DEVELOPMENT_PLAN.md": "510db1c8650ae84e7c797611508aa55ade93637e8e2683816d431fdd2aaa8261",
+  "Makefile": "615354a739c2ccaceea6f321c8a2ab55329265fadf3bf58d672a6c1ad07d3505",
+  "P2_START_HASHES.json": "55d6bce83d57838a30f9d136e9a748c70af856d9fc35bb4e8292adeaa8f2e5d8",
+  "README.md": "bd6bcac53115dbc94bbaa431d282347a6c9052d3c7f1cfb8581ddd1f47879e1a",
+  "docs/ACCEPTANCE_P2.md": "a4b42049840e706ae267c2b589e11c2f76ef312022e8edb3bab999a80ed63404",
+  "docs/P2_CONTRACT.md": "5ca40a928f903fd28e00f8e5233ba7a2578d24062e2c9e7777e54278d4b2f985",
+  "docs/P2_REPORT.md": "4c95590db0afc49d9f9025db3ea90bbdf04fc807191a86588885eeecf46e7e85",
+  "include/sx_arith.h": "792f31cfb35d7da96a0ed9f6c3823a5d587777463bd2eedf99d735577ae864f5",
+  "include/sx_table.h": "8724aa3758caf66d824336e9323b59faa9e7e2d4aeef2bf3844ccff9b0beef22",
+  "src/arith.c": "21c17065a0f3ddd3727c169f48505ecedd53217e1743822b17f0e3e42c3cd7ad",
+  "src/runtime_scope.h": "72d0aeb1cd69e0cbfa5988db67834b846f11bab147f601ee4984542631385f2c",
+  "src/table.c": "4a8ed9b5bc42d7a661cf1f5d6cef5c970d7d6ddf246b045feb7317a5cc280ba4",
+  "tests/reviewer_p2.py": "e96b6f8edaa31cc5716d219087bc47f8b9d1b2a41b1c1995a46cd19a0f8fc9ce",
+  "tests/reviewer_p2_acceptance.py": "bb66b9da7daf45e9f85d7f6132904a600938e8bab161299ae39f0c7e7cd5e1b3",
+  "tests/reviewer_p2_budget.c": "9de8a0717c3c5247553ec6a07dc97e003f6d9683de27cae474adacddc0740cc8",
+  "tests/reviewer_p2_driver.c": "0d13403d1a903b85f91fe14617caa579000d4b611596a7ddc7a38b403b3b65dc",
+  "tests/test_table.c": "60e44f23ce29900f7ef6c6d0f4065e217156af6247db17742ba18e1589610aeb"
+}
