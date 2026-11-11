@@ -1,0 +1,144 @@
+#include "../include/montg_add_jpoint_strategy.h"
+
+/* Goal-directed normalization for the X-coordinate trace. */
+id : 1
+priority : core(0)
+left : store_fp(?p,
+         Zmod(mont_p(aj_u1(?x1, ?z2)) - mont_p(aj_u2(?x2, ?z1)),
+              SM2_P_Z())) at 0
+right : store_fp(p, mont_p(aj_h(x1, z1, x2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 2
+priority : core(0)
+left : store_fp(?p,
+         Zmod(mont_p(aj_s1(?y1, ?z2)) - mont_p(aj_s2(?y2, ?z1)),
+              SM2_P_Z())) at 0
+right : store_fp(p, mont_p(aj_rr(y1, z1, y2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 3
+priority : core(0)
+left : store_fp(?p,
+         Zmod(mont_p(aj_u1(?x1, ?z2)) + mont_p(aj_u2(?x2, ?z1)),
+              SM2_P_Z())) at 0
+right : store_fp(p, mont_p(aj_u_sum(x1, z1, x2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 4
+priority : core(0)
+left : store_fp(?p,
+         Zmod(mont_p(aj_s1(?y1, ?z2)) + mont_p(aj_s2(?y2, ?z1)),
+              SM2_P_Z())) at 0
+right : store_fp(p, mont_p(aj_s_sum(y1, z1, y2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 5
+priority : core(0)
+left : store_fp(?p,
+         mont_p(aj_h(?x1, ?z1, ?x2, ?z2) * aj_h(x1, z1, x2, z2))) at 0
+right : store_fp(p, mont_p(aj_h2(x1, z1, x2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 6
+priority : core(0)
+left : store_fp(?p,
+         mont_p(aj_u_sum(?x1, ?z1, ?x2, ?z2) *
+                aj_h2(x1, z1, x2, z2))) at 0
+right : store_fp(p, mont_p(aj_base(x1, z1, x2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 7
+priority : core(0)
+left : store_fp(?p,
+         mont_p(aj_rr(?y1, ?z1, ?y2, ?z2) *
+                aj_rr(y1, z1, y2, z2))) at 0
+right : store_fp(p, mont_p(aj_rr2(y1, z1, y2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 8
+priority : core(0)
+left : store_fp(?p,
+         Zmod(mont_p(aj_rr2(?y1, ?z1, ?y2, ?z2)) -
+              mont_p(aj_base(?x1, z1, ?x2, z2)), SM2_P_Z())) at 0
+right : store_fp(p, mont_p(aj_rx(x1, y1, z1, x2, y2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 9
+priority : core(0)
+left : store_fp(?p,
+         Zmod(2 * mont_p(aj_rx(?x1, ?y1, ?z1, ?x2, ?y2, ?z2)),
+              SM2_P_Z())) at 0
+right : store_fp(p,
+          mont_p(aj_twice_rx(x1, y1, z1, x2, y2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 10
+priority : core(0)
+left : store_fp(?p,
+         Zmod(mont_p(aj_base(?x1, ?z1, ?x2, ?z2)) -
+              mont_p(aj_twice_rx(x1, ?y1, z1, x2, ?y2, z2)),
+              SM2_P_Z())) at 0
+right : store_fp(p,
+          mont_p(aj_base_minus_twice_rx(x1, y1, z1, x2, y2, z2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 101
+priority : core(0)
+right : 0 <= aj_h(?x1, ?z1, ?x2, ?z2) at 0
+        aj_h(x1, z1, x2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 102
+priority : core(0)
+right : 0 <= aj_rr(?y1, ?z1, ?y2, ?z2) at 0
+        aj_rr(y1, z1, y2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 103
+priority : core(0)
+right : 0 <= aj_u_sum(?x1, ?z1, ?x2, ?z2) at 0
+        aj_u_sum(x1, z1, x2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 104
+priority : core(0)
+right : 0 <= aj_s_sum(?y1, ?z1, ?y2, ?z2) at 0
+        aj_s_sum(y1, z1, y2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 105
+priority : core(0)
+right : 0 <= aj_h2(?x1, ?z1, ?x2, ?z2) at 0
+        aj_h2(x1, z1, x2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 106
+priority : core(0)
+right : 0 <= aj_base(?x1, ?z1, ?x2, ?z2) at 0
+        aj_base(x1, z1, x2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 107
+priority : core(0)
+right : 0 <= aj_rr2(?y1, ?z1, ?y2, ?z2) at 0
+        aj_rr2(y1, z1, y2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 108
+priority : core(0)
+right : 0 <= aj_rx(?x1, ?y1, ?z1, ?x2, ?y2, ?z2) at 0
+        aj_rx(x1, y1, z1, x2, y2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 109
+priority : core(0)
+right : 0 <= aj_twice_rx(?x1, ?y1, ?z1, ?x2, ?y2, ?z2) at 0
+        aj_twice_rx(x1, y1, z1, x2, y2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 110
+priority : core(0)
+right : 0 <= aj_base_minus_twice_rx(?x1, ?y1, ?z1, ?x2, ?y2, ?z2) at 0
+        aj_base_minus_twice_rx(x1, y1, z1, x2, y2, z2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);

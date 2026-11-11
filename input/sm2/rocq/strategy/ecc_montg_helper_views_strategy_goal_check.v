@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import ecc_montg_helper_views_strategy_goal ecc_montg_helper_views_strategy_proof.
+
+Module ecc_montg_helper_views_Strategy_Correctness : ecc_montg_helper_views_Strategy_Correct.
+  Include ecc_montg_helper_views_strategy_proof.
+End ecc_montg_helper_views_Strategy_Correctness.

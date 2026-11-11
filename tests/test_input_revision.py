@@ -18,7 +18,7 @@ class RevisionTests(unittest.TestCase):
                     a["report"]["verdict"]="insufficient"
                     a["report"]["findings"]=[{"description":"Need foundation","blocking":True}]
                 return json.dumps(a)
-        result=run_pipeline(self.root,self.base/"seed",self.upstream,lambda r,t:Insufficient(r),budgets=self.budgets)
+        result=run_pipeline(self.root,self.base/"seed",self.upstream,lambda r,t:Insufficient(r),budgets=self.budgets,protocol_version=2)
         self.assertEqual(result["status"],"insufficient")
         root=self.base/"newinput";shutil.copytree(self.root,root)
         (root/"foundation").mkdir();(root/"foundation/base.v").write_text("Definition base := 1.\n")
@@ -40,7 +40,7 @@ class RevisionTests(unittest.TestCase):
                                                    "action":"retain","material_needed":""}]
                 return json.dumps(a)
         def factory(r,t):roles.append(r);return Revised(r)
-        result=run_pipeline(root,self.base/"revised",self.upstream,factory,budgets=self.budgets,
+        result=run_pipeline(root,self.base/"revised",self.upstream,factory,budgets=self.budgets,protocol_version=2,
                             component_review=True,input_transition=path,revise_from=self.base/"seed")
         self.assertEqual(result["status"],"common_candidates_reviewed",result)
         self.assertEqual(roles,["common","review"])

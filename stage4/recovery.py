@@ -17,6 +17,8 @@ def prepare(previous, identity, inventory, nodes, budgets):
     previous = Path(previous).resolve(strict=True)
     load = lambda p: json.loads(p.read_text())
     old = load(previous/"identity.json")
+    if old.get('planning_policy') != identity.get('planning_policy'):
+        raise ValueError('recovery rejects changed protocol/planning policy; use a fresh run')
     old_limit = old.get("max_report_chars", 24000)
     expected = dict(identity)
     expected["max_report_chars"] = old_limit
@@ -44,7 +46,8 @@ def prepare(previous, identity, inventory, nodes, budgets):
         raise ValueError("latest task is not a stopped generation/review role")
     if stopped.get("budgets") != asdict(budgets):
         raise ValueError("recovery must preserve task budgets; report limit is separate")
-    if data.get("review") is not None and (role!="common" or data["review"].get("verdict")!="needs_revision"):
+    from .pipeline import requires_revision
+    if data.get("review") is not None and (role!="common" or not requires_revision(data["review"])):
         raise ValueError("recovery cannot bypass an accepted semantic review verdict")
     # Check saved report against assistant finish/patch history, never trust an edited draft alone.
     history=[json.loads(l) for l in (task/"conversation.jsonl").read_text().splitlines()]
@@ -74,11 +77,17 @@ def prepare(previous, identity, inventory, nodes, budgets):
         if role not in ("common","review") or load(previous/"candidate.json")!=data["candidate"]:
             raise ValueError("candidate/review checkpoint mismatch")
         strategies.verify_export(data["candidate"], previous)
+    if (data.get('candidate') or {}).get('protocol_version') == 3 and data.get('review'):
+        from .planning import candidate_digest
+        if (data['review'].get('protocol_version') != 3
+                or data['review'].get('candidate_digest') != candidate_digest(data['candidate'])):
+            raise ValueError('recovery review belongs to another candidate or protocol')
     protected={str(f):sha(f) for f in previous.rglob("*") if f.is_file() and f.name!="run.lock"}
     record={"version":VERSION,"source_run":str(previous),"source_task":str(task),"role":role,
             "source_sha256":protected,"extracts_reused":list(data["extracts"]),
             "old_report_limit":old_limit,"new_report_limit":identity["max_report_chars"],
             "revalidate_saved_report":revalidate,
+            "error_history":state.get('error_history', []) + ([{'reason':state['reason'], 'status':state.get('status'), 'source_run':str(previous)}] if state.get('reason') else []),
             "instruction":"Repair the preserved report according to validation errors. Never relax scope, inherited assumptions, evidence or proof-status checks."}
     return copy.deepcopy(data), task, record
 

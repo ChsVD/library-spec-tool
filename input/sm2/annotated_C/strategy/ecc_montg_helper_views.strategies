@@ -1,0 +1,76 @@
+#include "../include/basicOp.h"
+
+/* Restore a complete u32 view after a raw four-limb observer returns. */
+id : 10
+priority : close_store_u256_base0(0)
+left : store_u256_limbs(
+         field_addr(?p, u32, v) + (0 * sizeof(U64)), ?x) at 0
+action : left_erase(0);
+         left_add(store_u256(p, x));
+
+/* Open an already-raw limb predicate without also opening complete u32
+ * objects in the surrounding state. */
+id : 11
+priority : open_raw_u256_limbs(0)
+left : store_u256_limbs(?p, ?x) at 0
+action : left_erase(0);
+         left_exist_add(x0);
+         left_exist_add(x1);
+         left_exist_add(x2);
+         left_exist_add(x3);
+         left_add(0 <= x0);
+         left_add(x0 < U64_MOD());
+         left_add(0 <= x1);
+         left_add(x1 < U64_MOD());
+         left_add(0 <= x2);
+         left_add(x2 < U64_MOD());
+         left_add(0 <= x3);
+         left_add(x3 < U64_MOD());
+         left_add(x == u256_of_limbs(x0, x1, x2, x3));
+         left_add(data_at(p + (0 * sizeof(U64)), U64, x0));
+         left_add(data_at(p + (1 * sizeof(U64)), U64, x1));
+         left_add(data_at(p + (2 * sizeof(U64)), U64, x2));
+         left_add(data_at(p + (3 * sizeof(U64)), U64, x3));
+
+/* Raw UINT64[4] wrappers cast the limb base to u32*.  Keep the approved
+ * first-field layout bridge inside these explicit wrapper scopes. */
+id : 20
+priority : raw_to_store_fp(0)
+left : store_u256_limbs(?p, ?x) at 0
+check : infer(x < SM2_P_Z());
+action : left_erase(0);
+         left_add(store_fp(p, x));
+
+id : 21
+priority : raw_to_store_fn(0)
+left : store_u256_limbs(?p, ?x) at 0
+check : infer(x < SM2_N_Z());
+action : left_erase(0);
+         left_add(store_fn(p, x));
+
+id : 30
+priority : store_fp_to_raw(0)
+left : store_fp(?p, ?x) at 0
+action : left_erase(0);
+         left_add(store_u256_limbs(p, x));
+
+id : 31
+priority : store_fn_to_raw(0)
+left : store_fn(?p, ?x) at 0
+action : left_erase(0);
+         left_add(store_u256_limbs(p, x));
+
+/* Coordinate-output wrappers have many live field resources.  Match the
+ * UINT64* parameter cell as well so only its result is returned to raw form. */
+id : 32
+priority : store_fp_output_to_raw(0)
+left : store(?slot, PTR(U64), ?result) at 0
+       store_fp(result, ?x) at 1
+action : left_erase(1);
+         left_add(store_u256_limbs(result, x));
+
+id : 40
+priority : raw_undef_to_u32(0)
+left : UInt64Array::undef_full(?p, 4) at 0
+action : left_erase(0);
+         left_add(UndefStructPredu32(p));

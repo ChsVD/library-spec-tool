@@ -12,7 +12,7 @@ class RecoveryTests(unittest.TestCase):
     tearDown=fixtures.Stage3Tests.tearDown
 
     def execute(self, out, factory, **kwargs):
-        return run_pipeline(self.root,self.base/out,self.upstream,factory,budgets=self.budgets,**kwargs)
+        return run_pipeline(self.root,self.base/out,self.upstream,factory,budgets=self.budgets,protocol_version=2,**kwargs)
 
     def test_length_revalidate_without_common_regeneration(self):
         result=self.execute("failed",lambda r,t:Model(r),max_report_chars=2000)

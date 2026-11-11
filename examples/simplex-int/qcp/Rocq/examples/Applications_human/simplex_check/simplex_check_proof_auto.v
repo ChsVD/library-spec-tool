@@ -1,0 +1,168 @@
+From SimpleC.Verification Require Import VCPrelude.
+From SimpleC.EE.Applications_human.simplex_check Require Import simplex_check_goal.
+Import naive_C_Rules.
+Require Import SimpleC.EE.Applications_human.simplex_initialize.simplex_initialize_lib.
+Require Import SimpleC.EE.Applications_human.simplex_pivot.simplex_pivot_lib.
+Require Import SimpleC.EE.Applications_human.simplex_solve.simplex_solve_lib.
+Require Import SimpleC.EE.Applications_human.simplex_check.simplex_check_lib.
+Local Open Scope sac.
+
+Lemma proof_of_sx_check_safety_wit_1_matrix_normal_budget : sx_check_safety_wit_1_matrix_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_2_matrix_negative_budget : sx_check_safety_wit_2_matrix_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_3_zero_normal_budget : sx_check_safety_wit_3_zero_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_4_zero_negative_budget : sx_check_safety_wit_4_zero_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_5_check_rejected_coefficient : sx_check_safety_wit_5_check_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_6_check_invalid_dimensions : sx_check_safety_wit_6_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_7_check_invalid_dimensions : sx_check_safety_wit_7_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_8_check_invalid_dimensions : sx_check_safety_wit_8_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_9_check_invalid_dimensions : sx_check_safety_wit_9_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_10_check_invalid_dimensions : sx_check_safety_wit_10_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_11_check_invalid_dimensions : sx_check_safety_wit_11_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_12_check_invalid_dimensions : sx_check_safety_wit_12_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_13_check_invalid_dimensions : sx_check_safety_wit_13_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_14_check_rejected_coefficient : sx_check_safety_wit_14_check_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_15_zero_negative_budget : sx_check_safety_wit_15_zero_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_16_zero_normal_budget : sx_check_safety_wit_16_zero_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_17_matrix_negative_budget : sx_check_safety_wit_17_matrix_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_safety_wit_18_matrix_normal_budget : sx_check_safety_wit_18_matrix_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_1_check_invalid_dimensions : sx_check_return_wit_1_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_2_check_invalid_dimensions : sx_check_return_wit_2_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_3_check_invalid_dimensions : sx_check_return_wit_3_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_4_check_invalid_dimensions : sx_check_return_wit_4_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_11_matrix_normal_budget : sx_check_return_wit_11_matrix_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_12_matrix_normal_budget : sx_check_return_wit_12_matrix_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_13_matrix_normal_budget : sx_check_return_wit_13_matrix_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_14_check_invalid_dimensions : sx_check_return_wit_14_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_15_check_invalid_dimensions : sx_check_return_wit_15_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_16_check_invalid_dimensions : sx_check_return_wit_16_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_return_wit_17_check_invalid_dimensions : sx_check_return_wit_17_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_1_check_invalid_dimensions : sx_check_partial_solve_wit_1_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_2_check_invalid_dimensions : sx_check_partial_solve_wit_2_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_3_check_invalid_dimensions : sx_check_partial_solve_wit_3_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_4_check_invalid_dimensions : sx_check_partial_solve_wit_4_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_5_check_rejected_coefficient : sx_check_partial_solve_wit_5_check_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_6_zero_negative_budget_pure : sx_check_partial_solve_wit_6_zero_negative_budget_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_6_zero_negative_budget : sx_check_partial_solve_wit_6_zero_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_7_zero_normal_budget_pure : sx_check_partial_solve_wit_7_zero_normal_budget_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_7_zero_normal_budget : sx_check_partial_solve_wit_7_zero_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_8_matrix_negative_budget_pure : sx_check_partial_solve_wit_8_matrix_negative_budget_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_8_matrix_negative_budget : sx_check_partial_solve_wit_8_matrix_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_9_matrix_normal_budget_pure : sx_check_partial_solve_wit_9_matrix_normal_budget_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_9_matrix_normal_budget : sx_check_partial_solve_wit_9_matrix_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_10_check_invalid_dimensions : sx_check_partial_solve_wit_10_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_11_check_invalid_dimensions : sx_check_partial_solve_wit_11_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_12_check_invalid_dimensions : sx_check_partial_solve_wit_12_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_13_check_invalid_dimensions : sx_check_partial_solve_wit_13_check_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_14_check_rejected_coefficient : sx_check_partial_solve_wit_14_check_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_15_zero_negative_budget_pure : sx_check_partial_solve_wit_15_zero_negative_budget_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_15_zero_negative_budget : sx_check_partial_solve_wit_15_zero_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_16_zero_normal_budget : sx_check_partial_solve_wit_16_zero_normal_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_17_matrix_negative_budget_pure : sx_check_partial_solve_wit_17_matrix_negative_budget_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_17_matrix_negative_budget : sx_check_partial_solve_wit_17_matrix_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_check_partial_solve_wit_18_matrix_normal_budget : sx_check_partial_solve_wit_18_matrix_normal_budget.
+Proof. Admitted.
+

@@ -1,0 +1,33 @@
+#include "../include/montg_add_jpoint_and_apoint_trace.h"
+
+/* Goal-directed normalization for the mixed-add Y-coordinate trace. */
+id : 1
+priority : core(0)
+left : store_fp(?p,
+         Zmod(mont_p(maja_u1h2(?x1, ?x2, ?z1)) -
+              mont_p(maja_rx(x1, ?y1, z1, x2, ?y2)), SM2_P_Z())) at 0
+right : store_fp(p,
+          mont_p(maja_e_minus_rx(x1, y1, z1, x2, y2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 2
+priority : core(0)
+left : store_fp(?p,
+         mont_p(maja_r(?y1, ?y2, ?z1) *
+                maja_e_minus_rx(?x1, y1, z1, ?x2, y2))) at 0
+right : store_fp(p,
+          mont_p(maja_r_times_delta(x1, y1, z1, x2, y2))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 3
+priority : core(0)
+left : store_fp(?p,
+         mont_p(?y1 * maja_h3(?x1, ?x2, ?z1))) at 0
+right : store_fp(p, mont_p(maja_y1h3(x1, y1, x2, z1))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 101
+priority : core(0)
+right : 0 <= maja_e_minus_rx(?x1, ?y1, ?z1, ?x2, ?y2) at 0
+        maja_e_minus_rx(x1, y1, z1, x2, y2) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);

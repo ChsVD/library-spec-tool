@@ -1,4 +1,4 @@
-"""Generate common candidates from complete stage3 reference drafts or legacy reviewed candidates."""
+"""Find reusable references for selected functions using complete stage-three specifications."""
 from stage1.model_factory import ModelConfig, create_model, model_factory
 import argparse
 import json
@@ -23,7 +23,7 @@ def main():
         return result
     p.add_argument('--max-report-chars',type=report_limit,default=24000)
     p.add_argument('--recover-from',help='stopped stage4 run; write repaired results to a new output directory')
-    p.add_argument('--component-review',action='store_true',help='review each candidate separately; partial is not overall pass')
+    p.add_argument('--component-review',action='store_true',help='compatibility option; protocol 3 always reviews references and their uses separately')
     p.add_argument('--input-transition',help='explicit additive input manifest')
     p.add_argument('--revise-from',help='reviewed run needing correction; retain old run')
     a=p.parse_args()

@@ -26,8 +26,8 @@ python3 -m stage2.demand_scope --input input --graph-run runs/new-graph --reques
 - reference.py、reference_review.py、read_materials.py、scenario_guidance.py 仅为旧 Python 导入提供兼容转发，实际实现位于 stage3/。
 - 图准备暂复用 stage3.reference.run 的 prepare_only 分支，以保持已有图文件格式；入口不创建模型，并提供禁止模型调用的回调。
 
-详细说明：[图后端](FM_AGENT_GRAPH.md)、[范围选择](DEMAND_SCOPE.md)、[开发指南](../DEVELOPMENT.md)、[自然语言规约](../stage3/README.md)。
+详细说明：图后端、范围选择、[开发指南](../DEVELOPMENT.md)、[自然语言规约](../stage3/README.md)。
 
 ## 可选的函数组选择
 
-python3 -m stage2.select 使用单个会话沿图向上选择，依赖和预算通过静态工具查询。详细参数、工具和产物见 [函数组选择](SELECTION.md)。
+python3 -m stage2.select 使用单个会话沿图向上选择，依赖和预算通过静态工具查询。详细参数、工具和产物见 函数组选择。

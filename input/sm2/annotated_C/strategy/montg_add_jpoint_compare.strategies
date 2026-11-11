@@ -1,0 +1,66 @@
+#include "../include/montg_add_jpoint_strategy.h"
+
+/* Cross the field/raw boundary once around the two short-circuit equality
+ * tests.  Matching all four trace values prevents unrelated field resources
+ * from being opened. */
+id : 1
+priority : mont_aj_compare_open(0)
+left : store_fp(?u1, mont_p(?x1 * aj_qz2(?z2))) at 0
+       store_fp(?u2, mont_p(?x2 * aj_pz2(?z1))) at 1
+       store_fp(?s1, mont_p(?y1 * aj_qz3(z2))) at 2
+       store_fp(?s2, mont_p(?y2 * aj_pz3(z1))) at 3
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_add(0 <= mont_p(aj_u1(x1, z2)));
+         left_add(mont_p(aj_u1(x1, z2)) < SM2_P_Z());
+         left_add(0 <= mont_p(aj_u2(x2, z1)));
+         left_add(mont_p(aj_u2(x2, z1)) < SM2_P_Z());
+         left_add(0 <= mont_p(aj_s1(y1, z2)));
+         left_add(mont_p(aj_s1(y1, z2)) < SM2_P_Z());
+         left_add(0 <= mont_p(aj_s2(y2, z1)));
+         left_add(mont_p(aj_s2(y2, z1)) < SM2_P_Z());
+         left_add(store_u256_limbs(
+           field_addr(u1, u32, v) + (0 * sizeof(U64)),
+           mont_p(aj_u1(x1, z2))));
+         left_add(store_u256_limbs(
+           field_addr(u2, u32, v) + (0 * sizeof(U64)),
+           mont_p(aj_u2(x2, z1))));
+         left_add(store_u256_limbs(
+           field_addr(s1, u32, v) + (0 * sizeof(U64)),
+           mont_p(aj_s1(y1, z2))));
+         left_add(store_u256_limbs(
+           field_addr(s2, u32, v) + (0 * sizeof(U64)),
+           mont_p(aj_s2(y2, z1))));
+
+id : 2
+priority : mont_aj_compare_close(0)
+left : store_u256_limbs(
+         field_addr(?u1, u32, v) + (0 * sizeof(U64)),
+         mont_p(aj_u1(?x1, ?z2))) at 0
+       store_u256_limbs(
+         field_addr(?u2, u32, v) + (0 * sizeof(U64)),
+         mont_p(aj_u2(?x2, ?z1))) at 1
+       store_u256_limbs(
+         field_addr(?s1, u32, v) + (0 * sizeof(U64)),
+         mont_p(aj_s1(?y1, z2))) at 2
+       store_u256_limbs(
+         field_addr(?s2, u32, v) + (0 * sizeof(U64)),
+         mont_p(aj_s2(?y2, z1))) at 3
+check : infer(0 <= mont_p(aj_u1(x1, z2)));
+        infer(mont_p(aj_u1(x1, z2)) < SM2_P_Z());
+        infer(0 <= mont_p(aj_u2(x2, z1)));
+        infer(mont_p(aj_u2(x2, z1)) < SM2_P_Z());
+        infer(0 <= mont_p(aj_s1(y1, z2)));
+        infer(mont_p(aj_s1(y1, z2)) < SM2_P_Z());
+        infer(0 <= mont_p(aj_s2(y2, z1)));
+        infer(mont_p(aj_s2(y2, z1)) < SM2_P_Z());
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_add(store_fp(u1, mont_p(aj_u1(x1, z2))));
+         left_add(store_fp(u2, mont_p(aj_u2(x2, z1))));
+         left_add(store_fp(s1, mont_p(aj_s1(y1, z2))));
+         left_add(store_fp(s2, mont_p(aj_s2(y2, z1))));

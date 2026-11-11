@@ -1,0 +1,116 @@
+#include "../include/basepoint_trace.h"
+
+/* Split and restore one eight-byte limb view used by ML_mul_basepoint. */
+id : 10
+priority : basepoint_bytes_focus_chunk(0)
+left : Zlength{Z}(?bytes) == 32 at 0
+       0 <= ?i at 1
+       i < 4 at 2
+       UCharArray::full(?p, 32, bytes) at 3
+action : left_erase(3);
+         left_add(UCharArray::full(
+           p, 8 * i, sublist{Z}(0, 8 * i, bytes)));
+         left_add(UCharArray::full(
+           p + i * sizeof(unsigned long long), 8,
+           sublist{Z}(8 * i, 8 * i + 8, bytes)));
+         left_add(UCharArray::full(
+           p + (i + 1) * sizeof(unsigned long long),
+           32 - (8 * i + 8),
+           sublist{Z}(8 * i + 8, 32, bytes)));
+
+id : 11
+priority : basepoint_bytes_merge_chunk(0)
+left : Zlength{Z}(?bytes) == 32 at 0
+       0 <= ?i at 1
+       i < 4 at 2
+       UCharArray::full(
+         ?p, 8 * i, sublist{Z}(0, 8 * i, bytes)) at 3
+       UCharArray::full(
+         p + i * sizeof(unsigned long long), 8,
+         sublist{Z}(8 * i, 8 * i + 8, bytes)) at 4
+       UCharArray::full(
+         p + (i + 1) * sizeof(unsigned long long),
+         32 - (8 * i + 8),
+         sublist{Z}(8 * i + 8, 32, bytes)) at 5
+action : left_erase(3);
+         left_erase(4);
+         left_erase(5);
+         left_add(UCharArray::full(p, 32, bytes));
+
+/* Four fixed chunks used by montg_times_base_point. */
+id : 20
+priority : basepoint_bytes_split32(0)
+left : Zlength{Z}(?bytes) == 32 at 0
+       UCharArray::full(?p, 32, bytes) at 1
+action : left_erase(1);
+         left_add(UCharArray::full(p, 8, sublist{Z}(0, 8, bytes)));
+         left_add(UCharArray::full(
+           p + 1 * sizeof(unsigned long long), 8,
+           sublist{Z}(8, 16, bytes)));
+         left_add(UCharArray::full(
+           p + 2 * sizeof(unsigned long long), 8,
+           sublist{Z}(16, 24, bytes)));
+         left_add(UCharArray::full(
+           p + 3 * sizeof(unsigned long long), 8,
+           sublist{Z}(24, 32, bytes)));
+
+id : 21
+priority : basepoint_bytes_merge32(0)
+left : Zlength{Z}(?bytes) == 32 at 0
+       UCharArray::full(?p, 8, sublist{Z}(0, 8, bytes)) at 1
+       UCharArray::full(
+         p + 1 * sizeof(unsigned long long), 8,
+         sublist{Z}(8, 16, bytes)) at 2
+       UCharArray::full(
+         p + 2 * sizeof(unsigned long long), 8,
+         sublist{Z}(16, 24, bytes)) at 3
+       UCharArray::full(
+         p + 3 * sizeof(unsigned long long), 8,
+         sublist{Z}(24, 32, bytes)) at 4
+action : left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_erase(4);
+         left_add(UCharArray::full(p, 32, bytes));
+
+/* Walk one eight-byte window through the local [pk] alias.  The named,
+ * directional scopes prevent the two equivalent views from cycling. */
+id : 30
+priority : basepoint_bytes_alias_to_local(0)
+left : store(?slot, PTR(U8),
+         pointer_offset(?base, 0, unsigned long long)) at 0
+       UCharArray::full(base, ?n, ?bytes) at 1
+action : left_erase(1);
+         left_add(UCharArray::full(
+           pointer_offset(base, 0, unsigned long long), n, bytes));
+
+id : 31
+priority : basepoint_bytes_alias_to_canonical(0)
+left : store(?slot, PTR(U8),
+         pointer_offset(?base, 0, unsigned long long)) at 0
+       UCharArray::full(
+         pointer_offset(base, 0, unsigned long long), ?n, ?bytes) at 1
+action : left_erase(1);
+         left_add(UCharArray::full(base, n, bytes));
+
+/* Loop invariants retain the alias as a pure fact instead of a concrete
+ * pointer-slot value. */
+id : 32
+priority : basepoint_bytes_alias_to_canonical(0)
+left : ?alias == ?base at 0
+       UCharArray::full(alias, ?n, ?bytes) at 1
+action : left_erase(1);
+         left_add(UCharArray::full(base, n, bytes));
+
+/* Reconstitute the abstract scalar resource after all byte reads. */
+id : 40
+priority : basepoint_bytes_close_scalar(0)
+left : 0 <= ?value at 0
+       value < SM2_N_Z() at 1
+       Zlength{Z}(?bytes) == 32 at 2
+       u8_list_bounded(bytes) at 3
+       u8_list_value(bytes) == value at 4
+       aligned_4(field_addr(?k, u32, v)) at 5
+       UCharArray::full(field_addr(k, u32, v), 32, bytes) at 6
+action : left_erase(6);
+         left_add(store_fn(k, value));

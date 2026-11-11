@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import basepoint_table_points_strategy_goal basepoint_table_points_strategy_proof.
+
+Module basepoint_table_points_Strategy_Correctness : basepoint_table_points_Strategy_Correct.
+  Include basepoint_table_points_strategy_proof.
+End basepoint_table_points_Strategy_Correctness.

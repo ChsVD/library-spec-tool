@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import jpoint_double_trace_strategy_goal jpoint_double_trace_strategy_proof.
+
+Module jpoint_double_trace_Strategy_Correctness : jpoint_double_trace_Strategy_Correct.
+  Include jpoint_double_trace_strategy_proof.
+End jpoint_double_trace_Strategy_Correctness.

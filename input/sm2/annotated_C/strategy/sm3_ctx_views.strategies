@@ -1,0 +1,144 @@
+#include "../include/sm3.h"
+
+/* SM3_CTX stays abstract across calls.  Function bodies explicitly open it;
+ * callee/postcondition goals expand only on the right. */
+
+id : 1
+priority : core(0)
+left : store_sm3_ctx(?ctx, ?message) at 0
+right : store_sm3_ctx(?required_ctx, ?required_message) at 1
+check : infer(ctx == required_ctx);
+action : left_erase(0);
+         right_erase(1);
+         right_add(message == required_message);
+
+id : 2
+priority : open_store_sm3_ctx(0)
+left : store_sm3_ctx(?ctx, ?message) at 0
+action : left_erase(0);
+         left_add(u8_list_bounded(message));
+         left_add(Zlength{Z}(message) < SM3_MAX_BYTES());
+         left_add(store_u32_words(
+           field_addr(ctx, _SM3_CTX, digest), 8,
+           sm3_compress_bytes(
+             SM3_IV(), sm3_full_bytes(message))));
+         left_add(store(
+           field_addr(ctx, _SM3_CTX, nblocks), U64,
+           Zlength{Z}(message) / 64));
+         left_add(store_byte_prefix(
+           field_addr(ctx, _SM3_CTX, block), 64, sm3_tail(message)));
+         left_add(store(
+           field_addr(ctx, _SM3_CTX, num), U64,
+           Zlength{Z}(sm3_tail(message))));
+         left_add(aligned_4(field_addr(ctx, _SM3_CTX, block)));
+         left_add(aligned_4(field_addr(ctx, _SM3_CTX, block) + 56));
+
+id : 3
+priority : core(3)
+right : store_sm3_ctx(?ctx, ?message) at 0
+action : right_erase(0);
+         right_add(u8_list_bounded(message));
+         right_add(Zlength{Z}(message) < SM3_MAX_BYTES());
+         right_add(store_u32_words(
+           field_addr(ctx, _SM3_CTX, digest), 8,
+           sm3_compress_bytes(
+             SM3_IV(), sm3_full_bytes(message))));
+         right_add(store(
+           field_addr(ctx, _SM3_CTX, nblocks), U64,
+           Zlength{Z}(message) / 64));
+         right_add(store_byte_prefix(
+           field_addr(ctx, _SM3_CTX, block), 64, sm3_tail(message)));
+         right_add(store(
+           field_addr(ctx, _SM3_CTX, num), U64,
+           Zlength{Z}(sm3_tail(message))));
+
+/* Pure projections are non-consuming so callers can establish alignment
+ * before opening the semantic context. */
+id : 4
+priority : sm3_ctx_alignment(0)
+left : store_sm3_ctx(?ctx, ?message) at 0
+check : absense(aligned_4(field_addr(ctx, _SM3_CTX, block)));
+action : left_add(aligned_4(field_addr(ctx, _SM3_CTX, block)));
+
+id : 5
+priority : sm3_ctx_alignment(0)
+left : store_sm3_ctx(?ctx, ?message) at 0
+check : absense(aligned_4(field_addr(ctx, _SM3_CTX, block) + 56));
+action : left_add(aligned_4(field_addr(ctx, _SM3_CTX, block) + 56));
+
+id : 10
+priority : core(0)
+left : undef_sm3_ctx(?ctx) at 0
+right : undef_sm3_ctx(?required_ctx) at 1
+check : infer(ctx == required_ctx);
+action : left_erase(0);
+         right_erase(1);
+
+id : 11
+priority : open_undef_sm3_ctx(0)
+left : undef_sm3_ctx(?ctx) at 0
+action : left_erase(0);
+         left_add(UIntArray::undef_full(
+           field_addr(ctx, _SM3_CTX, digest), 8));
+         left_add(undef_data_at(
+           field_addr(ctx, _SM3_CTX, nblocks), U64));
+         left_add(UCharArray::undef_full(
+           field_addr(ctx, _SM3_CTX, block), 64));
+         left_add(undef_data_at(
+           field_addr(ctx, _SM3_CTX, num), U64));
+
+id : 12
+priority : core(3)
+right : undef_sm3_ctx(?ctx) at 0
+action : right_erase(0);
+         right_add(UIntArray::undef_full(
+           field_addr(ctx, _SM3_CTX, digest), 8));
+         right_add(undef_data_at(
+           field_addr(ctx, _SM3_CTX, nblocks), U64));
+         right_add(UCharArray::undef_full(
+           field_addr(ctx, _SM3_CTX, block), 64));
+         right_add(undef_data_at(
+           field_addr(ctx, _SM3_CTX, num), U64));
+
+/* A local C declaration is represented by the generated undefined structure
+ * predicate.  Discharge sm3_init's semantic precondition without opening it
+ * in the caller. */
+id : 13
+priority : core(0)
+left : UndefStructPred_SM3_CTX(?ctx) at 0
+right : undef_sm3_ctx(?required_ctx) at 1
+check : infer(ctx == required_ctx);
+action : left_erase(0);
+         right_erase(1);
+
+id : 20
+priority : core(0)
+left : sm3_ctx_full_shape(?ctx) at 0
+right : sm3_ctx_full_shape(?required_ctx) at 1
+check : infer(ctx == required_ctx);
+action : left_erase(0);
+         right_erase(1);
+
+/* sm3_final owns initialized values for every field.  Their values are no
+ * longer observed, so close them directly into the generated full shape. */
+id : 21
+priority : close_sm3_ctx_shape(0)
+left : store_u32_words(
+         field_addr(?ctx, _SM3_CTX, digest), 8, ?digest_words) at 0
+       store(field_addr(ctx, _SM3_CTX, nblocks), U64, ?nblocks) at 1
+       UCharArray::full(
+         field_addr(ctx, _SM3_CTX, block), 64, ?block_bytes) at 2
+       store(field_addr(ctx, _SM3_CTX, num), U64, ?num) at 3
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_add(sm3_ctx_full_shape(ctx));
+
+id : 22
+priority : core(0)
+left : StructPred_SM3_CTX(?ctx, ?value) at 0
+right : sm3_ctx_full_shape(?required_ctx) at 1
+check : infer(ctx == required_ctx);
+action : left_erase(0);
+         right_erase(1);

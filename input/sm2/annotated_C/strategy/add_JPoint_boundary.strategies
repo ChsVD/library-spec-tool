@@ -1,0 +1,41 @@
+/* Case-local materialization rules for the final add_JPoint trace values.
+ * Shared point-record copies live in ecc_representation.strategies. */
+#include "../include/add_JPoint_trace.h"
+
+/* Final u32 record assignments need exact source-array witnesses for the
+ * three case-local trace expressions. */
+id : 20
+priority : aj_rx_materialize(0)
+left : store_fp(?p, aj_rx(?x1, ?y1, ?z1, ?x2, ?y2, ?z2)) at 0
+action : left_erase(0);
+         left_exist_add(xs : list{Z});
+         left_add(0 <= aj_rx(x1, y1, z1, x2, y2, z2));
+         left_add(aj_rx(x1, y1, z1, x2, y2, z2) < SM2_P_Z());
+         left_add(Zlength{Z}(xs) == 4);
+         left_add(u64_list_bounded(xs));
+         left_add(u64_list_value(xs) == aj_rx(x1, y1, z1, x2, y2, z2));
+         left_add(UInt64Array::full(field_addr(p, u32, v), 4, xs));
+
+id : 21
+priority : aj_ry_materialize(0)
+left : store_fp(?p, aj_ry(?x1, ?y1, ?z1, ?x2, ?y2, ?z2)) at 0
+action : left_erase(0);
+         left_exist_add(xs : list{Z});
+         left_add(0 <= aj_ry(x1, y1, z1, x2, y2, z2));
+         left_add(aj_ry(x1, y1, z1, x2, y2, z2) < SM2_P_Z());
+         left_add(Zlength{Z}(xs) == 4);
+         left_add(u64_list_bounded(xs));
+         left_add(u64_list_value(xs) == aj_ry(x1, y1, z1, x2, y2, z2));
+         left_add(UInt64Array::full(field_addr(p, u32, v), 4, xs));
+
+id : 22
+priority : aj_rz_materialize(0)
+left : store_fp(?p, aj_rz(?x1, ?z1, ?x2, ?z2)) at 0
+action : left_erase(0);
+         left_exist_add(xs : list{Z});
+         left_add(0 <= aj_rz(x1, z1, x2, z2));
+         left_add(aj_rz(x1, z1, x2, z2) < SM2_P_Z());
+         left_add(Zlength{Z}(xs) == 4);
+         left_add(u64_list_bounded(xs));
+         left_add(u64_list_value(xs) == aj_rz(x1, z1, x2, z2));
+         left_add(UInt64Array::full(field_addr(p, u32, v), 4, xs));

@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import byte_memory_views_strategy_goal byte_memory_views_strategy_proof.
+
+Module byte_memory_views_Strategy_Correctness : byte_memory_views_Strategy_Correct.
+  Include byte_memory_views_strategy_proof.
+End byte_memory_views_Strategy_Correctness.

@@ -81,7 +81,7 @@ class Stage3Tests(unittest.TestCase):
     def tearDown(self):self.tmp.cleanup()
     def run_common(self,**kwargs):
         factory=kwargs.pop('factory',lambda r,t:Model(r))
-        return run_pipeline(self.root,self.base/'common',self.upstream,factory,budgets=self.budgets,**kwargs)
+        return run_pipeline(self.root,self.base/'common',self.upstream,factory,budgets=self.budgets,protocol_version=2,**kwargs)
     def validate(self,r):return contracts.candidate(r,self.reader,self.reads,nodes=self.nodes,extracts=self.extracts)
     def test_complete_group_chain_and_saved_outputs(self):
         result=self.run_common();self.assertEqual(result['status'],'common_candidates_reviewed')

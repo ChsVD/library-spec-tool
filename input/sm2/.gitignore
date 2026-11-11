@@ -1,0 +1,39 @@
+# Rocq build products
+*.vo
+*.vos
+*.vok
+*.glob
+*.aux
+.*.aux
+.lia.cache
+.nia.cache
+.depend
+
+# QCP temporary output
+*_backup*.v
+*_proof_diagnostics.v
+diagnostics_snapshot.json
+*.bak
+
+# Local build and configuration
+_build/
+build/
+tmp/
+temp/
+CONFIGURE
+_CoqProject
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Editors and operating systems
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Local planning and proof-analysis notes
+/docs/m2_p_montgomery_proof_analysis.md

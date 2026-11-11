@@ -1,0 +1,154 @@
+From SimpleC.Verification Require Import VCPrelude.
+From SimpleC.EE.Applications_human.simplex_solve Require Import simplex_solve_goal.
+Import naive_C_Rules.
+Require Import SimpleC.EE.Applications_human.simplex_find_violation_preserve.simplex_find_violation_preserve_lib.
+Require Import SimpleC.EE.Applications_human.simplex_find_entering_preserve.simplex_find_entering_preserve_lib.
+Require Import SimpleC.EE.Applications_human.simplex_pivot.simplex_pivot_lib.
+Require Import SimpleC.EE.Applications_human.simplex_recompute.simplex_recompute_lib.
+Require Import SimpleC.EE.Applications_human.simplex_solve.simplex_solve_lib.
+Local Open Scope sac.
+
+Lemma proof_of_sx_solve_safety_wit_1_negative_budget : sx_solve_safety_wit_1_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_2_normal_state : sx_solve_safety_wit_2_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_3_negative_budget : sx_solve_safety_wit_3_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_4_normal_state : sx_solve_safety_wit_4_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_5_negative_budget : sx_solve_safety_wit_5_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_6_normal_state : sx_solve_safety_wit_6_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_7_negative_budget : sx_solve_safety_wit_7_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_8_negative_budget : sx_solve_safety_wit_8_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_9_normal_state : sx_solve_safety_wit_9_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_10_normal_state : sx_solve_safety_wit_10_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_11_normal_state : sx_solve_safety_wit_11_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_12_normal_state : sx_solve_safety_wit_12_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_13_normal_state : sx_solve_safety_wit_13_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_14_normal_state : sx_solve_safety_wit_14_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_15_normal_state : sx_solve_safety_wit_15_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_16_normal_state : sx_solve_safety_wit_16_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_17_normal_state : sx_solve_safety_wit_17_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_18_normal_state : sx_solve_safety_wit_18_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_19_normal_state : sx_solve_safety_wit_19_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_20_normal_state : sx_solve_safety_wit_20_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_21_normal_state : sx_solve_safety_wit_21_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_22_normal_state : sx_solve_safety_wit_22_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_23_normal_state : sx_solve_safety_wit_23_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_24_normal_state : sx_solve_safety_wit_24_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_25_normal_state : sx_solve_safety_wit_25_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_26_normal_state : sx_solve_safety_wit_26_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_27_normal_state : sx_solve_safety_wit_27_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_28_normal_state : sx_solve_safety_wit_28_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_29_normal_state : sx_solve_safety_wit_29_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_30_normal_state : sx_solve_safety_wit_30_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_31_normal_state : sx_solve_safety_wit_31_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_32_normal_state : sx_solve_safety_wit_32_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_33_normal_state : sx_solve_safety_wit_33_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_34_normal_state : sx_solve_safety_wit_34_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_35_normal_state : sx_solve_safety_wit_35_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_36_normal_state : sx_solve_safety_wit_36_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_safety_wit_37_normal_state : sx_solve_safety_wit_37_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_return_wit_12_negative_budget : sx_solve_return_wit_12_negative_budget.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_1_normal_state : sx_solve_partial_solve_wit_1_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_2_normal_state : sx_solve_partial_solve_wit_2_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_3_normal_state : sx_solve_partial_solve_wit_3_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_4_normal_state : sx_solve_partial_solve_wit_4_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_5_normal_state : sx_solve_partial_solve_wit_5_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_6_normal_state : sx_solve_partial_solve_wit_6_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_7_normal_state : sx_solve_partial_solve_wit_7_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_8_normal_state : sx_solve_partial_solve_wit_8_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_9_normal_state : sx_solve_partial_solve_wit_9_normal_state.
+Proof. Admitted.
+
+Lemma proof_of_sx_solve_partial_solve_wit_10_normal_state : sx_solve_partial_solve_wit_10_normal_state.
+Proof. Admitted.
+

@@ -1,0 +1,507 @@
+#include "../include/ecc.h"
+
+/* Exact affine-point field resources. */
+
+id : 10
+priority : core(0)
+left : store_afpoint_fields(?p, ?x, ?y) at 0
+right : store_afpoint_fields(p, ?rx, ?ry) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == rx);
+         right_add(y == ry);
+
+/* Consume one coordinate for a u32-level callee while retaining the other
+ * coordinate in abstract form.  These rules avoid eagerly exposing the
+ * untouched coordinate as four limb cells. */
+id : 13
+priority : core(0)
+left : store_afpoint_fields(?p, ?x, ?y) at 0
+right : store_u256(field_addr(p, AFPoint, x), ?rx) at 1
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(store_u256(field_addr(p, AFPoint, y), y));
+         right_add(x == rx);
+
+id : 14
+priority : core(0)
+left : store_afpoint_fields(?p, ?x, ?y) at 0
+right : store_u256(field_addr(p, AFPoint, y), ?ry) at 1
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(store_u256(field_addr(p, AFPoint, x), x));
+         right_add(y == ry);
+
+/* Hand one affine coordinate to a field-level callee without opening either
+ * coordinate to limbs.  The untouched coordinate remains a store_fp. */
+id : 110
+priority : core(0)
+left : store_afpoint_fields(?p, ?x, ?y) at 0
+right : store_fp(field_addr(?q, AFPoint, x), ?rx) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(store_fp(field_addr(p, AFPoint, y), y));
+         right_add(x == rx);
+
+id : 111
+priority : core(0)
+left : store_afpoint_fields(?p, ?x, ?y) at 0
+right : store_fp(field_addr(?q, AFPoint, y), ?ry) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(store_fp(field_addr(p, AFPoint, x), x));
+         right_add(y == ry);
+
+id : 11
+priority : open_afpoint_fields(0)
+left : store_afpoint_fields(?p, ?x, ?y) at 0
+action : left_erase(0);
+         left_add(store_fp(field_addr(p, AFPoint, x), x));
+         left_add(store_fp(field_addr(p, AFPoint, y), y));
+
+id : 12
+priority : core(3)
+right : store_afpoint_fields(?p, ?x, ?y) at 0
+action : right_erase(0);
+         right_add(store_fp(field_addr(p, AFPoint, x), x));
+         right_add(store_fp(field_addr(p, AFPoint, y), y));
+
+/* Materialize complete point records only at an explicit C record-copy
+ * boundary.  These scopes are intentionally dormant unless selected by do/by. */
+id : 112
+priority : materialize_afpoint_record(0)
+left : store_afpoint_fields(?p, ?x, ?y) at 0
+action : left_erase(0);
+         left_exist_add(xs : list{Z});
+         left_exist_add(ys : list{Z});
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(Zlength{Z}(xs) == 4);
+         left_add(u64_list_bounded(xs));
+         left_add(u64_list_value(xs) == x);
+         left_add(UInt64Array::full(
+           field_addr(field_addr(p, AFPoint, x), u32, v), 4, xs));
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(Zlength{Z}(ys) == 4);
+         left_add(u64_list_bounded(ys));
+         left_add(u64_list_value(ys) == y);
+         left_add(UInt64Array::full(
+           field_addr(field_addr(p, AFPoint, y), u32, v), 4, ys));
+
+/* Exact Jacobian-point field resources. */
+id : 20
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : store_jpoint_fields(p, ?rx, ?ry, ?rz) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == rx);
+         right_add(y == ry);
+         right_add(z == rz);
+
+/* Forget a complete initialized JPoint when all three coordinate objects are
+ * about to be overwritten.  Keep the point layout at this abstraction layer
+ * instead of expanding through store_fp first. */
+id : 18
+priority : core(1)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : UInt64Array::undef_full(
+          field_addr(field_addr(p, JPoint, x), u32, v), 4) at 1
+        UInt64Array::undef_full(
+          field_addr(field_addr(p, JPoint, y), u32, v), 4) at 2
+        UInt64Array::undef_full(
+          field_addr(field_addr(p, JPoint, z), u32, v), 4) at 3
+action : left_erase(0);
+         right_erase(1);
+         right_erase(2);
+         right_erase(3);
+
+/* Hand one Jacobian coordinate to a field-level callee while keeping the
+ * other two coordinates at the store_fp layer. */
+id : 120
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : store_fp(field_addr(?q, JPoint, x), ?rx) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_fp(field_addr(p, JPoint, y), y));
+         left_add(store_fp(field_addr(p, JPoint, z), z));
+         right_add(x == rx);
+
+id : 121
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : store_fp(field_addr(?q, JPoint, y), ?ry) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_fp(field_addr(p, JPoint, x), x));
+         left_add(store_fp(field_addr(p, JPoint, z), z));
+         right_add(y == ry);
+
+id : 122
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : store_fp(field_addr(?q, JPoint, z), ?rz) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_fp(field_addr(p, JPoint, x), x));
+         left_add(store_fp(field_addr(p, JPoint, y), y));
+         right_add(z == rz);
+
+/* Start an in-place overwrite directly from the aggregate field predicate.
+ * Only the selected coordinate is forgotten; the frame stays at store_fp. */
+id : 126
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : UInt64Array::undef_full(
+          field_addr(field_addr(?q, JPoint, x), u32, v), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_fp(field_addr(p, JPoint, y), y));
+         left_add(store_fp(field_addr(p, JPoint, z), z));
+
+id : 127
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : UInt64Array::undef_full(
+          field_addr(field_addr(?q, JPoint, y), u32, v), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_fp(field_addr(p, JPoint, x), x));
+         left_add(store_fp(field_addr(p, JPoint, z), z));
+
+id : 128
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : UInt64Array::undef_full(
+          field_addr(field_addr(?q, JPoint, z), u32, v), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_fp(field_addr(p, JPoint, x), x));
+         left_add(store_fp(field_addr(p, JPoint, y), y));
+
+id : 21
+priority : open_jpoint_fields(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+action : left_erase(0);
+         left_add(store_fp(field_addr(p, JPoint, x), x));
+         left_add(store_fp(field_addr(p, JPoint, y), y));
+         left_add(store_fp(field_addr(p, JPoint, z), z));
+
+id : 22
+priority : core(3)
+right : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+action : right_erase(0);
+         right_add(store_fp(field_addr(p, JPoint, x), x));
+         right_add(store_fp(field_addr(p, JPoint, y), y));
+         right_add(store_fp(field_addr(p, JPoint, z), z));
+
+id : 129
+priority : materialize_jpoint_record(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+action : left_erase(0);
+         left_exist_add(xs : list{Z});
+         left_exist_add(ys : list{Z});
+         left_exist_add(zs : list{Z});
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(Zlength{Z}(xs) == 4);
+         left_add(u64_list_bounded(xs));
+         left_add(u64_list_value(xs) == x);
+         left_add(UInt64Array::full(
+           field_addr(field_addr(p, JPoint, x), u32, v), 4, xs));
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(Zlength{Z}(ys) == 4);
+         left_add(u64_list_bounded(ys));
+         left_add(u64_list_value(ys) == y);
+         left_add(UInt64Array::full(
+           field_addr(field_addr(p, JPoint, y), u32, v), 4, ys));
+         left_add(0 <= z);
+         left_add(z < SM2_P_Z());
+         left_add(Zlength{Z}(zs) == 4);
+         left_add(u64_list_bounded(zs));
+         left_add(u64_list_value(zs) == z);
+         left_add(UInt64Array::full(
+           field_addr(field_addr(p, JPoint, z), u32, v), 4, zs));
+
+/* Coordinate comparisons operate on u32 values, so expose only that layer
+ * and keep all three coordinate objects initialized. */
+id : 130
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : store_u256(field_addr(?q, JPoint, x), ?rx) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(0 <= z);
+         left_add(z < SM2_P_Z());
+         left_add(store_u256(field_addr(p, JPoint, y), y));
+         left_add(store_u256(field_addr(p, JPoint, z), z));
+         right_add(x == rx);
+
+id : 131
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : store_u256(field_addr(?q, JPoint, y), ?ry) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(0 <= z);
+         left_add(z < SM2_P_Z());
+         left_add(store_u256(field_addr(p, JPoint, x), x));
+         left_add(store_u256(field_addr(p, JPoint, z), z));
+         right_add(y == ry);
+
+id : 132
+priority : core(0)
+left : store_jpoint_fields(?p, ?x, ?y, ?z) at 0
+right : store_u256(field_addr(?q, JPoint, z), ?rz) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(0 <= z);
+         left_add(z < SM2_P_Z());
+         left_add(store_u256(field_addr(p, JPoint, x), x));
+         left_add(store_u256(field_addr(p, JPoint, y), y));
+         right_add(z == rz);
+
+/* Abstract affine-point resources. */
+id : 30
+priority : core(0)
+left : store_afpoint(?p, ?point) at 0
+right : store_afpoint(p, point) at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 31
+priority : open_afpoint(0)
+left : store_afpoint(?p, ?point) at 0
+action : left_erase(0);
+         left_exist_add(x : Z);
+         left_exist_add(y : Z);
+         left_add(afpoint_represents(x, y, point));
+         left_add(store_afpoint_fields(p, x, y));
+
+id : 32
+priority : core(3)
+right : store_afpoint(?p, ?point) at 0
+action : right_erase(0);
+         right_exist_add(x : Z);
+         right_exist_add(y : Z);
+         right_add(afpoint_represents(x, y, point));
+         right_add(store_afpoint_fields(p, x, y));
+
+/* Abstract Jacobian-point resources. */
+id : 40
+priority : core(0)
+left : store_jpoint(?p, ?point) at 0
+right : store_jpoint(p, point) at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 41
+priority : open_jpoint(0)
+left : store_jpoint(?p, ?point) at 0
+action : left_erase(0);
+         left_exist_add(x : Z);
+         left_exist_add(y : Z);
+         left_exist_add(z : Z);
+         left_add(jpoint_represents(x, y, z, point));
+         left_add(store_jpoint_fields(p, x, y, z));
+
+id : 42
+priority : core(3)
+right : store_jpoint(?p, ?point) at 0
+action : right_erase(0);
+         right_exist_add(x : Z);
+         right_exist_add(y : Z);
+         right_exist_add(z : Z);
+         right_add(jpoint_represents(x, y, z, point));
+         right_add(store_jpoint_fields(p, x, y, z));
+
+/* Abstract Jacobian-point resources with canonical infinity encoding. */
+id : 50
+priority : core(0)
+left : store_jpoint_with_canonical_infinity(?p, ?point) at 0
+right : store_jpoint_with_canonical_infinity(p, point) at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 51
+priority : open_jpoint_canonical(0)
+left : store_jpoint_with_canonical_infinity(?p, ?point) at 0
+action : left_erase(0);
+         left_exist_add(x : Z);
+         left_exist_add(y : Z);
+         left_exist_add(z : Z);
+         left_add(jpoint_represents(x, y, z, point));
+         left_add(jpoint_canonical_infinity_encoding(x, y, z, point));
+         left_add(store_jpoint_fields(p, x, y, z));
+
+id : 52
+priority : core(3)
+right : store_jpoint_with_canonical_infinity(?p, ?point) at 0
+action : right_erase(0);
+         right_exist_add(x : Z);
+         right_exist_add(y : Z);
+         right_exist_add(z : Z);
+         right_add(jpoint_represents(x, y, z, point));
+         right_add(jpoint_canonical_infinity_encoding(x, y, z, point));
+         right_add(store_jpoint_fields(p, x, y, z));
+
+/* Canonical affine coordinates stored in Montgomery form. */
+id : 60
+priority : core(0)
+left : store_mont_afpoint_coords(?p, ?x, ?y) at 0
+right : store_mont_afpoint_coords(p, ?rx, ?ry) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == rx);
+         right_add(y == ry);
+
+id : 61
+priority : open_mont_afpoint_coords(0)
+left : store_mont_afpoint_coords(?p, ?x, ?y) at 0
+action : left_erase(0);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(store_afpoint_fields(p, mont_p(x), mont_p(y)));
+
+id : 62
+priority : core(3)
+right : store_mont_afpoint_coords(?p, ?x, ?y) at 0
+action : right_erase(0);
+         right_add(0 <= x);
+         right_add(x < SM2_P_Z());
+         right_add(0 <= y);
+         right_add(y < SM2_P_Z());
+         right_add(store_afpoint_fields(p, mont_p(x), mont_p(y)));
+
+/* Canonical Jacobian coordinates stored in Montgomery form. */
+id : 70
+priority : core(0)
+left : store_mont_jpoint_coords(?p, ?x, ?y, ?z) at 0
+right : store_mont_jpoint_coords(p, ?rx, ?ry, ?rz) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == rx);
+         right_add(y == ry);
+         right_add(z == rz);
+
+id : 71
+priority : open_mont_jpoint_coords(0)
+left : store_mont_jpoint_coords(?p, ?x, ?y, ?z) at 0
+action : left_erase(0);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(0 <= y);
+         left_add(y < SM2_P_Z());
+         left_add(0 <= z);
+         left_add(z < SM2_P_Z());
+         left_add(store_jpoint_fields(p, mont_p(x), mont_p(y), mont_p(z)));
+
+id : 72
+priority : core(3)
+right : store_mont_jpoint_coords(?p, ?x, ?y, ?z) at 0
+action : right_erase(0);
+         right_add(0 <= x);
+         right_add(x < SM2_P_Z());
+         right_add(0 <= y);
+         right_add(y < SM2_P_Z());
+         right_add(0 <= z);
+         right_add(z < SM2_P_Z());
+         right_add(store_jpoint_fields(p, mont_p(x), mont_p(y), mont_p(z)));
+
+/* Abstract affine-point resources stored in Montgomery form. */
+id : 80
+priority : core(0)
+left : store_mont_afpoint(?p, ?point) at 0
+right : store_mont_afpoint(p, point) at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 81
+priority : open_mont_afpoint(0)
+left : store_mont_afpoint(?p, ?point) at 0
+action : left_erase(0);
+         left_exist_add(x : Z);
+         left_exist_add(y : Z);
+         left_add(afpoint_represents(x, y, point));
+         left_add(store_mont_afpoint_coords(p, x, y));
+
+id : 82
+priority : core(3)
+right : store_mont_afpoint(?p, ?point) at 0
+action : right_erase(0);
+         right_exist_add(x : Z);
+         right_exist_add(y : Z);
+         right_add(afpoint_represents(x, y, point));
+         right_add(store_mont_afpoint_coords(p, x, y));
+
+/* Abstract Jacobian-point resources stored in Montgomery form. */
+id : 90
+priority : core(0)
+left : store_mont_jpoint(?p, ?point) at 0
+right : store_mont_jpoint(p, point) at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 91
+priority : open_mont_jpoint(0)
+left : store_mont_jpoint(?p, ?point) at 0
+action : left_erase(0);
+         left_exist_add(x : Z);
+         left_exist_add(y : Z);
+         left_exist_add(z : Z);
+         left_add(jpoint_represents(x, y, z, point));
+         left_add(store_mont_jpoint_coords(p, x, y, z));
+
+id : 92
+priority : core(3)
+right : store_mont_jpoint(?p, ?point) at 0
+action : right_erase(0);
+         right_exist_add(x : Z);
+         right_exist_add(y : Z);
+         right_exist_add(z : Z);
+         right_add(jpoint_represents(x, y, z, point));
+         right_add(store_mont_jpoint_coords(p, x, y, z));

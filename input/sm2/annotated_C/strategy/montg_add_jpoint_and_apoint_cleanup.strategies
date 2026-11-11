@@ -1,0 +1,42 @@
+#include "../include/montg_add_jpoint_and_apoint_trace.h"
+
+/* Forget initialized mixed-add locals after an exceptional return. */
+id : 1
+priority : mont_maja_early_cleanup(0)
+left : store_fp(?a, mont_p(maja_u2(?x2, ?z1))) at 0
+       store_fp(?b, mont_p(maja_s2(?y2, z1))) at 1
+       store_fp(?h, mont_p(maja_h(?x1, x2, z1))) at 2
+       store_fp(?r, mont_p(maja_r(?y1, y2, z1))) at 3
+       store_fp(?z2, mont_p(maja_z2(z1))) at 4
+       store_fp(?tmp, mont_p(maja_z3(z1))) at 5
+action : left_erase(0); left_erase(1); left_erase(2);
+         left_erase(3); left_erase(4); left_erase(5);
+         left_add(UndefStructPredu32(a));
+         left_add(UndefStructPredu32(b));
+         left_add(UndefStructPredu32(h));
+         left_add(UndefStructPredu32(r));
+         left_add(UndefStructPredu32(z2));
+         left_add(UndefStructPredu32(tmp));
+
+/* Forget all eight initialized trace locals after the generic result. */
+id : 2
+priority : mont_maja_generic_cleanup(0)
+left : store_fp(?a, mont_p(maja_u2(?x2, ?z1))) at 0
+       store_fp(?b, mont_p(maja_s2(?y2, z1))) at 1
+       store_fp(?h, mont_p(maja_h(?x1, x2, z1))) at 2
+       store_fp(?r, mont_p(maja_r(?y1, y2, z1))) at 3
+       store_fp(?e, mont_p(maja_u1h2(x1, x2, z1))) at 4
+       store_fp(?z2, mont_p(maja_z2(z1))) at 5
+       store_fp(?h3, mont_p(maja_h3(x1, x2, z1))) at 6
+       store_fp(?tmp,
+         mont_p(maja_r_times_delta(x1, y1, z1, x2, y2))) at 7
+action : left_erase(0); left_erase(1); left_erase(2); left_erase(3);
+         left_erase(4); left_erase(5); left_erase(6); left_erase(7);
+         left_add(UndefStructPredu32(a));
+         left_add(UndefStructPredu32(b));
+         left_add(UndefStructPredu32(h));
+         left_add(UndefStructPredu32(r));
+         left_add(UndefStructPredu32(e));
+         left_add(UndefStructPredu32(z2));
+         left_add(UndefStructPredu32(h3));
+         left_add(UndefStructPredu32(tmp));

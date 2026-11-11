@@ -1,0 +1,39 @@
+#include "../include/montg_add_jpoint_and_apoint_trace.h"
+
+id : 1
+priority : mont_maja_equal_points(0)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       afpoint_represents(?x2, ?y2, ?P2) at 1
+check : infer(P1 != ECInfinity());
+        infer(P2 != ECInfinity());
+        infer(mont_p(maja_h(x1, x2, z1)) == 0);
+        infer(mont_p(maja_r(y1, y2, z1)) == 0);
+        absense(P1 == P2);
+action : left_add(P1 == P2);
+
+id : 2
+priority : mont_maja_inverse_sum(0)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       afpoint_represents(?x2, ?y2, ?P2) at 1
+check : infer(P1 != ECInfinity());
+        infer(P2 != ECInfinity());
+        infer(mont_p(maja_h(x1, x2, z1)) == 0);
+        infer(mont_p(maja_r(y1, y2, z1)) != 0);
+        absense(sm2_point_add(P1, P2) == ECInfinity());
+action : left_add(sm2_point_add(P1, P2) == ECInfinity());
+
+id : 3
+priority : mont_maja_generic_result(0)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       afpoint_represents(?x2, ?y2, ?P2) at 1
+check : infer(P1 != ECInfinity());
+        infer(P2 != ECInfinity());
+        infer(mont_p(maja_h(x1, x2, z1)) != 0);
+        absense(jpoint_represents(
+          maja_rx(x1, y1, z1, x2, y2),
+          maja_ry(x1, y1, z1, x2, y2),
+          maja_rz(x1, x2, z1), sm2_point_add(P1, P2)));
+action : left_add(jpoint_represents(
+           maja_rx(x1, y1, z1, x2, y2),
+           maja_ry(x1, y1, z1, x2, y2),
+           maja_rz(x1, x2, z1), sm2_point_add(P1, P2)));

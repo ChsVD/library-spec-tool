@@ -1,0 +1,1049 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From SimpleC.EE.Applications_human.simplex_find_violation Require Import simplex_find_violation_goal.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import naive_C_Rules.
+Require Import SimpleC.EE.Applications_human.simplex_rat_compare.simplex_rat_compare_lib.
+Require Import SimpleC.EE.Applications_human.simplex_find_violation.simplex_find_violation_lib.
+Local Open Scope sac.
+
+Lemma proof_of_sx_find_violation_safety_wit_1_out_known : sx_find_violation_safety_wit_1_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_2_out_known : sx_find_violation_safety_wit_2_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_3_out_undef : sx_find_violation_safety_wit_3_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_4_out_undef : sx_find_violation_safety_wit_4_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_5_out_known : sx_find_violation_safety_wit_5_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_6_out_undef : sx_find_violation_safety_wit_6_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_7_out_known : sx_find_violation_safety_wit_7_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_8_out_undef : sx_find_violation_safety_wit_8_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_9_out_undef : sx_find_violation_safety_wit_9_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_10_out_known : sx_find_violation_safety_wit_10_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_11_out_known : sx_find_violation_safety_wit_11_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_12_out_known : sx_find_violation_safety_wit_12_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_13_out_known : sx_find_violation_safety_wit_13_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_14_out_known : sx_find_violation_safety_wit_14_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_15_out_known : sx_find_violation_safety_wit_15_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_16_out_known : sx_find_violation_safety_wit_16_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_17_out_known : sx_find_violation_safety_wit_17_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_18_out_known : sx_find_violation_safety_wit_18_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_19_out_known : sx_find_violation_safety_wit_19_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_20_out_known : sx_find_violation_safety_wit_20_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_21_out_undef : sx_find_violation_safety_wit_21_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_22_out_undef : sx_find_violation_safety_wit_22_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_23_out_undef : sx_find_violation_safety_wit_23_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_24_out_undef : sx_find_violation_safety_wit_24_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_25_out_undef : sx_find_violation_safety_wit_25_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_26_out_undef : sx_find_violation_safety_wit_26_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_27_out_undef : sx_find_violation_safety_wit_27_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_28_out_undef : sx_find_violation_safety_wit_28_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_29_out_undef : sx_find_violation_safety_wit_29_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_30_out_undef : sx_find_violation_safety_wit_30_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_31_out_known : sx_find_violation_safety_wit_31_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_32_out_known : sx_find_violation_safety_wit_32_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_33_out_known : sx_find_violation_safety_wit_33_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_34_out_known : sx_find_violation_safety_wit_34_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_35_out_known : sx_find_violation_safety_wit_35_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_36_out_known : sx_find_violation_safety_wit_36_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_37_out_known : sx_find_violation_safety_wit_37_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_38_out_known : sx_find_violation_safety_wit_38_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_39_out_known : sx_find_violation_safety_wit_39_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_40_out_undef : sx_find_violation_safety_wit_40_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_41_out_undef : sx_find_violation_safety_wit_41_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_42_out_undef : sx_find_violation_safety_wit_42_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_43_out_undef : sx_find_violation_safety_wit_43_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_44_out_undef : sx_find_violation_safety_wit_44_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_45_out_undef : sx_find_violation_safety_wit_45_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_46_out_undef : sx_find_violation_safety_wit_46_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_47_out_undef : sx_find_violation_safety_wit_47_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_48_out_undef : sx_find_violation_safety_wit_48_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_49_out_known : sx_find_violation_safety_wit_49_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_50_out_known : sx_find_violation_safety_wit_50_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_51_out_known : sx_find_violation_safety_wit_51_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_52_out_known : sx_find_violation_safety_wit_52_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_53_out_known : sx_find_violation_safety_wit_53_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_54_out_known : sx_find_violation_safety_wit_54_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_55_out_undef : sx_find_violation_safety_wit_55_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_56_out_undef : sx_find_violation_safety_wit_56_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_57_out_undef : sx_find_violation_safety_wit_57_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_58_out_undef : sx_find_violation_safety_wit_58_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_59_out_undef : sx_find_violation_safety_wit_59_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_60_out_undef : sx_find_violation_safety_wit_60_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_61_out_known : sx_find_violation_safety_wit_61_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_62_out_known : sx_find_violation_safety_wit_62_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_63_out_known : sx_find_violation_safety_wit_63_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_64_out_undef : sx_find_violation_safety_wit_64_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_65_out_undef : sx_find_violation_safety_wit_65_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_66_out_undef : sx_find_violation_safety_wit_66_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_67_out_known : sx_find_violation_safety_wit_67_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_68_out_known : sx_find_violation_safety_wit_68_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_69_out_known : sx_find_violation_safety_wit_69_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_70_out_undef : sx_find_violation_safety_wit_70_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_71_out_undef : sx_find_violation_safety_wit_71_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_72_out_undef : sx_find_violation_safety_wit_72_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_73_out_known : sx_find_violation_safety_wit_73_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_74_out_known : sx_find_violation_safety_wit_74_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_75_out_known : sx_find_violation_safety_wit_75_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_76_out_undef : sx_find_violation_safety_wit_76_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_77_out_undef : sx_find_violation_safety_wit_77_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_78_out_undef : sx_find_violation_safety_wit_78_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_79_out_undef : sx_find_violation_safety_wit_79_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_80_out_known : sx_find_violation_safety_wit_80_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_81_out_undef : sx_find_violation_safety_wit_81_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_82_out_undef : sx_find_violation_safety_wit_82_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_83_out_known : sx_find_violation_safety_wit_83_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_84_out_known : sx_find_violation_safety_wit_84_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_85_out_undef : sx_find_violation_safety_wit_85_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_86_out_undef : sx_find_violation_safety_wit_86_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_87_out_known : sx_find_violation_safety_wit_87_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_88_out_known : sx_find_violation_safety_wit_88_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_89_out_undef : sx_find_violation_safety_wit_89_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_90_out_known : sx_find_violation_safety_wit_90_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_91_out_undef : sx_find_violation_safety_wit_91_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_92_out_known : sx_find_violation_safety_wit_92_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_93_out_undef : sx_find_violation_safety_wit_93_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_94_out_known : sx_find_violation_safety_wit_94_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_95_out_undef : sx_find_violation_safety_wit_95_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_96_out_undef : sx_find_violation_safety_wit_96_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_97_out_known : sx_find_violation_safety_wit_97_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_98_out_known : sx_find_violation_safety_wit_98_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_99_out_undef : sx_find_violation_safety_wit_99_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_100_out_undef : sx_find_violation_safety_wit_100_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_101_out_undef : sx_find_violation_safety_wit_101_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_102_out_undef : sx_find_violation_safety_wit_102_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_103_out_known : sx_find_violation_safety_wit_103_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_104_out_known : sx_find_violation_safety_wit_104_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_105_out_known : sx_find_violation_safety_wit_105_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_106_out_known : sx_find_violation_safety_wit_106_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_107_out_undef : sx_find_violation_safety_wit_107_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_108_out_undef : sx_find_violation_safety_wit_108_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_109_out_undef : sx_find_violation_safety_wit_109_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_110_out_undef : sx_find_violation_safety_wit_110_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_111_out_known : sx_find_violation_safety_wit_111_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_112_out_known : sx_find_violation_safety_wit_112_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_113_out_known : sx_find_violation_safety_wit_113_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_114_out_known : sx_find_violation_safety_wit_114_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_115_out_undef : sx_find_violation_safety_wit_115_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_116_out_known : sx_find_violation_safety_wit_116_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_117_out_undef : sx_find_violation_safety_wit_117_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_118_out_undef : sx_find_violation_safety_wit_118_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_119_out_known : sx_find_violation_safety_wit_119_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_120_out_known : sx_find_violation_safety_wit_120_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_121_out_undef : sx_find_violation_safety_wit_121_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_122_out_undef : sx_find_violation_safety_wit_122_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_123_out_known : sx_find_violation_safety_wit_123_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_124_out_known : sx_find_violation_safety_wit_124_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_125_out_undef : sx_find_violation_safety_wit_125_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_126_out_known : sx_find_violation_safety_wit_126_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_127_out_undef : sx_find_violation_safety_wit_127_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_128_out_undef : sx_find_violation_safety_wit_128_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_129_out_known : sx_find_violation_safety_wit_129_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_130_out_known : sx_find_violation_safety_wit_130_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_131_out_undef : sx_find_violation_safety_wit_131_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_132_out_undef : sx_find_violation_safety_wit_132_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_133_out_known : sx_find_violation_safety_wit_133_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_134_out_known : sx_find_violation_safety_wit_134_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_135_out_undef : sx_find_violation_safety_wit_135_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_136_out_undef : sx_find_violation_safety_wit_136_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_137_out_known : sx_find_violation_safety_wit_137_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_138_out_known : sx_find_violation_safety_wit_138_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_139_out_undef : sx_find_violation_safety_wit_139_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_140_out_undef : sx_find_violation_safety_wit_140_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_141_out_undef : sx_find_violation_safety_wit_141_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_142_out_undef : sx_find_violation_safety_wit_142_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_143_out_known : sx_find_violation_safety_wit_143_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_144_out_known : sx_find_violation_safety_wit_144_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_145_out_known : sx_find_violation_safety_wit_145_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_146_out_known : sx_find_violation_safety_wit_146_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_147_out_undef : sx_find_violation_safety_wit_147_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_148_out_undef : sx_find_violation_safety_wit_148_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_149_out_undef : sx_find_violation_safety_wit_149_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_150_out_undef : sx_find_violation_safety_wit_150_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_151_out_known : sx_find_violation_safety_wit_151_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_152_out_known : sx_find_violation_safety_wit_152_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_153_out_known : sx_find_violation_safety_wit_153_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_154_out_known : sx_find_violation_safety_wit_154_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_155_out_undef : sx_find_violation_safety_wit_155_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_156_out_known : sx_find_violation_safety_wit_156_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_157_out_undef : sx_find_violation_safety_wit_157_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_158_out_undef : sx_find_violation_safety_wit_158_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_159_out_known : sx_find_violation_safety_wit_159_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_160_out_known : sx_find_violation_safety_wit_160_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_161_out_undef : sx_find_violation_safety_wit_161_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_162_out_undef : sx_find_violation_safety_wit_162_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_163_out_known : sx_find_violation_safety_wit_163_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_164_out_known : sx_find_violation_safety_wit_164_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_165_out_undef : sx_find_violation_safety_wit_165_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_166_out_known : sx_find_violation_safety_wit_166_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_167_out_undef : sx_find_violation_safety_wit_167_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_168_out_undef : sx_find_violation_safety_wit_168_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_169_out_known : sx_find_violation_safety_wit_169_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_170_out_known : sx_find_violation_safety_wit_170_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_171_out_undef : sx_find_violation_safety_wit_171_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_172_out_undef : sx_find_violation_safety_wit_172_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_173_out_known : sx_find_violation_safety_wit_173_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_174_out_known : sx_find_violation_safety_wit_174_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_175_out_undef : sx_find_violation_safety_wit_175_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_176_out_known : sx_find_violation_safety_wit_176_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_177_out_undef : sx_find_violation_safety_wit_177_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_178_out_known : sx_find_violation_safety_wit_178_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_179_out_undef : sx_find_violation_safety_wit_179_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_180_out_known : sx_find_violation_safety_wit_180_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_181_out_undef : sx_find_violation_safety_wit_181_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_182_out_known : sx_find_violation_safety_wit_182_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_183_out_undef : sx_find_violation_safety_wit_183_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_184_out_undef : sx_find_violation_safety_wit_184_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_185_out_known : sx_find_violation_safety_wit_185_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_186_out_known : sx_find_violation_safety_wit_186_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_187_out_undef : sx_find_violation_safety_wit_187_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_188_out_undef : sx_find_violation_safety_wit_188_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_189_out_known : sx_find_violation_safety_wit_189_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_190_out_known : sx_find_violation_safety_wit_190_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_191_out_undef : sx_find_violation_safety_wit_191_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_192_out_known : sx_find_violation_safety_wit_192_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_193_out_undef : sx_find_violation_safety_wit_193_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_194_out_undef : sx_find_violation_safety_wit_194_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_195_out_known : sx_find_violation_safety_wit_195_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_196_out_known : sx_find_violation_safety_wit_196_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_197_out_undef : sx_find_violation_safety_wit_197_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_198_out_known : sx_find_violation_safety_wit_198_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_199_out_undef : sx_find_violation_safety_wit_199_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_200_out_known : sx_find_violation_safety_wit_200_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_201_out_undef : sx_find_violation_safety_wit_201_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_202_out_known : sx_find_violation_safety_wit_202_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_203_out_undef : sx_find_violation_safety_wit_203_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_204_out_undef : sx_find_violation_safety_wit_204_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_205_out_known : sx_find_violation_safety_wit_205_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_206_out_known : sx_find_violation_safety_wit_206_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_207_out_undef : sx_find_violation_safety_wit_207_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_208_out_undef : sx_find_violation_safety_wit_208_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_209_out_known : sx_find_violation_safety_wit_209_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_210_out_known : sx_find_violation_safety_wit_210_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_211_out_undef : sx_find_violation_safety_wit_211_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_212_out_undef : sx_find_violation_safety_wit_212_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_213_out_known : sx_find_violation_safety_wit_213_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_214_out_known : sx_find_violation_safety_wit_214_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_215_out_undef : sx_find_violation_safety_wit_215_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_216_out_known : sx_find_violation_safety_wit_216_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_217_out_known : sx_find_violation_safety_wit_217_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_218_out_undef : sx_find_violation_safety_wit_218_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_219_out_known : sx_find_violation_safety_wit_219_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_220_out_undef : sx_find_violation_safety_wit_220_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_221_out_known : sx_find_violation_safety_wit_221_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_222_out_known : sx_find_violation_safety_wit_222_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_223_out_undef : sx_find_violation_safety_wit_223_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_224_out_undef : sx_find_violation_safety_wit_224_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_225_out_known : sx_find_violation_safety_wit_225_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_226_out_undef : sx_find_violation_safety_wit_226_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_227_out_undef : sx_find_violation_safety_wit_227_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_228_out_known : sx_find_violation_safety_wit_228_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_229_out_undef : sx_find_violation_safety_wit_229_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_230_out_undef : sx_find_violation_safety_wit_230_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_231_out_known : sx_find_violation_safety_wit_231_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_232_out_known : sx_find_violation_safety_wit_232_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_233_out_undef : sx_find_violation_safety_wit_233_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_234_out_undef : sx_find_violation_safety_wit_234_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_235_out_known : sx_find_violation_safety_wit_235_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_236_out_known : sx_find_violation_safety_wit_236_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_237_out_undef : sx_find_violation_safety_wit_237_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_238_out_undef : sx_find_violation_safety_wit_238_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_239_out_known : sx_find_violation_safety_wit_239_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_240_out_known : sx_find_violation_safety_wit_240_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_241_out_undef : sx_find_violation_safety_wit_241_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_242_out_known : sx_find_violation_safety_wit_242_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_243_out_undef : sx_find_violation_safety_wit_243_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_safety_wit_244_out_known : sx_find_violation_safety_wit_244_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_1_out_known : sx_find_violation_entail_wit_5_1_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_2_out_known : sx_find_violation_entail_wit_5_2_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_3_out_known : sx_find_violation_entail_wit_5_3_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_4_out_known : sx_find_violation_entail_wit_5_4_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_5_out_known : sx_find_violation_entail_wit_5_5_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_6_out_known : sx_find_violation_entail_wit_5_6_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_7_out_known : sx_find_violation_entail_wit_5_7_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_8_out_known : sx_find_violation_entail_wit_5_8_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_9_out_known : sx_find_violation_entail_wit_5_9_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_10_out_known : sx_find_violation_entail_wit_5_10_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_11_out_known : sx_find_violation_entail_wit_5_11_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_12_out_known : sx_find_violation_entail_wit_5_12_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_13_out_undef : sx_find_violation_entail_wit_5_13_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_14_out_undef : sx_find_violation_entail_wit_5_14_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_15_out_undef : sx_find_violation_entail_wit_5_15_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_16_out_undef : sx_find_violation_entail_wit_5_16_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_17_out_undef : sx_find_violation_entail_wit_5_17_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_18_out_undef : sx_find_violation_entail_wit_5_18_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_19_out_undef : sx_find_violation_entail_wit_5_19_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_20_out_undef : sx_find_violation_entail_wit_5_20_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_21_out_undef : sx_find_violation_entail_wit_5_21_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_22_out_undef : sx_find_violation_entail_wit_5_22_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_23_out_undef : sx_find_violation_entail_wit_5_23_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_5_24_out_undef : sx_find_violation_entail_wit_5_24_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_1_out_known : sx_find_violation_entail_wit_6_1_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_2_out_known : sx_find_violation_entail_wit_6_2_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_3_out_known : sx_find_violation_entail_wit_6_3_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_4_out_known : sx_find_violation_entail_wit_6_4_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_5_out_known : sx_find_violation_entail_wit_6_5_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_6_out_known : sx_find_violation_entail_wit_6_6_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_7_out_known : sx_find_violation_entail_wit_6_7_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_8_out_known : sx_find_violation_entail_wit_6_8_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_9_out_known : sx_find_violation_entail_wit_6_9_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_10_out_known : sx_find_violation_entail_wit_6_10_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_11_out_known : sx_find_violation_entail_wit_6_11_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_12_out_known : sx_find_violation_entail_wit_6_12_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_13_out_undef : sx_find_violation_entail_wit_6_13_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_14_out_undef : sx_find_violation_entail_wit_6_14_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_15_out_undef : sx_find_violation_entail_wit_6_15_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_16_out_undef : sx_find_violation_entail_wit_6_16_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_17_out_undef : sx_find_violation_entail_wit_6_17_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_18_out_undef : sx_find_violation_entail_wit_6_18_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_19_out_undef : sx_find_violation_entail_wit_6_19_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_20_out_undef : sx_find_violation_entail_wit_6_20_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_21_out_undef : sx_find_violation_entail_wit_6_21_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_22_out_undef : sx_find_violation_entail_wit_6_22_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_23_out_undef : sx_find_violation_entail_wit_6_23_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_6_24_out_undef : sx_find_violation_entail_wit_6_24_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_1_out_undef : sx_find_violation_entail_wit_7_1_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_2_out_undef : sx_find_violation_entail_wit_7_2_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_3_out_known : sx_find_violation_entail_wit_7_3_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_4_out_known : sx_find_violation_entail_wit_7_4_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_5_out_undef : sx_find_violation_entail_wit_7_5_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_6_out_undef : sx_find_violation_entail_wit_7_6_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_7_out_undef : sx_find_violation_entail_wit_7_7_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_8_out_known : sx_find_violation_entail_wit_7_8_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_9_out_known : sx_find_violation_entail_wit_7_9_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_10_out_known : sx_find_violation_entail_wit_7_10_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_11_out_undef : sx_find_violation_entail_wit_7_11_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_12_out_undef : sx_find_violation_entail_wit_7_12_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_13_out_undef : sx_find_violation_entail_wit_7_13_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_14_out_known : sx_find_violation_entail_wit_7_14_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_15_out_known : sx_find_violation_entail_wit_7_15_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_7_16_out_known : sx_find_violation_entail_wit_7_16_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_1_out_undef : sx_find_violation_entail_wit_8_1_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_2_out_undef : sx_find_violation_entail_wit_8_2_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_3_out_known : sx_find_violation_entail_wit_8_3_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_4_out_known : sx_find_violation_entail_wit_8_4_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_5_out_undef : sx_find_violation_entail_wit_8_5_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_6_out_undef : sx_find_violation_entail_wit_8_6_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_7_out_undef : sx_find_violation_entail_wit_8_7_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_8_out_known : sx_find_violation_entail_wit_8_8_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_9_out_known : sx_find_violation_entail_wit_8_9_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_10_out_known : sx_find_violation_entail_wit_8_10_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_11_out_undef : sx_find_violation_entail_wit_8_11_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_12_out_undef : sx_find_violation_entail_wit_8_12_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_13_out_undef : sx_find_violation_entail_wit_8_13_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_14_out_known : sx_find_violation_entail_wit_8_14_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_15_out_known : sx_find_violation_entail_wit_8_15_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_entail_wit_8_16_out_known : sx_find_violation_entail_wit_8_16_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_1_out_undef : sx_find_violation_partial_solve_wit_1_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_2_out_known : sx_find_violation_partial_solve_wit_2_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_3_out_known : sx_find_violation_partial_solve_wit_3_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_4_out_known : sx_find_violation_partial_solve_wit_4_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_5_out_known : sx_find_violation_partial_solve_wit_5_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_6_out_undef : sx_find_violation_partial_solve_wit_6_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_7_out_undef : sx_find_violation_partial_solve_wit_7_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_8_out_undef : sx_find_violation_partial_solve_wit_8_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_9_out_undef : sx_find_violation_partial_solve_wit_9_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_10_out_known : sx_find_violation_partial_solve_wit_10_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_11_out_undef : sx_find_violation_partial_solve_wit_11_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_12_out_undef : sx_find_violation_partial_solve_wit_12_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_13_out_known : sx_find_violation_partial_solve_wit_13_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_14_out_known : sx_find_violation_partial_solve_wit_14_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_15_out_undef : sx_find_violation_partial_solve_wit_15_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_16_out_undef : sx_find_violation_partial_solve_wit_16_out_undef.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_17_out_known : sx_find_violation_partial_solve_wit_17_out_known.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_violation_partial_solve_wit_18_out_known : sx_find_violation_partial_solve_wit_18_out_known.
+Proof. Admitted. 
+

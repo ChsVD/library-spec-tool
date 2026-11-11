@@ -1,0 +1,395 @@
+From SimpleC.Verification Require Import VCPrelude.
+From SimpleC.EE.Applications_human.simplex_initialize Require Import simplex_initialize_goal.
+Import naive_C_Rules.
+Require Import SimpleC.EE.Applications_human.simplex_rat_zero.simplex_rat_zero_lib.
+Require Import SimpleC.EE.Applications_human.simplex_recompute.simplex_recompute_lib.
+Require Import SimpleC.EE.Applications_human.simplex_initialize.simplex_initialize_lib.
+Local Open Scope sac.
+
+Lemma proof_of_sx_initialize_safety_wit_1_invalid_dimensions : sx_initialize_safety_wit_1_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_2_invalid_dimensions : sx_initialize_safety_wit_2_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_3_invalid_dimensions : sx_initialize_safety_wit_3_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_4_invalid_dimensions : sx_initialize_safety_wit_4_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_5_rejected_coefficient : sx_initialize_safety_wit_5_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_6_initialized_matrix_non_alias : sx_initialize_safety_wit_6_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_7_zero_rows : sx_initialize_safety_wit_7_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_8_invalid_dimensions : sx_initialize_safety_wit_8_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_9_invalid_dimensions : sx_initialize_safety_wit_9_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_10_rejected_coefficient : sx_initialize_safety_wit_10_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_11_initialized_matrix_non_alias : sx_initialize_safety_wit_11_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_12_zero_rows : sx_initialize_safety_wit_12_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_13_zero_rows : sx_initialize_safety_wit_13_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_14_initialized_matrix_non_alias : sx_initialize_safety_wit_14_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_15_rejected_coefficient : sx_initialize_safety_wit_15_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_16_invalid_dimensions : sx_initialize_safety_wit_16_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_17_invalid_dimensions : sx_initialize_safety_wit_17_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_18_invalid_dimensions : sx_initialize_safety_wit_18_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_19_zero_rows : sx_initialize_safety_wit_19_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_20_initialized_matrix_non_alias : sx_initialize_safety_wit_20_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_21_rejected_coefficient : sx_initialize_safety_wit_21_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_22_invalid_dimensions : sx_initialize_safety_wit_22_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_23_zero_rows : sx_initialize_safety_wit_23_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_24_initialized_matrix_non_alias : sx_initialize_safety_wit_24_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_25_rejected_coefficient : sx_initialize_safety_wit_25_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_26_invalid_dimensions : sx_initialize_safety_wit_26_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_27_invalid_dimensions : sx_initialize_safety_wit_27_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_28_zero_rows : sx_initialize_safety_wit_28_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_29_initialized_matrix_non_alias : sx_initialize_safety_wit_29_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_30_rejected_coefficient : sx_initialize_safety_wit_30_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_31_invalid_dimensions : sx_initialize_safety_wit_31_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_32_invalid_dimensions : sx_initialize_safety_wit_32_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_33_zero_rows : sx_initialize_safety_wit_33_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_34_initialized_matrix_non_alias : sx_initialize_safety_wit_34_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_35_rejected_coefficient : sx_initialize_safety_wit_35_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_36_invalid_dimensions : sx_initialize_safety_wit_36_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_37_zero_rows : sx_initialize_safety_wit_37_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_38_initialized_matrix_non_alias : sx_initialize_safety_wit_38_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_39_rejected_coefficient : sx_initialize_safety_wit_39_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_40_invalid_dimensions : sx_initialize_safety_wit_40_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_41_invalid_dimensions : sx_initialize_safety_wit_41_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_42_invalid_dimensions : sx_initialize_safety_wit_42_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_43_invalid_dimensions : sx_initialize_safety_wit_43_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_44_invalid_dimensions : sx_initialize_safety_wit_44_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_45_invalid_dimensions : sx_initialize_safety_wit_45_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_46_invalid_dimensions : sx_initialize_safety_wit_46_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_47_invalid_dimensions : sx_initialize_safety_wit_47_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_48_invalid_dimensions : sx_initialize_safety_wit_48_invalid_dimensions.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_49_rejected_coefficient : sx_initialize_safety_wit_49_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_50_initialized_matrix_non_alias : sx_initialize_safety_wit_50_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_51_zero_rows : sx_initialize_safety_wit_51_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_52_zero_rows : sx_initialize_safety_wit_52_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_53_rejected_coefficient : sx_initialize_safety_wit_53_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_54_initialized_matrix_non_alias : sx_initialize_safety_wit_54_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_55_rejected_coefficient : sx_initialize_safety_wit_55_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_56_initialized_matrix_non_alias : sx_initialize_safety_wit_56_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_57_rejected_coefficient : sx_initialize_safety_wit_57_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_58_initialized_matrix_non_alias : sx_initialize_safety_wit_58_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_59_initialized_matrix_non_alias : sx_initialize_safety_wit_59_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_60_rejected_coefficient : sx_initialize_safety_wit_60_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_61_initialized_matrix_non_alias : sx_initialize_safety_wit_61_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_62_rejected_coefficient : sx_initialize_safety_wit_62_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_63_initialized_matrix_non_alias : sx_initialize_safety_wit_63_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_64_rejected_coefficient : sx_initialize_safety_wit_64_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_65_rejected_coefficient : sx_initialize_safety_wit_65_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_66_initialized_matrix_non_alias : sx_initialize_safety_wit_66_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_67_initialized_matrix_non_alias : sx_initialize_safety_wit_67_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_68_rejected_coefficient : sx_initialize_safety_wit_68_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_69_rejected_coefficient : sx_initialize_safety_wit_69_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_70_initialized_matrix_non_alias : sx_initialize_safety_wit_70_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_71_zero_rows : sx_initialize_safety_wit_71_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_72_rejected_coefficient : sx_initialize_safety_wit_72_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_73_initialized_matrix_non_alias : sx_initialize_safety_wit_73_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_74_zero_rows : sx_initialize_safety_wit_74_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_75_zero_rows : sx_initialize_safety_wit_75_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_76_initialized_matrix_non_alias : sx_initialize_safety_wit_76_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_77_rejected_coefficient : sx_initialize_safety_wit_77_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_78_zero_rows : sx_initialize_safety_wit_78_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_79_initialized_matrix_non_alias : sx_initialize_safety_wit_79_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_80_rejected_coefficient : sx_initialize_safety_wit_80_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_81_zero_rows : sx_initialize_safety_wit_81_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_82_initialized_matrix_non_alias : sx_initialize_safety_wit_82_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_83_rejected_coefficient : sx_initialize_safety_wit_83_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_84_zero_rows : sx_initialize_safety_wit_84_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_85_initialized_matrix_non_alias : sx_initialize_safety_wit_85_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_86_rejected_coefficient : sx_initialize_safety_wit_86_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_87_zero_rows : sx_initialize_safety_wit_87_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_88_initialized_matrix_non_alias : sx_initialize_safety_wit_88_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_89_rejected_coefficient : sx_initialize_safety_wit_89_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_90_zero_rows : sx_initialize_safety_wit_90_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_91_initialized_matrix_non_alias : sx_initialize_safety_wit_91_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_92_rejected_coefficient : sx_initialize_safety_wit_92_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_93_initialized_matrix_non_alias : sx_initialize_safety_wit_93_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_94_rejected_coefficient : sx_initialize_safety_wit_94_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_95_initialized_matrix_non_alias : sx_initialize_safety_wit_95_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_96_rejected_coefficient : sx_initialize_safety_wit_96_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_97_initialized_matrix_non_alias : sx_initialize_safety_wit_97_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_98_rejected_coefficient : sx_initialize_safety_wit_98_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_99_initialized_matrix_non_alias : sx_initialize_safety_wit_99_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_100_rejected_coefficient : sx_initialize_safety_wit_100_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_101_initialized_matrix_non_alias : sx_initialize_safety_wit_101_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_102_rejected_coefficient : sx_initialize_safety_wit_102_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_103_rejected_coefficient : sx_initialize_safety_wit_103_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_104_rejected_coefficient : sx_initialize_safety_wit_104_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_105_initialized_matrix_non_alias : sx_initialize_safety_wit_105_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_106_initialized_matrix_non_alias : sx_initialize_safety_wit_106_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_107_rejected_coefficient : sx_initialize_safety_wit_107_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_108_initialized_matrix_non_alias : sx_initialize_safety_wit_108_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_109_rejected_coefficient : sx_initialize_safety_wit_109_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_110_initialized_matrix_non_alias : sx_initialize_safety_wit_110_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_111_rejected_coefficient : sx_initialize_safety_wit_111_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_safety_wit_112_initialized_matrix_non_alias : sx_initialize_safety_wit_112_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_entail_wit_14_initialized_matrix_non_alias : sx_initialize_entail_wit_14_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_entail_wit_15_zero_rows : sx_initialize_entail_wit_15_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_1_zero_rows : sx_initialize_partial_solve_wit_1_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_2_initialized_matrix_non_alias : sx_initialize_partial_solve_wit_2_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_3_rejected_coefficient : sx_initialize_partial_solve_wit_3_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_4_zero_rows : sx_initialize_partial_solve_wit_4_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_5_initialized_matrix_non_alias : sx_initialize_partial_solve_wit_5_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_6_rejected_coefficient : sx_initialize_partial_solve_wit_6_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_7_zero_rows : sx_initialize_partial_solve_wit_7_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_8_initialized_matrix_non_alias : sx_initialize_partial_solve_wit_8_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_9_rejected_coefficient : sx_initialize_partial_solve_wit_9_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_10_rejected_coefficient : sx_initialize_partial_solve_wit_10_rejected_coefficient.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_11_initialized_matrix_non_alias : sx_initialize_partial_solve_wit_11_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_12_zero_rows_pure : sx_initialize_partial_solve_wit_12_zero_rows_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_12_zero_rows : sx_initialize_partial_solve_wit_12_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_13_initialized_matrix_non_alias : sx_initialize_partial_solve_wit_13_initialized_matrix_non_alias.
+Proof. Admitted.
+
+Lemma proof_of_sx_initialize_partial_solve_wit_14_rejected_coefficient : sx_initialize_partial_solve_wit_14_rejected_coefficient.
+Proof. Admitted.
+

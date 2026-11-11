@@ -1,0 +1,167 @@
+#include "../include/ecc.h"
+
+/* Expose exactly the four output slots written by the precomputation. */
+id : 10
+priority : wnaf3_precomp_open(0)
+left : wnaf3_precomp_undef(?positive, ?negative) at 0
+action : left_erase(0);
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             positive + 1 * sizeof(struct AFPoint), AFPoint, x), u32, v), 4));
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             positive + 1 * sizeof(struct AFPoint), AFPoint, y), u32, v), 4));
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             positive + 3 * sizeof(struct AFPoint), AFPoint, x), u32, v), 4));
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             positive + 3 * sizeof(struct AFPoint), AFPoint, y), u32, v), 4));
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             negative + 1 * sizeof(struct AFPoint), AFPoint, x), u32, v), 4));
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             negative + 1 * sizeof(struct AFPoint), AFPoint, y), u32, v), 4));
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             negative + 3 * sizeof(struct AFPoint), AFPoint, x), u32, v), 4));
+         left_add(UInt64Array::undef_full(
+           field_addr(field_addr(
+             negative + 3 * sizeof(struct AFPoint), AFPoint, y), u32, v), 4));
+
+id : 11
+priority : wnaf3_precomp_close(0)
+left : store_mont_afpoint(
+         ?positive + 1 * sizeof(struct AFPoint), ?point) at 0
+       store_mont_afpoint(
+         positive + 3 * sizeof(struct AFPoint),
+         sm2_point_mul(3, point)) at 1
+       store_mont_afpoint(
+         ?negative + 1 * sizeof(struct AFPoint),
+         sm2_point_negate(point)) at 2
+       store_mont_afpoint(
+         negative + 3 * sizeof(struct AFPoint),
+         sm2_point_negate(sm2_point_mul(3, point))) at 3
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_add(store_mont_wnaf3_precomp(positive, negative, point));
+
+/* Focus one dynamic table entry for a natural callee contract. */
+id : 20
+priority : wnaf3_focus_positive(0)
+left : wnaf3_digit(?digit) at 0
+       ?digit > 0 at 1
+       store_mont_wnaf3_precomp(?positive, ?negative, ?point) at 2
+action : left_erase(2);
+         left_add(store_mont_afpoint(
+           positive + digit * sizeof(struct AFPoint),
+           sm2_point_mul(digit, point)));
+         left_add(store_mont_wnaf3_precomp_rest(
+           positive, negative, point, digit));
+
+id : 21
+priority : wnaf3_restore_positive(0)
+left : wnaf3_digit(?digit) at 0
+       ?digit > 0 at 1
+       store_mont_afpoint(
+         ?positive + digit * sizeof(struct AFPoint),
+         sm2_point_mul(digit, ?point)) at 2
+       store_mont_wnaf3_precomp_rest(
+         positive, ?negative, point, digit) at 3
+action : left_erase(2);
+         left_erase(3);
+         left_add(store_mont_wnaf3_precomp(positive, negative, point));
+
+id : 22
+priority : wnaf3_focus_negative(0)
+left : wnaf3_digit(?digit) at 0
+       ?digit < 0 at 1
+       store_mont_wnaf3_precomp(?positive, ?negative, ?point) at 2
+action : left_erase(2);
+         left_add(store_mont_afpoint(
+           negative + (-digit) * sizeof(struct AFPoint),
+           sm2_point_negate(
+             sm2_point_mul(-digit, point))));
+         left_add(store_mont_wnaf3_precomp_rest(
+           positive, negative, point, digit));
+
+id : 23
+priority : wnaf3_restore_negative(0)
+left : wnaf3_digit(?digit) at 0
+       ?digit < 0 at 1
+       store_mont_afpoint(
+         ?negative + (-digit) * sizeof(struct AFPoint),
+         sm2_point_negate(
+           sm2_point_mul(-digit, ?point))) at 2
+       store_mont_wnaf3_precomp_rest(
+         ?positive, negative, point, digit) at 3
+action : left_erase(2);
+         left_erase(3);
+         left_add(store_mont_wnaf3_precomp(positive, negative, point));
+
+/* Prepare each local array while its source role is still unambiguous. */
+id : 30
+priority : wnaf3_positive_array_prepare(0)
+left : StructAFPointArray::undef_full(?positive, 4) at 0
+action : left_erase(0);
+         left_add(wnaf3_positive_array_undef(positive));
+
+id : 31
+priority : wnaf3_negative_array_prepare(0)
+left : StructAFPointArray::undef_full(?negative, 4) at 0
+action : left_erase(0);
+         left_add(wnaf3_negative_array_undef(negative));
+
+id : 32
+priority : wnaf3_arrays_combine(0)
+left : wnaf3_positive_array_undef(?positive) at 0
+       wnaf3_negative_array_undef(?negative) at 1
+action : left_erase(0);
+         left_erase(1);
+         left_add(wnaf3_precomp_undef(positive, negative));
+         left_add(wnaf3_precomp_unused(positive, negative));
+
+/* Release both role-labelled arrays at function exit. */
+id : 33
+priority : wnaf3_arrays_release(0)
+left : store_mont_wnaf3_precomp(?positive, ?negative, ?point) at 0
+       wnaf3_precomp_unused(positive, negative) at 1
+action : left_erase(0);
+         left_erase(1);
+         left_add(StructAFPointArray::undef_full(positive, 4));
+         left_add(StructAFPointArray::undef_full(negative, 4));
+
+/* Strip the zero-index array decay from the initialized call result. */
+id : 35
+priority : wnaf3_precomp_normalize_base(0)
+left : store_mont_wnaf3_precomp(
+         ?positive + 0 * sizeof(struct AFPoint),
+         ?negative + 0 * sizeof(struct AFPoint), ?point) at 0
+action : left_erase(0);
+         left_add(store_mont_wnaf3_precomp(positive, negative, point));
+
+/* Open the mathematical digit sequence produced by get_naf_w3. */
+id : 41
+priority : open_store_wnaf3(0)
+left : store_wnaf3(?address, ?scalar) at 0
+action : left_erase(0);
+         left_exist_add(digits : list{Z});
+         left_add(wnaf3_representation(scalar, digits));
+         left_add(CharArray::full(address, 257, digits));
+
+/* Forget byte values only at the get_naf_w3 output boundary. */
+id : 42
+priority : wnaf3_buffer_to_undef(0)
+left : CharArray::full(?address, 257, ?digits) at 0
+action : left_erase(0);
+         left_add(CharArray::undef_full(address, 257));
+
+id : 43
+priority : wnaf3_digits_normalize_base(0)
+left : CharArray::full(
+         ?address + 0 * sizeof(char), 257, ?digits) at 0
+action : left_erase(0);
+         left_add(CharArray::full(address, 257, digits));

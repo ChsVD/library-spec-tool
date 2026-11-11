@@ -1,0 +1,108 @@
+#include "../include/sm3.h"
+
+/* Keep the two directly written ENTL bytes inside one array predicate. */
+id : 1
+priority : start_uchar_mixed_250(0)
+left : UCharArray::undef_full(?p, 250) at 0
+action : left_erase(0);
+         left_add(UCharArray::mixed_full(
+           p, 250, repeat_Z{option{Z}}(None{Z}(), 250)));
+
+id : 2
+priority : materialize_uchar_prefix2(0)
+left : UCharArray::mixed_full(
+         ?p, ?n,
+         replace_Znth{option{Z}}(1, Some{Z}(?b1),
+           replace_Znth{option{Z}}(0, Some{Z}(?b0),
+             repeat_Z{option{Z}}(None{Z}(), n)))) at 0
+check : infer(2 <= n);
+action : left_erase(0);
+         left_add(UCharArray::seg(
+           p, 0, 2, cons{Z}(b0, cons{Z}(b1, nil{Z}()))));
+         left_add(UCharArray::undef_seg(p, 2, n));
+
+/* These rules are named and one-way: callers opt in when adjoining byte
+ * segments must be assembled or forgotten. */
+id : 3
+priority : merge_uchar_segments(0)
+left : UCharArray::seg(?p, ?lo, ?mid, ?left_bytes) at 0
+       UCharArray::seg(p, ?next, ?hi, ?right_bytes) at 1
+check : infer(mid == next);
+action : left_erase(0);
+         left_erase(1);
+         left_add(UCharArray::seg(
+           p, lo, hi, app{Z}(left_bytes, right_bytes)));
+
+id : 5
+priority : close_uchar_seg0(0)
+left : UCharArray::seg(?p, 0, ?hi, ?bytes) at 0
+action : left_erase(0);
+         left_add(UCharArray::full(p, hi, bytes));
+
+id : 7
+priority : forget_uchar_full(0)
+left : UCharArray::full(?p, ?n, ?bytes) at 0
+action : left_erase(0);
+         left_add(UCharArray::undef_full(p, n));
+
+id : 9
+priority : forget_uchar_prefix(0)
+left : store_bytes(
+         ?base + 0 * sizeof(unsigned char), ?used, ?bytes) at 0
+       UCharArray::undef_seg(base, used, ?capacity) at 1
+action : left_erase(0);
+         left_erase(1);
+         left_add(UCharArray::undef_full(base, capacity));
+
+/* A byte segment is the same owned block viewed from its first element.
+ * The forward rule is goal-directed at a callee boundary; the reverse rule
+ * is explicitly requested after the call so surrounding segments remain
+ * available for later assembly. */
+id : 10
+priority : core(1)
+left : UCharArray::seg(?base, ?lo, ?hi, ?bytes) at 0
+right : UCharArray::full(?address, ?count, ?required) at 1
+check : infer(address == base + lo * sizeof(unsigned char));
+        infer(count == hi - lo);
+action : left_erase(0);
+         right_erase(1);
+         right_add(bytes == required);
+
+id : 11
+priority : restore_uchar_segment(0)
+left : store_bytes(
+         ?base + ?lo * sizeof(unsigned char), ?count, ?bytes) at 0
+action : left_erase(0);
+         left_add(Zlength{Z}(bytes) == count);
+         left_add(u8_list_bounded(bytes));
+         left_add(UCharArray::seg(
+           base, lo, lo + count, bytes));
+
+/* Built-in array cancellation requires syntactically identical bounds.
+ * These goal-directed variants also accept bounds proved equal by infer. */
+id : 4
+priority : core(0)
+left : UCharArray::seg(?p, ?lo, ?hi, ?actual_bytes) at 0
+right : UCharArray::seg(p, ?required_lo, ?required_hi, ?required_bytes) at 1
+check : infer(lo == required_lo);
+        infer(hi == required_hi);
+action : left_erase(0);
+         right_erase(1);
+         right_add(actual_bytes == required_bytes);
+
+id : 6
+priority : core(0)
+left : UCharArray::full(?p, ?n, ?actual_bytes) at 0
+right : UCharArray::full(p, ?required_n, ?required_bytes) at 1
+check : infer(n == required_n);
+action : left_erase(0);
+         right_erase(1);
+         right_add(actual_bytes == required_bytes);
+
+id : 8
+priority : core(0)
+left : UCharArray::undef_full(?p, ?n) at 0
+right : UCharArray::undef_full(p, ?required_n) at 1
+check : infer(n == required_n);
+action : left_erase(0);
+         right_erase(1);

@@ -1,0 +1,113 @@
+From SimpleC.Verification Require Import VCPrelude.
+From SimpleC.EE.Applications_human.simplex_recompute Require Import simplex_recompute_goal.
+Import naive_C_Rules.
+Require Import SimpleC.EE.Applications_human.simplex_rat_mul.simplex_rat_mul_lib.
+Require Import SimpleC.EE.Applications_human.simplex_rat_add.simplex_rat_add_lib.
+Require Import SimpleC.EE.Applications_human.simplex_recompute.simplex_recompute_lib.
+Local Open Scope sac.
+
+Lemma proof_of_sx_recompute_safety_wit_1_recompute : sx_recompute_safety_wit_1_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_2_zero_rows : sx_recompute_safety_wit_2_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_3_zero_rows : sx_recompute_safety_wit_3_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_4_recompute : sx_recompute_safety_wit_4_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_5_recompute : sx_recompute_safety_wit_5_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_6_recompute : sx_recompute_safety_wit_6_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_7_recompute : sx_recompute_safety_wit_7_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_8_recompute : sx_recompute_safety_wit_8_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_9_recompute : sx_recompute_safety_wit_9_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_10_recompute : sx_recompute_safety_wit_10_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_11_recompute : sx_recompute_safety_wit_11_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_12_recompute : sx_recompute_safety_wit_12_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_13_recompute : sx_recompute_safety_wit_13_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_14_recompute : sx_recompute_safety_wit_14_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_15_recompute : sx_recompute_safety_wit_15_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_16_recompute : sx_recompute_safety_wit_16_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_17_recompute : sx_recompute_safety_wit_17_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_18_recompute : sx_recompute_safety_wit_18_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_19_recompute : sx_recompute_safety_wit_19_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_20_recompute : sx_recompute_safety_wit_20_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_21_recompute : sx_recompute_safety_wit_21_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_22_recompute : sx_recompute_safety_wit_22_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_23_recompute : sx_recompute_safety_wit_23_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_24_recompute : sx_recompute_safety_wit_24_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_25_zero_rows : sx_recompute_safety_wit_25_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_safety_wit_26_recompute : sx_recompute_safety_wit_26_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_entail_wit_2_zero_rows : sx_recompute_entail_wit_2_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_return_wit_1_zero_rows : sx_recompute_return_wit_1_zero_rows.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_partial_solve_wit_1_recompute : sx_recompute_partial_solve_wit_1_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_partial_solve_wit_2_recompute : sx_recompute_partial_solve_wit_2_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_partial_solve_wit_3_recompute : sx_recompute_partial_solve_wit_3_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_partial_solve_wit_4_recompute_pure : sx_recompute_partial_solve_wit_4_recompute_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_partial_solve_wit_4_recompute : sx_recompute_partial_solve_wit_4_recompute.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_partial_solve_wit_5_recompute_pure : sx_recompute_partial_solve_wit_5_recompute_pure.
+Proof. Admitted.
+
+Lemma proof_of_sx_recompute_partial_solve_wit_5_recompute : sx_recompute_partial_solve_wit_5_recompute.
+Proof. Admitted.
+

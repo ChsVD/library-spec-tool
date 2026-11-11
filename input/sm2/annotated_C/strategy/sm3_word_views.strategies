@@ -1,0 +1,183 @@
+#include "../include/sm3.h"
+
+/* Focus one aligned uint32_t cell out of an initialized byte array.  This is
+ * the byte/word analogue of the built-in Array.full -> missing_i rule: the
+ * prefix and suffix remain as the frame, while the requested typed cell is
+ * supplied to symbolic execution. */
+id : 1
+priority : core(1)
+left : Zlength{Z}(?bytes) == ?n at 0
+       u8_list_bounded(bytes) at 1
+       aligned_4(?word_base) at 2
+       UCharArray::full(?byte_base, n, bytes) at 3
+right : store(
+          ?word_base + (?index * sizeof(U32)), U32, ?value) at 4
+check : infer(0 <= word_base + index * sizeof(U32) - byte_base);
+        infer(word_base + index * sizeof(U32) - byte_base + 4 <= n);
+action : left_erase(3);
+         right_erase(4);
+         left_add(UCharArray::full(
+           byte_base, word_base + index * sizeof(U32) - byte_base,
+           sublist{Z}(0, word_base + index * sizeof(U32) - byte_base, bytes)));
+         left_add(UCharArray::full(
+           word_base + (index + 1) * sizeof(U32),
+           n - (word_base + index * sizeof(U32) - byte_base + 4),
+           sublist{Z}(
+             word_base + index * sizeof(U32) - byte_base + 4, n, bytes)));
+         right_add(value == u8_list_value(
+           sublist{Z}(
+             word_base + index * sizeof(U32) - byte_base,
+             word_base + index * sizeof(U32) - byte_base + 4, bytes)));
+
+/* An unchanged read restores the original byte list. */
+id : 2
+priority : post(1)
+left : Zlength{Z}(?bytes) == ?n at 0
+       u8_list_bounded(bytes) at 1
+       aligned_4(?word_base) at 2
+       UCharArray::full(
+         ?byte_base, word_base + ?index * sizeof(U32) - byte_base,
+         sublist{Z}(
+           0, word_base + index * sizeof(U32) - byte_base, bytes)) at 3
+       store(word_base + index * sizeof(U32), U32,
+         u8_list_value(
+           sublist{Z}(
+             word_base + index * sizeof(U32) - byte_base,
+             word_base + index * sizeof(U32) - byte_base + 4, bytes))) at 4
+       UCharArray::full(
+         word_base + (index + 1) * sizeof(U32),
+         n - (word_base + index * sizeof(U32) - byte_base + 4),
+         sublist{Z}(
+           word_base + index * sizeof(U32) - byte_base + 4, n, bytes)) at 5
+check : infer(0 <= word_base + index * sizeof(U32) - byte_base);
+        infer(word_base + index * sizeof(U32) - byte_base + 4 <= n);
+action : left_erase(3);
+         left_erase(4);
+         left_erase(5);
+         left_add(UCharArray::full(byte_base, n, bytes));
+
+/* A changed word restores one complete byte array and records the generated
+ * four little-endian bytes.  The surrounding byte prefix/suffix are kept. */
+id : 3
+priority : post(3)
+left : Zlength{Z}(?bytes) == ?n at 0
+       u8_list_bounded(bytes) at 1
+       aligned_4(?word_base) at 2
+       UCharArray::full(
+         ?byte_base, word_base + ?index * sizeof(U32) - byte_base,
+         sublist{Z}(
+           0, word_base + index * sizeof(U32) - byte_base, bytes)) at 3
+       store(word_base + index * sizeof(U32), U32, ?value) at 4
+       UCharArray::full(
+         word_base + (index + 1) * sizeof(U32),
+         n - (word_base + index * sizeof(U32) - byte_base + 4),
+         sublist{Z}(
+           word_base + index * sizeof(U32) - byte_base + 4, n, bytes)) at 5
+check : infer(0 <= word_base + index * sizeof(U32) - byte_base);
+        infer(word_base + index * sizeof(U32) - byte_base + 4 <= n);
+action : left_erase(3);
+         left_erase(4);
+         left_erase(5);
+         left_exist_add(word_bytes : list{Z});
+         left_add(Zlength{Z}(word_bytes) == 4);
+         left_add(u8_list_bounded(word_bytes));
+         left_add(u8_list_value(word_bytes) == value);
+         left_add(Zlength{Z}(
+           app{Z}(
+             sublist{Z}(0, word_base + index * sizeof(U32) - byte_base, bytes),
+             app{Z}(word_bytes,
+               sublist{Z}(
+                 word_base + index * sizeof(U32) - byte_base + 4,
+                 n, bytes)))) == n);
+         left_add(u8_list_bounded(
+           app{Z}(
+             sublist{Z}(0, word_base + index * sizeof(U32) - byte_base, bytes),
+             app{Z}(word_bytes,
+               sublist{Z}(
+                 word_base + index * sizeof(U32) - byte_base + 4,
+                 n, bytes)))));
+         left_add(UCharArray::full(byte_base, n,
+           app{Z}(
+             sublist{Z}(0, word_base + index * sizeof(U32) - byte_base, bytes),
+             app{Z}(word_bytes,
+               sublist{Z}(
+                 word_base + index * sizeof(U32) - byte_base + 4,
+                 n, bytes)))));
+
+/* Sequential digest writes use store_byte_prefix: initialized bytes remain
+ * at the front and the next aligned word is taken from the undefined suffix. */
+id : 10
+priority : core(10)
+left : store_byte_prefix(?base, ?capacity, ?prefix) at 0
+right : undef_data_at(
+          ?word_base + (?index * sizeof(U32)), U32) at 1
+check : infer(Zlength{Z}(prefix) + 4 <= capacity);
+        infer(
+          word_base + index * sizeof(U32) - base == Zlength{Z}(prefix));
+        infer(aligned_4(word_base));
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= Zlength{Z}(prefix));
+         left_add(Zlength{Z}(prefix) + 4 <= capacity);
+         left_add(u8_list_bounded(prefix));
+         left_add(
+           word_base + index * sizeof(U32) - base == Zlength{Z}(prefix));
+         left_add(aligned_4(word_base));
+         left_add(UCharArray::full(
+           base, Zlength{Z}(prefix), prefix));
+         left_add(UCharArray::undef_full(
+           word_base + (index + 1) * sizeof(U32),
+           capacity - Zlength{Z}(prefix) - 4));
+
+/* The first word starts from an empty prefix.  State the zero-length instance
+ * directly because the strategy arithmetic solver does not unfold Zlength
+ * over nil while selecting a rule. */
+id : 13
+priority : core(10)
+left : aligned_4(?base) at 0
+       store_byte_prefix(base, ?capacity, nil{Z}) at 1
+right : undef_data_at(base + (0 * sizeof(U32)), U32) at 2
+check : infer(4 <= capacity);
+action : left_erase(1);
+         right_erase(2);
+         left_add(0 <= Zlength{Z}(nil{Z}));
+         left_add(Zlength{Z}(nil{Z}) + 4 <= capacity);
+         left_add(u8_list_bounded(nil{Z}));
+         left_add(
+           base + 0 * sizeof(U32) - base == Zlength{Z}(nil{Z}));
+         left_add(UCharArray::full(
+           base, Zlength{Z}(nil{Z}), nil{Z}));
+         left_add(UCharArray::undef_full(
+           base + (0 + 1) * sizeof(U32),
+           capacity - Zlength{Z}(nil{Z}) - 4));
+
+id : 11
+priority : post(1)
+left : 0 <= Zlength{Z}(?prefix) at 0
+       Zlength{Z}(prefix) + 4 <= ?capacity at 1
+       u8_list_bounded(prefix) at 2
+       ?word_base + ?index * sizeof(U32) - ?base ==
+         Zlength{Z}(prefix) at 3
+       aligned_4(word_base) at 4
+       UCharArray::full(base, Zlength{Z}(prefix), prefix) at 5
+       store(word_base + index * sizeof(U32), U32, ?value) at 6
+       UCharArray::undef_full(
+         word_base + (index + 1) * sizeof(U32),
+         capacity - Zlength{Z}(prefix) - 4) at 7
+action : left_erase(3);
+         left_erase(5);
+         left_erase(6);
+         left_erase(7);
+         left_exist_add(word_bytes : list{Z});
+         left_add(Zlength{Z}(word_bytes) == 4);
+         left_add(u8_list_bounded(word_bytes));
+         left_add(u8_list_value(word_bytes) == value);
+         left_add(store_byte_prefix(
+           base, capacity, app{Z}(prefix, word_bytes)));
+
+id : 15
+priority : post(0)
+left : store_byte_prefix(
+         ?base, ?capacity, app{Z}(nil{Z}, ?bytes)) at 0
+action : left_erase(0);
+         left_add(store_byte_prefix(base, capacity, bytes));

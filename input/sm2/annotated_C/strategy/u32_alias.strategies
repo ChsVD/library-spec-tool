@@ -1,0 +1,11 @@
+#include "../include/basicOp.h"
+
+/* Equal u32 pointers identify corresponding limb cells. */
+id : 10
+priority : core(4)
+left : data_at(field_addr(?a, u32, v) + (?i * sizeof(U64)), U64, ?x) at 0
+       (?a == ?b || ?b == ?a) at 1
+right : data_at(field_addr(b, u32, v) + (i * sizeof(U64)), U64, ?y) at 2
+action : left_erase(0);
+         right_erase(2);
+         right_add(x == y);

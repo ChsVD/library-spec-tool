@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import raw_mul_arrays_strategy_goal raw_mul_arrays_strategy_proof.
+
+Module raw_mul_arrays_Strategy_Correctness : raw_mul_arrays_Strategy_Correct.
+  Include raw_mul_arrays_strategy_proof.
+End raw_mul_arrays_Strategy_Correctness.

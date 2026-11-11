@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import ecc_representation_strategy_goal ecc_representation_strategy_proof.
+
+Module ecc_representation_Strategy_Correctness : ecc_representation_Strategy_Correct.
+  Include ecc_representation_strategy_proof.
+End ecc_representation_Strategy_Correctness.

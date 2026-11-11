@@ -39,6 +39,22 @@ class StrategyTests(unittest.TestCase):
         self.assertTrue(validate(self.report,self.reader))
         row["proof_unknown"]="Not located"
         self.assertEqual(validate(self.report,self.reader),[])
+    def test_current_strategy_links_to_shared_reference_without_legacy_items(self):
+        report = copy.deepcopy(self.report)
+        report["protocol_version"] = 3
+        del report["items"]
+        self.read()
+        self.assertEqual(validate(report, self.reader), [])
+        index = export(report, self.reader, self.out)
+        rule = index["strategies"][0]
+        self.assertEqual(rule["reference_ids"], ["ref"])
+        self.assertNotIn("item_ids", rule)
+        verify_export(report, self.out)
+        rule["reference_ids"] = ["another-reference"]
+        (self.out/"reference_strategies/index.json").write_text(json.dumps(index))
+        with self.assertRaisesRegex(ValueError, "metadata changed"):
+            verify_export(report, self.out)
+
     def test_revision_index_drops_removed_rules(self):
         self.read();export(self.report,self.reader,self.out)
         empty={"references":[],"items":[],"reference_strategies":[]}

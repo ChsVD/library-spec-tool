@@ -1,0 +1,16 @@
+#include "../include/ecc.h"
+
+/* Expose a finite Jacobian coordinate only when a caller explicitly asks
+ * for this fact.  The absence check makes the named scope idempotent. */
+id : 1
+priority : finite_jpoint_coordinates(0)
+left : jpoint_represents(?x, ?y, ?z, ?point) at 0
+       point != ECInfinity() at 1
+check : absense(z != 0);
+action : left_add(z != 0);
+
+id : 2
+priority : afpoint_valid(0)
+left : afpoint_represents(?x, ?y, ?point) at 0
+check : absense(valid_afpoint(x, y));
+action : left_add(valid_afpoint(x, y));

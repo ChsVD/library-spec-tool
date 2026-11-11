@@ -1,0 +1,128 @@
+#include "../include/basepoint_trace.h"
+
+/* Focus an ordinary fixed-base record directly at the abstract point view
+ * requested by a callee.  The exact record and missing array frame remain
+ * internal to symbolic execution. */
+id : 10
+priority : core(1)
+left : StructAFPointArray::full(
+         ?base, SM2_TABLE_RECORDS(),
+         sm2_table_flatten(SM2_BASE_TABLE_DATA())) at 0
+right : store_afpoint(
+          ?selected,
+          sm2_point_mul(
+            sm2_table_term(?byte, ?limb, ?window), SM2_G_POINT())) at 1
+check : infer(0 <= limb);
+        infer(limb < 4);
+        infer(0 <= window);
+        infer(window < 8);
+        infer(0 <= byte);
+        infer(byte < 256);
+        infer(selected ==
+          pointer_offset(
+            pointer_offset(
+              pointer_offset(base, limb, struct AFPoint[256][8]),
+              window, struct AFPoint[256]),
+            byte, struct AFPoint));
+action : right_erase(1);
+         left_erase(0);
+         left_add(record_afpoint_well_formed(
+           sm2_base_table_record_at(limb, window, byte)));
+         left_add(StructAFPointArray::missing_i(
+           base, limb * 8 * 256 + window * 256 + byte,
+           0, SM2_TABLE_RECORDS(),
+           sm2_table_flatten(SM2_BASE_TABLE_DATA())));
+
+id : 11
+priority : post(1)
+left : StructAFPointArray::missing_i(
+         ?base, ?limb * 8 * 256 + ?window * 256 + ?byte,
+         0, SM2_TABLE_RECORDS(),
+         sm2_table_flatten(SM2_BASE_TABLE_DATA())) at 0
+       record_afpoint_well_formed(
+         sm2_base_table_record_at(limb, window, byte)) at 1
+       store_afpoint(
+         ?selected,
+         sm2_point_mul(
+           sm2_table_term(byte, limb, window), SM2_G_POINT())) at 2
+check : infer(0 <= limb);
+        infer(limb < 4);
+        infer(0 <= window);
+        infer(window < 8);
+        infer(0 <= byte);
+        infer(byte < 256);
+        infer(selected ==
+          pointer_offset(
+            pointer_offset(
+              pointer_offset(base, limb, struct AFPoint[256][8]),
+              window, struct AFPoint[256]),
+            byte, struct AFPoint));
+action : left_erase(2);
+         left_erase(1);
+         left_erase(0);
+         left_add(StructAFPointArray::full(
+           base, SM2_TABLE_RECORDS(),
+           sm2_table_flatten(SM2_BASE_TABLE_DATA())));
+
+/* Montgomery table records contain encoded coordinates, while the callee
+ * interface remains the same abstract curve point. */
+id : 20
+priority : core(1)
+left : StructAFPointArray::full(
+         ?base, SM2_TABLE_RECORDS(),
+         sm2_table_flatten(SM2_MONT_BASE_TABLE_DATA())) at 0
+right : store_mont_afpoint(
+          ?selected,
+          sm2_point_mul(
+            sm2_table_term(?byte, ?limb, ?window), SM2_G_POINT())) at 1
+check : infer(0 <= limb);
+        infer(limb < 4);
+        infer(0 <= window);
+        infer(window < 8);
+        infer(0 <= byte);
+        infer(byte < 256);
+        infer(selected ==
+          pointer_offset(
+            pointer_offset(
+              pointer_offset(base, limb, struct AFPoint[256][8]),
+              window, struct AFPoint[256]),
+            byte, struct AFPoint));
+action : right_erase(1);
+         left_erase(0);
+         left_add(record_afpoint_well_formed(
+           sm2_mont_base_table_record_at(limb, window, byte)));
+         left_add(StructAFPointArray::missing_i(
+           base, limb * 8 * 256 + window * 256 + byte,
+           0, SM2_TABLE_RECORDS(),
+           sm2_table_flatten(SM2_MONT_BASE_TABLE_DATA())));
+
+id : 21
+priority : post(1)
+left : StructAFPointArray::missing_i(
+         ?base, ?limb * 8 * 256 + ?window * 256 + ?byte,
+         0, SM2_TABLE_RECORDS(),
+         sm2_table_flatten(SM2_MONT_BASE_TABLE_DATA())) at 0
+       record_afpoint_well_formed(
+         sm2_mont_base_table_record_at(limb, window, byte)) at 1
+       store_mont_afpoint(
+         ?selected,
+         sm2_point_mul(
+           sm2_table_term(byte, limb, window), SM2_G_POINT())) at 2
+check : infer(0 <= limb);
+        infer(limb < 4);
+        infer(0 <= window);
+        infer(window < 8);
+        infer(0 <= byte);
+        infer(byte < 256);
+        infer(selected ==
+          pointer_offset(
+            pointer_offset(
+              pointer_offset(base, limb, struct AFPoint[256][8]),
+              window, struct AFPoint[256]),
+            byte, struct AFPoint));
+action : left_erase(2);
+         left_erase(1);
+         left_erase(0);
+         left_add(StructAFPointArray::full(
+           base, SM2_TABLE_RECORDS(),
+           sm2_table_flatten(SM2_MONT_BASE_TABLE_DATA())));

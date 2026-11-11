@@ -1,0 +1,176 @@
+#include "../include/basicOp.h"
+
+/* Exact memory layouts of the read-only SM2 constants. */
+
+id : 10
+priority : core(0)
+left : store_sm2_p() at 0
+right : store_sm2_p() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 11
+priority : open_sm2_p(0)
+left : store_sm2_p() at 0
+action : left_erase(0);
+         left_add(UInt64Array::full(field_addr(SM2_P, u32, v), 4,
+           cons{Z}(SM2_P_LIMB_0(), cons{Z}(SM2_P_LIMB_1(),
+           cons{Z}(SM2_P_LIMB_2(), cons{Z}(SM2_P_LIMB_3(), nil{Z}()))))));
+
+id : 20
+priority : core(0)
+left : store_sm2_n() at 0
+right : store_sm2_n() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 21
+priority : open_sm2_n(0)
+left : store_sm2_n() at 0
+action : left_erase(0);
+         left_add(UInt64Array::full(field_addr(SM2_N, u32, v), 4,
+           cons{Z}(SM2_N0_Z(), cons{Z}(SM2_N1_Z(),
+           cons{Z}(SM2_N2_Z(), cons{Z}(SM2_N3_Z(), nil{Z}()))))));
+
+id : 30
+priority : core(0)
+left : store_sm2_rhop() at 0
+right : store_sm2_rhop() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 31
+priority : open_sm2_rhop(0)
+left : store_sm2_rhop() at 0
+action : left_erase(0);
+         left_add(store_u256(SM2_rhoP, SM2_RHOP_Z()));
+
+id : 40
+priority : core(0)
+left : store_sm2_rhon() at 0
+right : store_sm2_rhon() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 41
+priority : open_sm2_rhon(0)
+left : store_sm2_rhon() at 0
+action : left_erase(0);
+         left_add(store_u256(SM2_rhoN, SM2_RHON_Z()));
+
+id : 50
+priority : core(0)
+left : store_sm2_neg_inv_n() at 0
+right : store_sm2_neg_inv_n() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 51
+priority : open_sm2_neg_inv_n(0)
+left : store_sm2_neg_inv_n() at 0
+action : left_erase(0);
+         left_add(data_at(SM2_neg_invN, U64, SM2_NEG_INV_N()));
+
+id : 53
+priority : core(0)
+left : data_at(SM2_neg_invN, U64, ?x) at 0
+right : store_sm2_neg_inv_n() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_NEG_INV_N());
+
+id : 60
+priority : core(0)
+left : store_sm2_h() at 0
+right : store_sm2_h() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 61
+priority : open_sm2_h(0)
+left : store_sm2_h() at 0
+action : left_erase(0);
+         left_add(store_u256(SM2_H, SM2_H_Z()));
+
+id : 70
+priority : core(0)
+left : store_sm2_nh() at 0
+right : store_sm2_nh() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 71
+priority : open_sm2_nh(0)
+left : store_sm2_nh() at 0
+action : left_erase(0);
+         left_add(store_fn(SM2_NH, SM2_NH_Z()));
+
+/* Fold implementation-level constant resources back to their named public
+ * resources.  The forward direction is intentionally explicit [do]/[by] at
+ * the actual read boundary. */
+id : 81
+priority : core(4)
+left : store_u256(SM2_P, ?x) at 0
+right : store_sm2_p() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_P_Z());
+
+id : 83
+priority : core(4)
+left : store_u256(SM2_N, ?x) at 0
+right : store_sm2_n() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_N_Z());
+
+id : 85
+priority : core(4)
+left : store_u256(SM2_rhoP, ?x) at 0
+right : store_sm2_rhop() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_RHOP_Z());
+
+id : 87
+priority : core(4)
+left : store_u256(SM2_rhoN, ?x) at 0
+right : store_sm2_rhon() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_RHON_Z());
+
+id : 89
+priority : core(4)
+left : store_u256(SM2_H, ?x) at 0
+right : store_sm2_h() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_H_Z());
+
+id : 91
+priority : core(4)
+left : store_fn(SM2_NH, ?x) at 0
+right : store_sm2_nh() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_NH_Z());
+
+/* Fold exact constant arrays after implementation-level direct reads. */
+id : 92
+priority : core(0)
+left : UInt64Array::full(field_addr(SM2_P, u32, v), 4,
+         cons{Z}(SM2_P_LIMB_0(), cons{Z}(SM2_P_LIMB_1(),
+         cons{Z}(SM2_P_LIMB_2(), cons{Z}(SM2_P_LIMB_3(), nil{Z}()))))) at 0
+right : store_sm2_p() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 93
+priority : core(0)
+left : UInt64Array::full(field_addr(SM2_N, u32, v), 4,
+         cons{Z}(SM2_N0_Z(), cons{Z}(SM2_N1_Z(),
+         cons{Z}(SM2_N2_Z(), cons{Z}(SM2_N3_Z(), nil{Z}()))))) at 0
+right : store_sm2_n() at 1
+action : left_erase(0);
+         right_erase(1);

@@ -1,0 +1,458 @@
+#include "../include/sm2_protocol.h"
+
+/* Protocol objects project only the field requested by a callee.  The
+ * untouched field and protocol validity facts remain in the caller state. */
+
+id : 1
+priority : core(0)
+left : store_sm2_private_key(?p, ?d) at 0
+right : store_sm2_private_key(?q, ?required_d) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         right_add(d == required_d);
+
+id : 2
+priority : core(0)
+left : store_sm2_private_key(?p, ?d) at 0
+right : store_fn(field_addr(?q, PrivKey, da), ?required_d) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(valid_sm2_private_key(d));
+         right_add(d == required_d);
+
+id : 3
+priority : core(3)
+right : store_sm2_private_key(?p, ?d) at 0
+action : right_erase(0);
+         right_add(valid_sm2_private_key(d));
+         right_add(store_fn(field_addr(p, PrivKey, da), d));
+
+id : 4
+priority : core(0)
+left : undef_sm2_private_key(?p) at 0
+right : undef_sm2_private_key(?q) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+id : 5
+priority : core(0)
+left : undef_sm2_private_key(?p) at 0
+right : UndefStructPredu32(field_addr(?q, PrivKey, da)) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+id : 6
+priority : core(3)
+right : undef_sm2_private_key(?p) at 0
+action : right_erase(0);
+         right_add(UndefStructPredu32(field_addr(p, PrivKey, da)));
+
+id : 7
+priority : core(0)
+left : undef_sm2_private_key(?p) at 0
+right : UInt64Array::undef_full(
+          field_addr(field_addr(?q, PrivKey, da), u32, v), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+id : 10
+priority : core(0)
+left : store_sm2_signature(?p, ?r, ?s) at 0
+right : store_sm2_signature(?q, ?required_r, ?required_s) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         right_add(r == required_r);
+         right_add(s == required_s);
+
+id : 11
+priority : core(0)
+left : store_sm2_signature(?p, ?r, ?s) at 0
+right : store_u256(field_addr(?q, SM2SIG, r), ?required_r) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_u256(field_addr(p, SM2SIG, s), s));
+         right_add(r == required_r);
+
+id : 12
+priority : core(0)
+left : store_sm2_signature(?p, ?r, ?s) at 0
+right : store_u256(field_addr(?q, SM2SIG, s), ?required_s) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_u256(field_addr(p, SM2SIG, r), r));
+         right_add(s == required_s);
+
+id : 13
+priority : core(3)
+right : store_sm2_signature(?p, ?r, ?s) at 0
+action : right_erase(0);
+         right_add(store_u256(field_addr(p, SM2SIG, r), r));
+         right_add(store_u256(field_addr(p, SM2SIG, s), s));
+
+id : 14
+priority : core(0)
+left : undef_sm2_signature(?p) at 0
+right : undef_sm2_signature(?q) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+id : 15
+priority : open_undef_sm2_signature(0)
+left : undef_sm2_signature(?p) at 0
+action : left_erase(0);
+         left_add(UndefStructPredu32(field_addr(p, SM2SIG, r)));
+         left_add(UndefStructPredu32(field_addr(p, SM2SIG, s)));
+
+id : 16
+priority : core(3)
+right : undef_sm2_signature(?p) at 0
+action : right_erase(0);
+         right_add(UndefStructPredu32(field_addr(p, SM2SIG, r)));
+         right_add(UndefStructPredu32(field_addr(p, SM2SIG, s)));
+
+id : 20
+priority : core(0)
+left : store_sm2_public_key(?p, ?point) at 0
+right : store_sm2_public_key(?q, ?required_point) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         right_add(point == required_point);
+
+id : 21
+priority : core(0)
+left : store_sm2_public_key(?p, ?point) at 0
+right : store_afpoint(?q, ?required_point) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(valid_sm2_public_key(point));
+         right_add(point == required_point);
+
+id : 22
+priority : core(3)
+right : store_sm2_public_key(?p, ?point) at 0
+action : right_erase(0);
+         right_add(valid_sm2_public_key(point));
+         right_add(store_afpoint(p, point));
+
+id : 23
+priority : open_sm2_public_key(0)
+left : store_sm2_public_key(?p, ?point) at 0
+action : left_erase(0);
+         left_add(valid_sm2_public_key(point));
+         left_add(store_afpoint(p, point));
+
+/* Export the canonical integer coordinates of an already opened affine
+ * point without changing its memory representation. */
+id : 24
+priority : sm2_point_coordinates(0)
+left : afpoint_represents(?x, ?y, ?point) at 0
+check : absense(x == sm2_point_x(point));
+        absense(y == sm2_point_y(point));
+action : left_add(x == sm2_point_x(point));
+         left_add(y == sm2_point_y(point));
+
+id : 30
+priority : core(0)
+left : store_sm2_za(?p, ?id_bytes, ?point, ?za) at 0
+right : store_sm2_za(
+          ?q, ?required_id, ?required_point, ?required_za) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         right_add(id_bytes == required_id);
+         right_add(point == required_point);
+         right_add(za == required_za);
+
+id : 31
+priority : core(0)
+left : store_sm2_za(?p, ?id_bytes, ?point, ?za) at 0
+right : store_bytes(?q, 32, ?required_za) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(za == sm2_za_digest(id_bytes, point));
+         right_add(za == required_za);
+
+id : 32
+priority : core(3)
+right : store_sm2_za(?p, ?id_bytes, ?point, ?za) at 0
+action : right_erase(0);
+         right_add(za == sm2_za_digest(id_bytes, point));
+         right_add(store_bytes(p, 32, za));
+
+/* Global groups are opened only at function entry.  Right-side expansion is
+ * goal-driven, allowing a caller's leaf resources to satisfy a callee group
+ * without loading unrelated constant-opening scopes. */
+
+id : 40
+priority : core(0)
+left : store_sm2_get_public_key_globals() at 0
+right : store_sm2_get_public_key_globals() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 41
+priority : open_sm2_get_public_key_globals(0)
+left : store_sm2_get_public_key_globals() at 0
+action : left_erase(0);
+         left_add(store_sm2_base_point_table());
+         left_add(store_sm2_p());
+         left_add(store_sm2_rhop());
+         left_add(store_jpoint_zero());
+         left_add(store_sm2_inv2p());
+
+id : 42
+priority : core(3)
+right : store_sm2_get_public_key_globals() at 0
+action : right_erase(0);
+         right_add(store_sm2_base_point_table());
+         right_add(store_sm2_p());
+         right_add(store_sm2_rhop());
+         right_add(store_jpoint_zero());
+         right_add(store_sm2_inv2p());
+
+id : 50
+priority : core(0)
+left : store_sm2_keypair_globals() at 0
+right : store_sm2_keypair_globals() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 51
+priority : open_sm2_keypair_globals(0)
+left : store_sm2_keypair_globals() at 0
+action : left_erase(0);
+         left_add(store_sm2_n());
+         left_add(store_sm2_rhon());
+         left_add(store_sm2_base_point_table());
+         left_add(store_sm2_p());
+         left_add(store_sm2_rhop());
+         left_add(store_jpoint_zero());
+         left_add(store_sm2_inv2p());
+
+id : 52
+priority : core(3)
+right : store_sm2_keypair_globals() at 0
+action : right_erase(0);
+         right_add(store_sm2_n());
+         right_add(store_sm2_rhon());
+         right_add(store_sm2_base_point_table());
+         right_add(store_sm2_p());
+         right_add(store_sm2_rhop());
+         right_add(store_jpoint_zero());
+         right_add(store_sm2_inv2p());
+
+id : 60
+priority : core(0)
+left : store_sm2_za_globals() at 0
+right : store_sm2_za_globals() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 61
+priority : open_sm2_za_globals(0)
+left : store_sm2_za_globals() at 0
+action : left_erase(0);
+         left_add(store_sm2_a());
+         left_add(store_sm2_b());
+         left_add(store_sm2_g());
+         left_add(store_sm3_ti());
+
+id : 62
+priority : core(3)
+right : store_sm2_za_globals() at 0
+action : right_erase(0);
+         right_add(store_sm2_a());
+         right_add(store_sm2_b());
+         right_add(store_sm2_g());
+         right_add(store_sm3_ti());
+
+id : 63
+priority : core(0)
+left : store_sm2_g() at 0
+right : store_sm2_g() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 64
+priority : open_sm2_g(0)
+left : store_sm2_g() at 0
+action : left_erase(0);
+         left_add(store_afpoint(SM2_G, SM2_G_POINT()));
+
+id : 65
+priority : core(3)
+right : store_sm2_g() at 0
+action : right_erase(0);
+         right_add(store_afpoint(SM2_G, SM2_G_POINT()));
+
+id : 70
+priority : core(0)
+left : store_sm2_sign_dgst_globals() at 0
+right : store_sm2_sign_dgst_globals() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 71
+priority : open_sm2_sign_dgst_globals(0)
+left : store_sm2_sign_dgst_globals() at 0
+action : left_erase(0);
+         left_add(store_sm2_n());
+         left_add(store_sm2_rhon());
+         left_add(store_sm2_nh());
+         left_add(store_sm2_neg_inv_n());
+         left_add(store_sm2_mont_base_point_table());
+         left_add(store_sm2_p());
+         left_add(store_sm2_rhop());
+         left_add(store_bn_zero());
+         left_add(store_montg_one());
+
+id : 72
+priority : core(3)
+right : store_sm2_sign_dgst_globals() at 0
+action : right_erase(0);
+         right_add(store_sm2_n());
+         right_add(store_sm2_rhon());
+         right_add(store_sm2_nh());
+         right_add(store_sm2_neg_inv_n());
+         right_add(store_sm2_mont_base_point_table());
+         right_add(store_sm2_p());
+         right_add(store_sm2_rhop());
+         right_add(store_bn_zero());
+         right_add(store_montg_one());
+
+id : 80
+priority : core(0)
+left : store_sm2_sign_globals() at 0
+right : store_sm2_sign_globals() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 81
+priority : open_sm2_sign_globals(0)
+left : store_sm2_sign_globals() at 0
+action : left_erase(0);
+         left_add(store_sm2_a());
+         left_add(store_sm2_b());
+         left_add(store_sm2_g());
+         left_add(store_sm3_ti());
+         left_add(store_sm2_n());
+         left_add(store_sm2_rhon());
+         left_add(store_sm2_nh());
+         left_add(store_sm2_neg_inv_n());
+         left_add(store_sm2_mont_base_point_table());
+         left_add(store_sm2_p());
+         left_add(store_sm2_rhop());
+         left_add(store_bn_zero());
+         left_add(store_montg_one());
+
+id : 82
+priority : core(3)
+right : store_sm2_sign_globals() at 0
+action : right_erase(0);
+         right_add(store_sm2_a());
+         right_add(store_sm2_b());
+         right_add(store_sm2_g());
+         right_add(store_sm3_ti());
+         right_add(store_sm2_n());
+         right_add(store_sm2_rhon());
+         right_add(store_sm2_nh());
+         right_add(store_sm2_neg_inv_n());
+         right_add(store_sm2_mont_base_point_table());
+         right_add(store_sm2_p());
+         right_add(store_sm2_rhop());
+         right_add(store_bn_zero());
+         right_add(store_montg_one());
+
+id : 90
+priority : core(0)
+left : store_sm2_verify_dgst_globals() at 0
+right : store_sm2_verify_dgst_globals() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 91
+priority : open_sm2_verify_dgst_globals(0)
+left : store_sm2_verify_dgst_globals() at 0
+action : left_erase(0);
+         left_add(store_sm2_a());
+         left_add(store_sm2_b());
+         left_add(store_sm2_n());
+         left_add(store_sm2_rhon());
+         left_add(store_sm2_h());
+         left_add(store_sm2_p());
+         left_add(store_sm2_rhop());
+         left_add(store_sm2_mont_base_point_table());
+         left_add(store_jpoint_zero());
+         left_add(store_bn_zero());
+         left_add(store_montg_one());
+
+id : 92
+priority : core(3)
+right : store_sm2_verify_dgst_globals() at 0
+action : right_erase(0);
+         right_add(store_sm2_a());
+         right_add(store_sm2_b());
+         right_add(store_sm2_n());
+         right_add(store_sm2_rhon());
+         right_add(store_sm2_h());
+         right_add(store_sm2_p());
+         right_add(store_sm2_rhop());
+         right_add(store_sm2_mont_base_point_table());
+         right_add(store_jpoint_zero());
+         right_add(store_bn_zero());
+         right_add(store_montg_one());
+
+id : 100
+priority : core(0)
+left : store_sm2_verify_globals() at 0
+right : store_sm2_verify_globals() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 101
+priority : open_sm2_verify_globals(0)
+left : store_sm2_verify_globals() at 0
+action : left_erase(0);
+         left_add(store_sm2_a());
+         left_add(store_sm2_b());
+         left_add(store_sm2_n());
+         left_add(store_sm2_rhon());
+         left_add(store_sm2_h());
+         left_add(store_sm2_p());
+         left_add(store_sm2_rhop());
+         left_add(store_sm2_mont_base_point_table());
+         left_add(store_jpoint_zero());
+         left_add(store_bn_zero());
+         left_add(store_montg_one());
+         left_add(store_sm2_g());
+         left_add(store_sm3_ti());
+
+id : 102
+priority : core(3)
+right : store_sm2_verify_globals() at 0
+action : right_erase(0);
+         right_add(store_sm2_a());
+         right_add(store_sm2_b());
+         right_add(store_sm2_n());
+         right_add(store_sm2_rhon());
+         right_add(store_sm2_h());
+         right_add(store_sm2_p());
+         right_add(store_sm2_rhop());
+         right_add(store_sm2_mont_base_point_table());
+         right_add(store_jpoint_zero());
+         right_add(store_bn_zero());
+         right_add(store_montg_one());
+         right_add(store_sm2_g());
+         right_add(store_sm3_ti());

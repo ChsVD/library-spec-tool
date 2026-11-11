@@ -1,0 +1,160 @@
+#include "../include/basicOp.h"
+
+/* Compatibility bridges not covered by QCP's goal-directed UInt64Array
+ * strategies.  In particular, do not eagerly expand a four-element [full]
+ * predicate here: the builtin array rules open only the requested element and
+ * restore the array through their [post] scope. */
+
+/* A record copy can leave a four-limb u32 as one [full] array.  Open all four
+ * cells only at an explicit record/alias boundary; keeping this rule out of
+ * [core] prevents unrelated callers from accumulating limb-level states. */
+id : 1
+priority : open_u64_array4(0)
+left : UInt64Array::full(?p, 4, ?xs) at 0
+action : left_erase(0);
+         left_add(data_at(p + (0 * sizeof(U64)), U64, Znth{Z}(0, xs, 0)));
+         left_add(data_at(p + (1 * sizeof(U64)), U64, Znth{Z}(1, xs, 0)));
+         left_add(data_at(p + (2 * sizeof(U64)), U64, Znth{Z}(2, xs, 0)));
+         left_add(data_at(p + (3 * sizeof(U64)), U64, Znth{Z}(3, xs, 0)));
+
+id : 2
+priority : core(3)
+left : data_at(?p + (0 * sizeof(U64)), U64, ?x0) at 0
+       data_at(p + (1 * sizeof(U64)), U64, ?x1) at 1
+       data_at(p + (2 * sizeof(U64)), U64, ?x2) at 2
+       data_at(p + (3 * sizeof(U64)), U64, ?x3) at 3
+right : UInt64Array::full(?q, 4, ?xs) at 4
+check : infer(p == q);
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         right_erase(4);
+         right_add(xs == cons{Z}(x0,
+           cons{Z}(x1, cons{Z}(x2, cons{Z}(x3, nil{Z}())))));
+
+/* Preserve the shape of a uniformly initialized suffix. */
+id : 3
+priority : core(0)
+left : UInt64Array::full(?p, ?n, repeat_Z{Z}(?x, n)) at 0
+right : UInt64Array::undef_full(?q, ?m) at 1
+check : infer(p == q);
+        infer(0 <= m);
+        infer(m <= n);
+action : left_erase(0);
+         right_erase(1);
+         left_add(UInt64Array::full(q + (m * sizeof(U64)), n - m,
+           repeat_Z{Z}(x, n - m)));
+
+/* Use the required base so equivalent pointer expressions remain aligned. */
+id : 4
+priority : core(0)
+left : UInt64Array::full(?p, ?n, ?xs) at 0
+right : UInt64Array::undef_full(?q, ?m) at 1
+check : infer(p == q);
+        infer(0 <= m);
+        infer(m <= n);
+action : left_erase(0);
+         right_erase(1);
+         left_add(UInt64Array::full(q + (m * sizeof(U64)), n - m,
+           sublist{Z}(m, n, xs)));
+
+/* Consume a uniformly initialized singleton against an equal cell. */
+id : 5
+priority : core(0)
+left : UInt64Array::full(?p, ?n, repeat_Z{Z}(?x, n)) at 0
+right : data_at(?q, U64, ?y) at 1
+check : infer(n == 1);
+        infer(p == q);
+        infer(x == y);
+action : left_erase(0);
+         right_erase(1);
+
+/* Read a dynamic limb and retain the remaining array frame. */
+id : 7
+priority : core(0)
+left : UInt64Array::full(?p, ?n, ?xs) at 0
+       u64_list_bounded(xs) at 1
+right : data_at(?q + (?i * sizeof(U64)), U64, ?v) at 2
+check : infer(p == q);
+        infer(0 <= i);
+        infer(i < n);
+action : right_erase(2);
+         left_erase(0);
+         left_add(UInt64Array::missing_i(p, i, 0, n, xs));
+         left_add(0 <= Znth{Z}(i, xs, 0));
+         left_add(Znth{Z}(i, xs, 0) < U64_MOD());
+         right_add(v == Znth{Z}(i, xs, 0));
+
+/* Preserve list length and bounds after an in-range limb update. */
+id : 8
+priority : core(1)
+left : UInt64Array::full(?p, ?n, replace_Znth{Z}(?i, ?v, ?xs)) at 0
+       u64_list_bounded(xs) at 1
+       Zlength{Z}(xs) == n at 2
+       0 <= v at 3
+       v < U64_MOD() at 4
+check : infer(0 <= i);
+        infer(i < n);
+        absense(u64_list_bounded(replace_Znth{Z}(i, v, xs)));
+action : left_add(Zlength{Z}(replace_Znth{Z}(i, v, xs)) == n);
+         left_add(u64_list_bounded(replace_Znth{Z}(i, v, xs)));
+
+/* Normalize array decay at index zero before releasing a local array. */
+id : 9
+priority : normalize_u64_shape_base(0)
+left : UInt64Array::full_shape(?p + (0 * sizeof(U64)), ?n) at 0
+action : left_erase(0);
+         left_add(UInt64Array::full_shape(p, n));
+
+/* Forget element values while retaining the complete array permission. */
+id : 10
+priority : core(0)
+left : UInt64Array::full_shape(?p, ?n) at 0
+right : UInt64Array::undef_full(p, n) at 1
+action : left_erase(0);
+         right_erase(1);
+
+/* Normalize array decay at index zero for an undefined uint64 array. */
+id : 11
+priority : core(0)
+left : UInt64Array::undef_full(?p, ?n) at 0
+right : UInt64Array::undef_full(?q + (0 * sizeof(U64)), ?m) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+
+/* Array reads are represented internally as a write-back of the value just
+ * read.  Collapse that identity update at explicit phase boundaries so a
+ * sequence of reads does not carry nested [replace_Znth] terms into a branch
+ * join. */
+id : 12
+priority : normalize_u64_reads(0)
+left : UInt64Array::full(?p, ?n,
+         replace_Znth{Z}(?i, Znth{Z}(i, ?xs, 0), xs)) at 0
+       Zlength{Z}(xs) == n at 1
+check : infer(0 <= i);
+        infer(i < n);
+action : left_erase(0);
+         left_add(UInt64Array::full(p, n, xs));
+
+/* Transfer an unchanged byte array across a pointer-cast alias.  This is an
+ * exact cancellation rule: all of base, length, and contents must already be
+ * provably equal, so it does not expand or otherwise reshape arrays. */
+id : 13
+priority : core(0)
+left : UCharArray::full(?p, ?n, ?xs) at 0
+right : UCharArray::full(?q, ?m, ?ys) at 1
+check : infer(p == q);
+        infer(n == m);
+        infer(xs == ys);
+action : left_erase(0);
+         right_erase(1);
+
+/* Discard the empty suffix left by a complete fixed-size array overwrite. */
+id : 14
+priority : core(1)
+left : UInt64Array::full(?p, ?n, ?xs) at 0
+check : infer(n == 0);
+action : left_erase(0);

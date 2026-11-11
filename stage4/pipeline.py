@@ -116,7 +116,46 @@ def load_upstream(root, source, input_transition=None):
     return graph,nodes,inventory
 
 
-def render(proposal):
+GUIDANCE_PATH = Path(__file__).resolve().parents[1] / 'SPECIFICATION_WRITING_GUIDE.md'
+
+
+def writing_guidance():
+    import hashlib
+    content = GUIDANCE_PATH.read_text()
+    version = hashlib.sha256(content.encode()).hexdigest()
+    return {'path':str(GUIDANCE_PATH), 'version':'sha256:' + version,
+            'sha256':version, 'content':content}
+
+
+def upstream_needs(node):
+    import copy
+    spec = node['spec']
+    items = copy.deepcopy(spec.get('common_needs', []))
+    return {'present':'common_needs' in spec, 'items':items,
+            'ids':['upstream-' + str(i) for i in range(len(items))]}
+
+
+def planning_index(proposal, extracts):
+    if proposal.get('protocol_version') == 3:
+        return {'schema_version':3, 'protocol_version':3,
+                'candidate_digest':planning.candidate_digest(proposal), 'needs':extracts,
+                'references':proposal['references'], 'uses':proposal['uses'],
+                'reference_strategies':proposal.get('reference_strategies', []),
+                'strategy_search':proposal['strategy_search'],
+                'proof_status':'not_proved', 'target_status':'not_validated',
+                'execution_status':'not_started'}
+    return {'schema_version':2, 'candidate_digest':digest(proposal),
+            'needs':extracts, 'references':proposal['references'],
+            'reference_strategies':proposal.get('reference_strategies', []),
+            'decisions':proposal['coverage'],
+            'validation_obligations':{i['id']:i['validation_obligations'] for i in proposal['items']},
+            'proof_status':'not_proved', 'execution_status':'not_started'}
+
+
+def render(proposal, review=None):
+    if proposal.get('protocol_version') == 3:
+        return render_handoff(proposal, review)
+
     lines=['# 公共定义与 lemma 候选','','精确数学/自然语言草案；未形式化、未证明。独立审查见 review.json。','']
     for item in proposal['items']:
         lines+=['## '+item['name']+' ('+item['id']+')','']
@@ -136,9 +175,55 @@ def render(proposal):
     return '\n'.join(lines)
 
 
+def render_handoff(proposal, review=None):
+    # A review of another candidate or protocol never authorizes a recommendation.
+    reviewed = (isinstance(review, dict) and review.get('protocol_version') == 3
+                and review.get('candidate_digest') == planning.candidate_digest(proposal))
+    refs = {r['id']:r for r in proposal['references']}
+    reference_reviews = {r['reference_id']:r for r in review.get('reference_reviews', [])} if reviewed else {}
+    use_reviews = {r['use_id']:r for r in review.get('use_reviews', [])} if reviewed else {}
+    def accepted(use):
+        return (use_reviews.get(use['id'], {}).get('verdict') == 'pass'
+                and all(reference_reviews.get(i, {}).get('verdict') == 'pass' for i in use['reference_ids']))
+    lines = ['# 参考检索交接', '', '审查状态：' + (review['verdict'] if reviewed else '待审'),
+             '目标端验证：未验证；未执行 Coq、QCP 或调用匹配检查。', '']
+    for fid in dict.fromkeys(u['function_id'] for u in proposal['uses']):
+        lines += ['## 函数 ' + fid, '', '### 可参考清单', '']
+        usable = [u for u in proposal['uses'] if u['function_id'] == fid and u['result'] in ('direct', 'adapt', 'idea') and accepted(u)]
+        lines += ['- ' + u['id'] + ' / ' + u['need_id'] + '：' + u['purpose'] + '；审查：pass；检索判断：' + u['result'] + '；参考 ' + ', '.join(u['reference_ids']) for u in usable] or ['无已获审查认可的推荐。']
+        lines += ['', '### 检索结果、适配限制与待确认事项', '']
+        for use in (u for u in proposal['uses'] if u['function_id'] == fid):
+            lines += ['- ' + use['id'] + ' / ' + use['need_id'] + '：' + use['result'] + '；审查：' + (use_reviews.get(use['id'], {}).get('verdict', '待审') if reviewed else '待审'),
+                      '  用途：' + use['purpose'], '  差异：' + (use.get('adaptation') or '无'),
+                      '  待确认：' + (use.get('uncertainty') or '无'), '  已查范围：' + (use.get('search_scope') or '无')]
+    lines += ['', '## 共享参考原意及前提', '']
+    for ident, ref in refs.items():
+        lines += ['### ' + ident + ' — ' + ref['name'], '', '审查：' + reference_reviews.get(ident, {}).get('verdict', '待审') + '（未获认可时不可采用本条解释）', '原意：' + ref['meaning'],
+                  '前提：' + str(ref['premises']), '原文位置：' + json.dumps(ref['evidence'], ensure_ascii=False), '']
+    lines += ['## Strategy 附件', '', json.dumps({'reference_strategies':proposal.get('reference_strategies', []), 'strategy_search':proposal['strategy_search']}, ensure_ascii=False, indent=2),
+              '', '## 审查记录', '', json.dumps(review if reviewed else {'status':'pending'}, ensure_ascii=False, indent=2)]
+    return '\n'.join(lines) + '\n'
+
+
+def requires_revision(review):
+    if not review:
+        return False
+    if review.get('verdict') == 'needs_revision':
+        return True
+    if review.get('protocol_version') == 3:
+        return any(row.get('verdict') == 'needs_revision'
+                   for key in ('reference_reviews', 'use_reviews') for row in review.get(key, []))
+    return review.get('verdict') == 'partial' and any(
+        row.get('action') == 'revise' for row in review.get('item_reviews', []))
+
+
 def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1,
-                 resume=False, recover_from=None, max_report_chars=24000, component_review=False, input_transition=None, revise_from=None, label='fixture', model_identity=None):
+                 resume=False, recover_from=None, max_report_chars=24000, component_review=False, input_transition=None, revise_from=None, label='fixture', model_identity=None, protocol_version=3):
     import fcntl
+    if type(protocol_version) is not int or protocol_version not in (2, 3):
+        raise ValueError('unsupported pipeline protocol_version')
+    if protocol_version == 2 and label != 'fixture':
+        raise ValueError('protocol_version=2 is restricted to fixed-response fixture replay')
     root=Path(root).resolve(strict=True); output=Path(output).resolve();source=Path(source).resolve(strict=True)
     if output.is_relative_to(root) or output==source or output.is_relative_to(source):
         raise ValueError('stage3 output must be outside input and upstream run')
@@ -152,7 +237,7 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
     if revise_from and output.is_relative_to(Path(revise_from).resolve()):
         raise ValueError('input revision requires a separate output')
     graph,nodes,inventory=load_upstream(root,source,input_transition)
-    identity={'max_report_chars':max_report_chars,'recovery_policy':1,'strategy_policy':strategies.VERSION,'material_policy':materials.VERSION,'planning_policy':planning.VERSION,'prompt_digest':digest({r:prompt(r,{},max_report_chars,component_review) for r in ('extract','common','review')}),'graph_digest':digest(graph),'source':str(source),'condition_policy':1,'model':model_identity or {'mode':label},'mode':label}
+    identity={'max_report_chars':max_report_chars,'recovery_policy':1,'strategy_policy':strategies.VERSION,'material_policy':materials.VERSION if protocol_version == 3 else 1,'planning_policy':protocol_version,'writing_guidance_digest':writing_guidance()['sha256'],'prompt_digest':digest({r:prompt(r,{},max_report_chars,component_review) for r in ('extract','common','review')}),'graph_digest':digest(graph),'source':str(source),'condition_policy':1,'model':model_identity or {'mode':label},'mode':label}
     transition_record=None;revision_data=None;revision_record=None
     if component_review:identity['component_policy']=1
     if revise_from:
@@ -163,7 +248,7 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
         current_hashes={r['path']:r['sha256'] for r in inventory}
         if any(current_hashes.get(r['path'])!=r['sha256'] for r in old_inventory):
             raise ValueError('revision changed or removed an earlier input material')
-        revision_data,revision_record=input_revision.seed(revise_from,graph,nodes,old_inventory,identity['model'])
+        revision_data,revision_record=input_revision.seed(revise_from,graph,nodes,old_inventory,identity['model'], protocol_version=protocol_version)
         identity['input_transition']=transition_record
         identity['revision_seed']=revision_record
     if not resume:output.mkdir(parents=True,exist_ok=False)
@@ -175,19 +260,24 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
             if json.loads((output/'identity.json').read_text())!=identity:raise ValueError('upstream/model/planning policy changed; use a new output directory')
             data=json.loads((output/'checkpoint.json').read_text());state=json.loads((output/'status.json').read_text())
             if state.get('checkpoint_digest')!=digest(data):raise ValueError('checkpoint/status mismatch')
+            if (data.get('candidate') or {}).get('protocol_version') == 3 and data.get('review'):
+                if (data['review'].get('protocol_version') != 3 or data['review'].get('candidate_digest') != planning.candidate_digest(data['candidate'])):
+                    raise ValueError('checkpoint review belongs to another candidate or protocol')
             if state.get('status')=='common_candidates_reviewed':
                 strategies.verify_export(data['candidate'], output)
                 return state
         else:
             data={'extracts':{},'candidate':None,'review':None}
-            state={'status':'running','attempt':0,'tasks':{},'proof_status':'not_proved','mode':label}
+            state={'status':'running','attempt':0,'tasks':{},'proof_status':'not_proved','mode':label,'protocol_version':protocol_version,'run_status':'running','review_status':'pending','target_status':'not_validated'}
             write_json(output/'identity.json',identity);write_json(output/'input_snapshot.json',inventory)
+            write_json(output/'specification-writing-guidance.json',writing_guidance())
         budgets=budgets or Budgets(calls=24,context_chars=60000)
         recovery_task=None;recovery_record=None
         if recover_from is not None:
             from . import recovery
             data,recovery_task,recovery_record=recovery.prepare(recover_from,identity,inventory,nodes,budgets)
             write_json(output/'recovery.json',recovery_record)
+            state['error_history']=recovery_record.get('error_history', [])
             for ident, report in data['extracts'].items():
                 folder=output/'functions'/ident;folder.mkdir(parents=True,exist_ok=True)
                 write_json(folder/'common_needs.json',report)
@@ -207,6 +297,7 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
                 write_json(folder/'common_needs.json',report)
         upstream_context=graph.get('upstream_context',{'kind':'legacy_reviewed_candidates','semantic_review':True,'proved':False})
         state['upstream_context']=upstream_context
+        state.setdefault('error_history', [])
         write_json(output/'upstream_context.json',upstream_context)
         write_json(output/'upstream_conditions.json',contracts.upstream_conditions(nodes))
         budgets=budgets or Budgets(calls=24,context_chars=60000)
@@ -218,6 +309,11 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
             state['expected_functions']=list(nodes)
             state['extracted_functions']=list(data['extracts'])
             write_json(output/'status.json',state)
+        def record_error(reason):
+            entry = {'reason':reason, 'status':state.get('status'), 'attempt':state['attempt']}
+            if not state['error_history'] or state['error_history'][-1].get('reason') != reason or state['error_history'][-1].get('attempt') != state['attempt']:
+                state['error_history'].append(entry)
+            state['reason'] = reason
         def execute(role,assignment,artifacts,validator):
             nonlocal recovery_task
             state['attempt']+=1;save();tid=role+'-'+str(state['attempt']).zfill(4)
@@ -227,12 +323,19 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
                 scoped=bundles_from_nodes(source,selected_nodes,inventory)
                 artifacts=dict(artifacts)
                 artifacts['source-index']=[{'function_id':m['function_id'],'ranges':[x['original'] for x in m['mappings']]} for _,m in scoped]
-            instructions=prompt(role,assignment,max_report_chars,component_review)
+            artifacts = dict(artifacts)
+            artifacts['specification-writing-guidance'] = writing_guidance()
+            if artifacts['specification-writing-guidance']['sha256'] != identity['writing_guidance_digest']:
+                raise ValueError('specification writing guidance changed during run')
+            instructions=('Report protocol_version must be ' + str(protocol_version) + '. First read artifact specification-writing-guidance at ' + str(GUIDANCE_PATH) + '; use its recorded version and requirements. This trusted artifact does not expand Reader permissions.\n' + prompt(role,assignment,max_report_chars,component_review))
             if scoped is not None:instructions='Reader only exposes extracted source copies at original coordinates. Read source-index for exact available ranges. Missing material must remain unknown/insufficient; no original repository fallback.\n'+instructions
             if scoped is not None and any(m.get('source_kind')=='reviewed_preparation' for _,m in scoped):
                 instructions='Sources are human-reviewed adapted input in prepared/ coordinates, NOT verbatim original-library evidence. Callee declarations and QCP contracts are preprocessed interfaces in the same C file; do not infer their implementations or promote imported contract status into a new proof.\n'+instructions
             task_artifacts, mandatory = materials.prepare(role, graph,
-                {n['id']:n for n in selected_nodes}, upstream_context, artifacts, scoped, source_preparation)
+                {n['id']:n for n in selected_nodes}, upstream_context, artifacts, scoped, source_preparation,
+                protocol_version=protocol_version)
+            mandatory = ([{'tool':'artifact', 'id':'specification-writing-guidance'}]
+                         + [action for action in mandatory if action != {'tool':'artifact', 'id':'specification-writing-guidance'}])
             resumed=recovery_task
             if resumed is not None and recovery_record['role']!=role:
                 raise ValueError('recovery task role does not match next pipeline step')
@@ -245,9 +348,18 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
                                      for i in range(1,len(lines)+1,120))
                 task_artifacts['input-transition']=transition_record
                 mandatory.insert(0,{'tool':'artifact','id':'input-transition'})
-            result=run_task(root,output/'tasks'/tid,factory(role,tid),instructions,validator,
+            def versioned_validator(report, reader, reads):
+                actual = report.get('protocol_version', 2) if isinstance(report, dict) else None
+                if actual != protocol_version:
+                    return ['report protocol_version must match pipeline protocol ' + str(protocol_version)]
+                return validator(report, reader, reads)
+            task_reader_factory = reader_factory(scoped) if scoped is not None else None
+            if protocol_version == 3:
+                from .read_cost import reader_factory as deduplicating_reader_factory
+                task_reader_factory = deduplicating_reader_factory(task_reader_factory)
+            result=run_task(root,output/'tasks'/tid,factory(role,tid),instructions,versioned_validator,
                             role=role,task_id=tid,budgets=budgets,artifacts=task_artifacts,label=label,allow_report_patch=True,required_inputs=mandatory,
-                            reader_factory=reader_factory(scoped) if scoped is not None else None,
+                            reader_factory=task_reader_factory,
                             resume_from=resumed, resume_revalidate=bool(resumed and recovery_record['revalidate_saved_report']),
                             resume_prompt_migration=({'old_max_report_chars':recovery_record['old_report_limit'],
                                 'new_max_report_chars':max_report_chars} if resumed and recovery_record['old_report_limit']!=max_report_chars else None),
@@ -263,15 +375,21 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
             if digest(current_graph)!=identity['graph_digest']:
                 raise ValueError('upstream changed during stage3')
             if result['status']!='task_completed':
-                state.update(status='incomplete',reason='task did not complete: '+tid);save();return None
+                state.update(status='incomplete',run_status='incomplete')
+                record_error('task did not complete: ' + tid + ': ' + str(result.get('reason', 'unknown')))
+                save();return None
             return result['report']
         try:
-            state['status']='running';save()
+            if state.get('reason'):
+                record_error(state['reason'])
+                state.pop('reason', None)
+            state.update(status='running',run_status='running');save()
             for ident,node in nodes.items():
                 if ident in data['extracts']:continue
                 report=execute('extract',{'function':{k:node[k] for k in ('id','symbol','source','configuration')}},
-                    {'spec':node['spec']},partial(contracts.extraction,node=node,max_report_chars=max_report_chars))
+                    {'spec':node['spec'], 'upstream-needs':upstream_needs(node)},partial(contracts.extraction,node=node,max_report_chars=max_report_chars))
                 if report is None:return state
+                report['upstream_needs']=upstream_needs(node)
                 data['extracts'][ident]=report;save()
                 folder=output/'functions'/ident;folder.mkdir(parents=True,exist_ok=True)
                 write_json(folder/'common_needs.json',report)
@@ -280,7 +398,7 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
             assignment={'functions':list(nodes),'selection':graph['selection_inventory']['selection'],
                         'scope':'All selected functions; upstream specs are immutable reference material, not proved.'}
             for revision in range(max_revisions+1):
-                if data.get('needs_input_revision') or data['candidate'] is None or (data['review'] and (data['review']['verdict']=='needs_revision' or (data['review']['verdict']=='partial' and any(r.get('action')=='revise' for r in data['review'].get('item_reviews',[]))))):
+                if data.get('needs_input_revision') or data['candidate'] is None or requires_revision(data['review']):
                     inputs=dict(artifacts)
                     if data['candidate']:inputs['previous_candidate']=data['candidate']
                     if data['review']:inputs['revision_review']=data['review']
@@ -292,32 +410,32 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
                     export_reader = (reader_factory(scoped_export) if scoped_export is not None else Reader)(root, output/'strategy-export-reads.jsonl')
                     strategies.export(report, export_reader, output)
                     if data.get('candidate') is not None:
-                        before={i['id']:i for i in data['candidate']['items']}
-                        after={i['id']:i for i in report['items']}
+                        before={i['id']:i for i in data['candidate'].get('uses', data['candidate'].get('items', []))}
+                        after={i['id']:i for i in report.get('uses', report.get('items', []))}
                         write_json(output/('candidate-change-'+str(state['attempt'])+'.json'), {
                             'previous_digest':digest(data['candidate']),'candidate_digest':digest(report),
                             'added':sorted(set(after)-set(before)),'removed':sorted(set(before)-set(after)),
                             'changed':sorted(i for i in before.keys() & after.keys() if before[i]!=after[i]),
                             'unchanged':sorted(i for i in before.keys() & after.keys() if before[i]==after[i]),
                             'note':'Structural comparison only; all candidates are independently reviewed again.'})
-                    data['candidate']=report;data['review']=None;data.pop('needs_input_revision',None);save()
-                    write_json(output/'planning.json',{'schema_version':planning.VERSION,'candidate_digest':digest(report),
-                        'needs':data['extracts'],'references':report['references'],
-                        'reference_strategies':report.get('reference_strategies',[]),
-                        'decisions':report['coverage'],
-                        'validation_obligations':{i['id']:i['validation_obligations'] for i in report['items']},
-                        'proof_status':'not_proved','execution_status':'not_started'})
+                    (output/'review.json').unlink(missing_ok=True)
+                    data['candidate']=report;data['review']=None;state['review_status']='pending';data.pop('needs_input_revision',None);save()
+                    write_json(output/'planning.json',planning_index(report, data['extracts']))
                     write_json(output/'candidate.json',report);write_text(output/'candidate.md',render(report))
                 result=execute('review',assignment,{**artifacts,'candidate':data['candidate']},
                     partial(contracts.review,proposal=data['candidate'],nodes=nodes,max_report_chars=max_report_chars,component_review=component_review))
                 if result is None:return state
-                data['review']=result;save();write_json(output/'review.json',result)
-                if result['verdict']!='needs_revision' and not (result['verdict']=='partial' and any(r.get('action')=='revise' for r in result.get('item_reviews',[]))):break
+                data['review']=result;state['review_status']=result['verdict'];save();write_json(output/'review.json',result)
+                write_text(output/'candidate.md',render(data['candidate'],result))
+                if not requires_revision(result):break
             state['status']='common_candidates_reviewed' if data['review']['verdict']=='pass' else data['review']['verdict']
+            state.update(run_status='completed',review_status=data['review']['verdict'],target_status='not_validated')
+            state.pop('reason',None)
             save()
-            write_text(output/'SUMMARY.md','# 阶段 3 结果\n\n状态：'+state['status']+'\n\n覆盖 '+str(len(nodes))+' 个函数；公共候选 '+str(len(data['candidate']['items']))+' 项。自然规约及公共内容均未证明。\n')
+            write_text(output/'SUMMARY.md','# 阶段四结果\n\n状态：'+state['status']+'\n\n覆盖 '+str(len(nodes))+' 个函数；已证明库共享参考 '+str(len(data['candidate'].get('references', data['candidate'].get('items', []))))+' 项。目标端适用性未验证。\n\n当前审查：'+state['review_status']+'；目标端验证：未验证。\n')
             return state
         except (Exception,KeyboardInterrupt) as exc:
-            state.update(status='interrupted' if isinstance(exc,KeyboardInterrupt) else 'incomplete',reason=str(exc));save()
+            state.update(status='interrupted' if isinstance(exc,KeyboardInterrupt) else 'incomplete',run_status='incomplete')
+            record_error(str(exc));save()
             if isinstance(exc,KeyboardInterrupt):raise
             return state

@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import wnaf3_predicate_cancellation_strategy_goal wnaf3_predicate_cancellation_strategy_proof.
+
+Module wnaf3_predicate_cancellation_Strategy_Correctness : wnaf3_predicate_cancellation_Strategy_Correct.
+  Include wnaf3_predicate_cancellation_strategy_proof.
+End wnaf3_predicate_cancellation_Strategy_Correctness.

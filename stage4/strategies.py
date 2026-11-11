@@ -12,7 +12,11 @@ def validate(report, reader):
     if not isinstance(rows, list):
         return ["reference_strategies must be a list"]
     errors, ids = [], set()
-    references = {r["id"] for r in report.get("references", [])}
+    reference_rows = report.get("references", [])
+    if not isinstance(reference_rows, list):
+        return ["references must be a list"]
+    references = {r["id"] for r in reference_rows
+                  if isinstance(r, dict) and safe_id(r.get("id"))}
     used = set()
     for row in rows:
         if not isinstance(row, dict):
@@ -37,6 +41,9 @@ def validate(report, reader):
                 errors.append("missing strategy proof requires proof_unknown")
         if row.get("target_status") != "not_validated":
             errors.append("reference strategy cannot claim target validation")
+    if report.get("protocol_version") == 3:
+        # Rule records already link directly to the shared reference by ID.
+        return errors
     for item in report.get("items", []):
         links = item.get("strategy_ids", [])
         if not isinstance(links, list) or any(not isinstance(i,str) or i not in ids for i in links):
@@ -66,9 +73,12 @@ def export(report, reader, output):
         for proof in row["proof_sources"]:
             _, proof_sha = reader.lines(proof["path"])
             proofs.append({**proof, "source_sha256": proof_sha})
-        rows.append({**row, "source": {**src, "source_sha256": source_sha},
-            "proof_sources": proofs, "file": filename, "sha256": sha,
-            "item_ids": [i["id"] for i in report["items"] if row["id"] in i.get("strategy_ids", [])]})
+        entry = {**row, "source": {**src, "source_sha256": source_sha},
+                 "proof_sources": proofs, "file": filename, "sha256": sha}
+        if report.get("protocol_version") != 3:
+            entry["item_ids"] = [item["id"] for item in report["items"]
+                                 if row["id"] in item.get("strategy_ids", [])]
+        rows.append(entry)
     index = {"version": VERSION, "candidate_digest": digest(report),
              "target_status": "not_validated", "installed": False,
              "copy_format": "Selected source lines, UTF-8 with LF and final newline; not a standalone strategy package.",
@@ -82,10 +92,17 @@ def verify_export(report, output):
     index = json.loads((folder/"index.json").read_text())
     if index.get("candidate_digest") != digest(report) or index.get("installed") is not False:
         raise ValueError("reference strategy index differs from candidate")
-    expected = {r["id"] for r in report.get("reference_strategies", [])}
-    if {r["id"] for r in index["strategies"]} != expected:
+    expected = {row["id"]: row for row in report.get("reference_strategies", [])}
+    rows = index["strategies"]
+    if len(expected) != len(rows) or {row["id"] for row in rows} != set(expected):
         raise ValueError("reference strategy coverage changed")
-    for row in index["strategies"]:
+    for row in rows:
+        original = expected[row["id"]]
+        for key in ("reference_ids", "dependencies", "applicability", "target_status"):
+            if row.get(key) != original.get(key):
+                raise ValueError("reference strategy metadata changed: " + key)
         path = (folder/row["file"]).resolve()
-        if not path.is_relative_to(folder.resolve()) or hashlib.sha256(path.read_bytes()).hexdigest() != row["sha256"]:
+        filename = row["id"] + "-" + row["sha256"] + ".strategies"
+        if (row["file"] != filename or not path.is_relative_to(folder.resolve())
+                or hashlib.sha256(path.read_bytes()).hexdigest() != row["sha256"]):
             raise ValueError("reference strategy attachment changed")

@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import basicop_facts_strategy_goal basicop_facts_strategy_proof.
+
+Module basicop_facts_Strategy_Correctness : basicop_facts_Strategy_Correct.
+  Include basicop_facts_strategy_proof.
+End basicop_facts_Strategy_Correctness.

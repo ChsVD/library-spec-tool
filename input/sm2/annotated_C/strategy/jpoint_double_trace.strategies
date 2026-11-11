@@ -1,0 +1,167 @@
+#include "../include/jpoint_double_trace.h"
+
+/* Ordinary-domain trace normalization.  This scope is invoked after one
+ * field operation and rewrites every newly available raw result. */
+id : 12
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_s2(?y) * jdouble_trace_s2(y), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_m4(y)));
+
+id : 13
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_m4(?y) * jdouble_trace_m4(y), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_t16(y)));
+
+id : 14
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_m4(?y) * ?x, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_s4(x, y)));
+
+id : 15
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, fp_div2(jdouble_trace_t16(?y))) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_t8(y)));
+
+id : 16
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_z2(?z) + ?x, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_sum(x, z)));
+
+id : 17
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(?x - jdouble_trace_z2(?z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_diff(x, z)));
+
+id : 18
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_sum(?x, ?z) * jdouble_trace_diff(x, z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_prod(x, z)));
+
+id : 19
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(3 * jdouble_trace_prod(?x, ?z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_slope(x, z)));
+
+id : 20
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_slope(?x, ?z) * jdouble_trace_slope(x, z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_slope_sq(x, z)));
+
+id : 21
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(2 * jdouble_trace_s4(?x, ?y), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_u8(x, y)));
+
+id : 22
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_slope_sq(?x, ?z) - jdouble_trace_u8(x, ?y), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_rx(x, y, z)));
+
+id : 23
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_s4(?x, ?y) - jdouble_trace_rx(x, y, ?z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_tmp(x, y, z)));
+
+id : 24
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_tmp(?x, ?y, ?z) * jdouble_trace_slope(x, z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_tmp2(x, y, z)));
+
+id : 25
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(jdouble_trace_tmp2(?x, ?y, ?z) - jdouble_trace_t8(y), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_ry(x, y, z)));
+
+/* Keep generic doubling/squaring last so the more specific trace shapes
+ * above win when both patterns match. */
+id : 30
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(2 * ?y, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_s2(y)));
+
+id : 31
+priority : jdouble_trace_plain(0)
+left : store_fp(?p, Zmod(?z * z, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, jdouble_trace_z2(z)));
+
+/* Montgomery-domain analogue.  The soundness proofs keep all mont_p
+ * congruence reasoning out of ordinary function VCs. */
+id : 112
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_s2(?y) * jdouble_trace_s2(y))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_m4(y)); left_add(jdouble_trace_m4(y) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_m4(y))));
+
+id : 113
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_m4(?y) * jdouble_trace_m4(y))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_t16(y)); left_add(jdouble_trace_t16(y) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_t16(y))));
+
+id : 114
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_m4(?y) * ?x)) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_s4(x, y)); left_add(jdouble_trace_s4(x, y) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_s4(x, y))));
+
+id : 115
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(fp_div2(jdouble_trace_t16(?y)))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_t8(y)); left_add(jdouble_trace_t8(y) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_t8(y))));
+
+id : 116
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(?x + jdouble_trace_z2(?z))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_sum(x, z)); left_add(jdouble_trace_sum(x, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_sum(x, z))));
+
+id : 117
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(?x - jdouble_trace_z2(?z))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_diff(x, z)); left_add(jdouble_trace_diff(x, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_diff(x, z))));
+
+id : 118
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_diff(?x, ?z) * jdouble_trace_sum(x, z))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_prod(x, z)); left_add(jdouble_trace_prod(x, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_prod(x, z))));
+
+id : 119
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(3 * jdouble_trace_prod(?x, ?z))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_slope(x, z)); left_add(jdouble_trace_slope(x, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_slope(x, z))));
+
+id : 120
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_slope(?x, ?z) * jdouble_trace_slope(x, z))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_slope_sq(x, z)); left_add(jdouble_trace_slope_sq(x, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_slope_sq(x, z))));
+
+id : 121
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(2 * jdouble_trace_s4(?x, ?y))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_u8(x, y)); left_add(jdouble_trace_u8(x, y) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_u8(x, y))));
+
+id : 122
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_slope_sq(?x, ?z) - jdouble_trace_u8(x, ?y))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_rx(x, y, z)); left_add(jdouble_trace_rx(x, y, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_rx(x, y, z))));
+
+id : 123
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_s4(?x, ?y) - jdouble_trace_rx(x, y, ?z))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_tmp(x, y, z)); left_add(jdouble_trace_tmp(x, y, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_tmp(x, y, z))));
+
+id : 124
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_slope(?x, ?z) * jdouble_trace_tmp(x, ?y, z))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_tmp2(x, y, z)); left_add(jdouble_trace_tmp2(x, y, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_tmp2(x, y, z))));
+
+id : 125
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(jdouble_trace_tmp2(?x, ?y, ?z) - jdouble_trace_t8(y))) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_ry(x, y, z)); left_add(jdouble_trace_ry(x, y, z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_ry(x, y, z))));
+
+id : 130
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(2 * ?y)) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_s2(y)); left_add(jdouble_trace_s2(y) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_s2(y))));
+
+id : 131
+priority : jdouble_trace_mont(0)
+left : store_fp(?p, mont_p(?z * z)) at 0
+action : left_erase(0); left_add(0 <= jdouble_trace_z2(z)); left_add(jdouble_trace_z2(z) < SM2_P_Z()); left_add(store_fp(p, mont_p(jdouble_trace_z2(z))));

@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import basepoint_bytes_strategy_goal basepoint_bytes_strategy_proof.
+
+Module basepoint_bytes_Strategy_Correctness : basepoint_bytes_Strategy_Correct.
+  Include basepoint_bytes_strategy_proof.
+End basepoint_bytes_Strategy_Correctness.

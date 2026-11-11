@@ -1,0 +1,166 @@
+#include "../include/sm3.h"
+
+/* Stable wrappers around the built-in byte and uint array predicates.  Left
+ * expansion is explicit; right expansion is goal-directed and cannot cycle. */
+
+id : 1
+priority : core(0)
+left : store_bytes(?p, ?n, ?bytes) at 0
+right : store_bytes(?q, ?m, ?required) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+         right_add(bytes == required);
+
+id : 2
+priority : open_store_bytes(0)
+left : store_bytes(?p, ?n, ?bytes) at 0
+action : left_erase(0);
+         left_add(Zlength{Z}(bytes) == n);
+         left_add(u8_list_bounded(bytes));
+         left_add(UCharArray::full(p, n, bytes));
+
+id : 3
+priority : core(3)
+right : store_bytes(?p, ?n, ?bytes) at 0
+action : right_erase(0);
+         right_add(Zlength{Z}(bytes) == n);
+         right_add(u8_list_bounded(bytes));
+         right_add(UCharArray::full(p, n, bytes));
+
+/* Forget byte contents only when a complete overwrite requests the same
+ * byte array. */
+id : 4
+priority : core(0)
+left : store_bytes(?p, ?n, ?bytes) at 0
+right : UCharArray::undef_full(?q, ?m) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+
+id : 5
+priority : core(0)
+left : UCharArray::undef_full(?p, ?n) at 0
+right : UCharArray::undef_full(?q + (0 * sizeof(unsigned char)), ?m) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+
+/* Normalize an initialized local byte array at function-scope release. */
+id : 6
+priority : core(0)
+left : store_bytes(
+         ?p + (0 * sizeof(unsigned char)), ?n, ?bytes) at 0
+right : UCharArray::undef_full(?q, ?m) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+
+id : 10
+priority : core(0)
+left : store_u32_words(?p, ?n, ?words) at 0
+right : store_u32_words(?q, ?m, ?required) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+         right_add(words == required);
+
+id : 11
+priority : open_store_u32_words(0)
+left : store_u32_words(?p, ?n, ?words) at 0
+action : left_erase(0);
+         left_add(Zlength{Z}(words) == n);
+         left_add(limb_list_bounded(SM3_WORD_MODULUS(), words));
+         left_add(UIntArray::full(p, n, words));
+
+id : 12
+priority : core(3)
+right : store_u32_words(?p, ?n, ?words) at 0
+action : right_erase(0);
+         right_add(Zlength{Z}(words) == n);
+         right_add(limb_list_bounded(SM3_WORD_MODULUS(), words));
+         right_add(UIntArray::full(p, n, words));
+
+id : 13
+priority : core(0)
+left : store_u32_words(?p, ?n, ?words) at 0
+right : UIntArray::undef_full(?q, ?m) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+
+id : 20
+priority : core(0)
+left : store_byte_prefix(?p, ?capacity, ?bytes) at 0
+right : store_byte_prefix(?q, ?required_capacity, ?required) at 1
+check : infer(p == q);
+        infer(capacity == required_capacity);
+action : left_erase(0);
+         right_erase(1);
+         right_add(bytes == required);
+
+id : 21
+priority : open_store_byte_prefix(0)
+left : store_byte_prefix(?p, ?capacity, ?bytes) at 0
+action : left_erase(0);
+         left_add(0 <= Zlength{Z}(bytes));
+         left_add(Zlength{Z}(bytes) <= capacity);
+         left_add(u8_list_bounded(bytes));
+         left_add(UCharArray::full(p, Zlength{Z}(bytes), bytes));
+         left_add(UCharArray::undef_full(
+           p + Zlength{Z}(bytes), capacity - Zlength{Z}(bytes)));
+
+id : 22
+priority : core(3)
+right : store_byte_prefix(?p, ?capacity, ?bytes) at 0
+action : right_erase(0);
+         right_add(0 <= Zlength{Z}(bytes));
+         right_add(Zlength{Z}(bytes) <= capacity);
+         right_add(u8_list_bounded(bytes));
+         right_add(UCharArray::full(p, Zlength{Z}(bytes), bytes));
+         right_add(UCharArray::undef_full(
+           p + Zlength{Z}(bytes), capacity - Zlength{Z}(bytes)));
+
+/* Start the initialized-prefix representation without manufacturing any byte
+ * value.  This is used for digest outputs before the first word write. */
+id : 23
+priority : start_store_byte_prefix(0)
+left : UCharArray::undef_full(?p, ?capacity) at 0
+check : infer(0 <= capacity);
+action : left_erase(0);
+         left_add(store_byte_prefix(p, capacity, nil{Z}));
+
+/* A read-only 256-bit C object can be copied through a byte-oriented API.
+ * Keep both directions explicit so ordinary integer callers stay abstract. */
+id : 30
+priority : open_store_u256_bytes(0)
+left : store_u256(?p, ?value) at 0
+action : left_erase(0);
+         left_exist_add(bytes : list{Z});
+         left_add(u8_list_value(bytes) == value);
+         left_add(aligned_4(p));
+         left_add(store_bytes(p, 32, bytes));
+
+id : 31
+priority : close_store_u256_bytes(0)
+left : u8_list_value(?bytes) == ?value at 0
+       aligned_4(?p) at 1
+       store_bytes(p, 32, bytes) at 2
+action : left_erase(2);
+         left_add(store_u256(p, value));
+
+/* A byte-oriented complete overwrite of one u32 starts from the generated
+ * undefined structure predicate.  Keep this conversion explicit so ordinary
+ * arithmetic callers do not expose byte storage. */
+id : 32
+priority : open_undef_u256_bytes(0)
+left : UndefStructPredu32(?p) at 0
+action : left_erase(0);
+         left_add(aligned_4(p));
+         left_add(UCharArray::undef_full(p, 32));

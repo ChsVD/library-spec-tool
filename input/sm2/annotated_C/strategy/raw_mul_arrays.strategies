@@ -1,0 +1,38 @@
+#include "../include/basicOp.h"
+
+id : 1
+priority : core(0)
+left : UInt64Array::mixed_full(
+         ?p,
+         8,
+         replace_Znth{option{Z}}(0, Some{Z}(?x0),
+           replace_Znth{option{Z}}(1, Some{Z}(?x1),
+             replace_Znth{option{Z}}(2, Some{Z}(?x2),
+               repeat_Z{option{Z}}(None{Z}(), 8))))) at 0
+action : left_erase(0);
+         left_add(data_at(p + (0 * sizeof(U64)), U64, x0));
+         left_add(data_at(p + (1 * sizeof(U64)), U64, x1));
+         left_add(data_at(p + (2 * sizeof(U64)), U64, x2));
+         left_add(UInt64Array::undef_seg(p, 3, 8));
+
+/* Prefer syntactically identical bases; this covers ordinary array access
+ * without searching all pairs of live cells. */
+id : 2
+priority : core(0)
+left : data_at(?p + (?i * sizeof(U64)), U64, ?v) at 0
+right : data_at(p + (?j * sizeof(U64)), U64, ?w) at 1
+check : infer(i == j);
+action : left_erase(0);
+         right_erase(1);
+         right_add(v == w);
+
+/* Fall back to provably equal bases for the a_eq_b specification. */
+id : 3
+priority : core(2)
+left : data_at(?p + (?i * sizeof(U64)), U64, ?v) at 0
+right : data_at(?q + (?j * sizeof(U64)), U64, ?w) at 1
+check : infer(p == q);
+        infer(i == j);
+action : left_erase(0);
+         right_erase(1);
+         right_add(v == w);

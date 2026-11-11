@@ -2,7 +2,7 @@
 import copy
 from stage2.graph import digest
 
-VERSION = 1
+VERSION = 2
 
 
 def source_ranges(value):
@@ -100,7 +100,85 @@ def local_context(upstream, graph, ids):
     return value, cards
 
 
-def prepare(role, graph, nodes, upstream, artifacts, scoped=None, source_preparation=None):
+def needs_summary(nodes, artifacts):
+    """Lossless question identities and conditions, without extraction evidence trees."""
+    rows = []
+    for ident, node in nodes.items():
+        spec = node['spec']
+        extracted = artifacts['extract:' + ident]
+        upstream = copy.deepcopy(spec.get('common_needs', []))
+        rows.append({
+            'function_id':ident, 'source':copy.deepcopy(node['source']),
+            'assumptions':copy.deepcopy(spec.get('assumptions', '')),
+            'conditional_assumptions':copy.deepcopy(spec.get('conditional_assumptions', [])),
+            'upstream_needs':{'present':'common_needs' in spec, 'items':upstream,
+                              'ids':['upstream-' + str(i) for i in range(len(upstream))]},
+            'needs':[{k:copy.deepcopy(n[k]) for k in ('id', 'function_id', 'spec_clause',
+                       'use_site', 'search_question', 'source', 'upstream_need_id') if k in n}
+                     for n in extracted['needs']],
+            'spec_artifact':'spec:' + ident, 'extract_artifact':'extract:' + ident})
+    return {'schema_version':1, 'material_policy':VERSION, 'functions':rows}
+
+
+def compact_call_context(context, optional):
+    """Keep requirements/conditions mandatory; archive bulky callsite navigation."""
+    for index, edge in enumerate(context['call_requirements']):
+        ident = 'background:call_requirements:' + str(index)
+        optional[ident] = copy.deepcopy(edge)
+        context['call_requirements'][index] = {
+            k:copy.deepcopy(v) for k,v in edge.items()
+            if k not in ('callsites', 'callsite', 'code', 'excerpt', 'snippet', 'source_text')}
+        context['call_requirements'][index]['full_context'] = ident
+    context['background_index']['call_requirements'] = {
+        'count':len(context['call_requirements']),
+        'artifact_ids':['background:call_requirements:' + str(i)
+                        for i in range(len(context['call_requirements']))]}
+
+
+def prepare(role, graph, nodes, upstream, artifacts, scoped=None, source_preparation=None,
+            protocol_version=3):
+    if protocol_version == 3:
+        return prepare_v3(role, graph, nodes, upstream, artifacts, scoped, source_preparation)
+    return prepare_legacy(role, graph, nodes, upstream, artifacts, scoped, source_preparation)
+
+
+def prepare_v3(role, graph, nodes, upstream, artifacts, scoped=None, source_preparation=None):
+    if role == 'extract':
+        return prepare_legacy(role, graph, nodes, upstream, artifacts, scoped, source_preparation)
+    context, optional = local_context(upstream, graph, set(nodes))
+    compact_call_context(context, optional)
+    supplied = {**optional, **artifacts, 'upstream-context':context}
+    mandatory = ['upstream-context'] + [key for key in artifacts
+        if not key.startswith(('extract:', 'spec:'))]
+    if role == 'common':
+        supplied['needs-summary'] = needs_summary(nodes, artifacts)
+        mandatory.append('needs-summary')
+        ranges = []
+    else:
+        mandatory.extend('spec:' + ident for ident in nodes)
+        ranges = [dict(n['source']) for n in nodes.values()]
+        # Candidate evidence is exactly the support for the judgments under review.
+        # Never recursively expand optional extraction reports or caller context.
+        ranges.extend(source_ranges(artifacts.get('candidate', {})))
+    if scoped is not None:
+        mapped = [x['original'] for _,m in scoped for x in m['mappings']]
+        unavailable = []
+        for edge in context['call_requirements']:
+            detail = optional[edge['full_context']]
+            for field in ('callsite', 'callsites'):
+                for source in source_ranges(detail.get(field)):
+                    if not any(m['path'] == source['path'] and m['start'] <= source['start']
+                               and source['end'] <= m['end'] for m in mapped):
+                        unavailable.append(source)
+        context['unavailable_callsite_sources'] = unavailable
+        # The manifest is an allowlist, not a mandatory reading list. Missing cited
+        # ranges still fail in BundleReader; no original-repository fallback.
+        mandatory = ['source-index'] + [x for x in mandatory if x != 'source-index']
+    return supplied, ([{'tool':'artifact', 'id':i} for i in dict.fromkeys(mandatory)]
+                      + read_actions(ranges))
+
+
+def prepare_legacy(role, graph, nodes, upstream, artifacts, scoped=None, source_preparation=None):
     selected = set(nodes)
     context, optional = local_context(upstream, graph, selected)
     supplied = {**optional, **artifacts, "upstream-context":context}

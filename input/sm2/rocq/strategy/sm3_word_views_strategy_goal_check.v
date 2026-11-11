@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import sm3_word_views_strategy_goal sm3_word_views_strategy_proof.
+
+Module sm3_word_views_Strategy_Correctness : sm3_word_views_Strategy_Correct.
+  Include sm3_word_views_strategy_proof.
+End sm3_word_views_Strategy_Correctness.

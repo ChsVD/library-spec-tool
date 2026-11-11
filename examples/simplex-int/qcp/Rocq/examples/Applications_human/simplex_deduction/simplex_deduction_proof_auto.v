@@ -1,0 +1,544 @@
+From SimpleC.Verification Require Import VCPrelude.
+From SimpleC.EE.Applications_human.simplex_deduction Require Import simplex_deduction_goal.
+Import naive_C_Rules.
+Require Import SimpleC.EE.Applications_human.simplex_initialize.simplex_initialize_lib.
+Require Import SimpleC.EE.Applications_human.simplex_pivot.simplex_pivot_lib.
+Require Import SimpleC.EE.Applications_human.simplex_solve.simplex_solve_lib.
+Require Import SimpleC.EE.Applications_human.simplex_check.simplex_check_lib.
+Require Import SimpleC.EE.Applications_human.simplex_deduction.simplex_deduction_lib.
+Local Open Scope sac.
+
+Lemma proof_of_simplex_deduction_safety_wit_1_invalid_inputs : simplex_deduction_safety_wit_1_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_2_invalid_inputs : simplex_deduction_safety_wit_2_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_3_nullcoef_reject : simplex_deduction_safety_wit_3_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_4_bounded_prefix_reject : simplex_deduction_safety_wit_4_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_5_complete_min : simplex_deduction_safety_wit_5_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_6_zero_negative : simplex_deduction_safety_wit_6_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_7_zero_normal : simplex_deduction_safety_wit_7_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_8_matrix_negative : simplex_deduction_safety_wit_8_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_9_matrix_normal : simplex_deduction_safety_wit_9_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_10_invalid_inputs : simplex_deduction_safety_wit_10_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_11_invalid_inputs : simplex_deduction_safety_wit_11_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_12_nullcoef_reject : simplex_deduction_safety_wit_12_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_13_bounded_prefix_reject : simplex_deduction_safety_wit_13_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_14_complete_min : simplex_deduction_safety_wit_14_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_15_zero_negative : simplex_deduction_safety_wit_15_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_16_zero_normal : simplex_deduction_safety_wit_16_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_17_matrix_negative : simplex_deduction_safety_wit_17_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_18_matrix_normal : simplex_deduction_safety_wit_18_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_19_invalid_inputs : simplex_deduction_safety_wit_19_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_20_invalid_inputs : simplex_deduction_safety_wit_20_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_21_nullcoef_reject : simplex_deduction_safety_wit_21_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_22_bounded_prefix_reject : simplex_deduction_safety_wit_22_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_23_complete_min : simplex_deduction_safety_wit_23_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_24_zero_negative : simplex_deduction_safety_wit_24_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_25_zero_normal : simplex_deduction_safety_wit_25_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_26_matrix_negative : simplex_deduction_safety_wit_26_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_27_matrix_normal : simplex_deduction_safety_wit_27_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_28_matrix_normal : simplex_deduction_safety_wit_28_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_29_matrix_negative : simplex_deduction_safety_wit_29_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_30_zero_normal : simplex_deduction_safety_wit_30_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_31_zero_negative : simplex_deduction_safety_wit_31_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_32_complete_min : simplex_deduction_safety_wit_32_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_33_bounded_prefix_reject : simplex_deduction_safety_wit_33_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_34_nullcoef_reject : simplex_deduction_safety_wit_34_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_35_invalid_inputs : simplex_deduction_safety_wit_35_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_36_matrix_normal : simplex_deduction_safety_wit_36_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_37_matrix_negative : simplex_deduction_safety_wit_37_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_38_zero_normal : simplex_deduction_safety_wit_38_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_39_zero_negative : simplex_deduction_safety_wit_39_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_40_complete_min : simplex_deduction_safety_wit_40_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_41_bounded_prefix_reject : simplex_deduction_safety_wit_41_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_42_nullcoef_reject : simplex_deduction_safety_wit_42_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_43_invalid_inputs : simplex_deduction_safety_wit_43_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_44_invalid_inputs : simplex_deduction_safety_wit_44_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_45_invalid_inputs : simplex_deduction_safety_wit_45_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_46_invalid_inputs : simplex_deduction_safety_wit_46_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_47_invalid_inputs : simplex_deduction_safety_wit_47_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_48_nullcoef_reject : simplex_deduction_safety_wit_48_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_49_bounded_prefix_reject : simplex_deduction_safety_wit_49_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_50_complete_min : simplex_deduction_safety_wit_50_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_51_complete_min : simplex_deduction_safety_wit_51_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_52_complete_min : simplex_deduction_safety_wit_52_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_53_complete_min : simplex_deduction_safety_wit_53_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_54_zero_negative : simplex_deduction_safety_wit_54_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_55_zero_negative : simplex_deduction_safety_wit_55_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_56_zero_negative : simplex_deduction_safety_wit_56_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_57_zero_negative : simplex_deduction_safety_wit_57_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_58_zero_normal : simplex_deduction_safety_wit_58_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_59_zero_normal : simplex_deduction_safety_wit_59_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_60_zero_normal : simplex_deduction_safety_wit_60_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_61_zero_normal : simplex_deduction_safety_wit_61_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_62_matrix_negative : simplex_deduction_safety_wit_62_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_63_matrix_negative : simplex_deduction_safety_wit_63_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_64_matrix_negative : simplex_deduction_safety_wit_64_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_65_matrix_negative : simplex_deduction_safety_wit_65_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_66_matrix_normal : simplex_deduction_safety_wit_66_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_67_matrix_normal : simplex_deduction_safety_wit_67_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_68_matrix_normal : simplex_deduction_safety_wit_68_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_69_matrix_normal : simplex_deduction_safety_wit_69_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_70_nullcoef_reject : simplex_deduction_safety_wit_70_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_71_bounded_prefix_reject : simplex_deduction_safety_wit_71_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_72_complete_min : simplex_deduction_safety_wit_72_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_73_complete_min : simplex_deduction_safety_wit_73_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_74_complete_min : simplex_deduction_safety_wit_74_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_75_complete_min : simplex_deduction_safety_wit_75_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_76_complete_min : simplex_deduction_safety_wit_76_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_77_complete_min : simplex_deduction_safety_wit_77_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_78_zero_negative : simplex_deduction_safety_wit_78_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_79_zero_negative : simplex_deduction_safety_wit_79_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_80_zero_negative : simplex_deduction_safety_wit_80_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_81_zero_negative : simplex_deduction_safety_wit_81_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_82_zero_negative : simplex_deduction_safety_wit_82_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_83_zero_negative : simplex_deduction_safety_wit_83_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_84_zero_negative : simplex_deduction_safety_wit_84_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_85_zero_normal : simplex_deduction_safety_wit_85_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_86_zero_normal : simplex_deduction_safety_wit_86_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_87_zero_normal : simplex_deduction_safety_wit_87_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_88_zero_normal : simplex_deduction_safety_wit_88_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_89_zero_normal : simplex_deduction_safety_wit_89_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_90_zero_normal : simplex_deduction_safety_wit_90_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_91_zero_normal : simplex_deduction_safety_wit_91_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_92_matrix_negative : simplex_deduction_safety_wit_92_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_93_matrix_negative : simplex_deduction_safety_wit_93_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_94_matrix_negative : simplex_deduction_safety_wit_94_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_95_matrix_negative : simplex_deduction_safety_wit_95_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_96_matrix_negative : simplex_deduction_safety_wit_96_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_97_matrix_negative : simplex_deduction_safety_wit_97_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_98_matrix_normal : simplex_deduction_safety_wit_98_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_99_matrix_normal : simplex_deduction_safety_wit_99_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_100_matrix_normal : simplex_deduction_safety_wit_100_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_101_matrix_normal : simplex_deduction_safety_wit_101_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_102_matrix_normal : simplex_deduction_safety_wit_102_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_103_matrix_normal : simplex_deduction_safety_wit_103_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_104_nullcoef_reject : simplex_deduction_safety_wit_104_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_105_nullcoef_reject : simplex_deduction_safety_wit_105_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_106_bounded_prefix_reject : simplex_deduction_safety_wit_106_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_107_bounded_prefix_reject : simplex_deduction_safety_wit_107_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_108_complete_min : simplex_deduction_safety_wit_108_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_109_complete_min : simplex_deduction_safety_wit_109_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_110_matrix_negative : simplex_deduction_safety_wit_110_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_111_matrix_negative : simplex_deduction_safety_wit_111_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_112_matrix_normal : simplex_deduction_safety_wit_112_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_113_matrix_normal : simplex_deduction_safety_wit_113_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_114_nullcoef_reject : simplex_deduction_safety_wit_114_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_115_nullcoef_reject : simplex_deduction_safety_wit_115_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_116_nullcoef_reject : simplex_deduction_safety_wit_116_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_117_bounded_prefix_reject : simplex_deduction_safety_wit_117_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_118_bounded_prefix_reject : simplex_deduction_safety_wit_118_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_119_complete_min : simplex_deduction_safety_wit_119_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_120_complete_min : simplex_deduction_safety_wit_120_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_121_matrix_negative : simplex_deduction_safety_wit_121_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_122_matrix_negative : simplex_deduction_safety_wit_122_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_123_matrix_normal : simplex_deduction_safety_wit_123_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_124_matrix_normal : simplex_deduction_safety_wit_124_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_125_nullcoef_reject : simplex_deduction_safety_wit_125_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_126_bounded_prefix_reject : simplex_deduction_safety_wit_126_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_127_complete_min : simplex_deduction_safety_wit_127_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_128_matrix_negative : simplex_deduction_safety_wit_128_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_129_matrix_normal : simplex_deduction_safety_wit_129_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_130_nullcoef_reject : simplex_deduction_safety_wit_130_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_131_bounded_prefix_reject : simplex_deduction_safety_wit_131_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_132_complete_min : simplex_deduction_safety_wit_132_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_133_matrix_negative : simplex_deduction_safety_wit_133_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_134_matrix_normal : simplex_deduction_safety_wit_134_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_135_bounded_prefix_reject : simplex_deduction_safety_wit_135_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_136_complete_min : simplex_deduction_safety_wit_136_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_137_matrix_negative : simplex_deduction_safety_wit_137_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_138_matrix_normal : simplex_deduction_safety_wit_138_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_139_matrix_normal : simplex_deduction_safety_wit_139_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_140_matrix_negative : simplex_deduction_safety_wit_140_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_141_complete_min : simplex_deduction_safety_wit_141_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_142_bounded_prefix_reject : simplex_deduction_safety_wit_142_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_143_matrix_normal : simplex_deduction_safety_wit_143_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_144_matrix_negative : simplex_deduction_safety_wit_144_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_145_complete_min : simplex_deduction_safety_wit_145_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_146_bounded_prefix_reject : simplex_deduction_safety_wit_146_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_147_nullcoef_reject : simplex_deduction_safety_wit_147_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_148_matrix_normal : simplex_deduction_safety_wit_148_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_149_matrix_negative : simplex_deduction_safety_wit_149_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_150_complete_min : simplex_deduction_safety_wit_150_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_151_bounded_prefix_reject : simplex_deduction_safety_wit_151_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_152_nullcoef_reject : simplex_deduction_safety_wit_152_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_153_matrix_normal : simplex_deduction_safety_wit_153_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_154_matrix_negative : simplex_deduction_safety_wit_154_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_155_complete_min : simplex_deduction_safety_wit_155_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_156_bounded_prefix_reject : simplex_deduction_safety_wit_156_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_157_nullcoef_reject : simplex_deduction_safety_wit_157_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_158_matrix_normal : simplex_deduction_safety_wit_158_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_159_matrix_negative : simplex_deduction_safety_wit_159_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_160_complete_min : simplex_deduction_safety_wit_160_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_161_bounded_prefix_reject : simplex_deduction_safety_wit_161_bounded_prefix_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_safety_wit_162_nullcoef_reject : simplex_deduction_safety_wit_162_nullcoef_reject.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_return_wit_1_complete_min : simplex_deduction_return_wit_1_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_return_wit_6_matrix_negative : simplex_deduction_return_wit_6_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_return_wit_7_matrix_normal : simplex_deduction_return_wit_7_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_return_wit_8_matrix_normal : simplex_deduction_return_wit_8_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_return_wit_9_matrix_normal : simplex_deduction_return_wit_9_matrix_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_return_wit_19_invalid_inputs : simplex_deduction_return_wit_19_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_return_wit_20_invalid_inputs : simplex_deduction_return_wit_20_invalid_inputs.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_1_complete_min : simplex_deduction_partial_solve_wit_1_complete_min.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_2_zero_negative_pure : simplex_deduction_partial_solve_wit_2_zero_negative_pure.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_2_zero_negative : simplex_deduction_partial_solve_wit_2_zero_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_3_zero_normal_pure : simplex_deduction_partial_solve_wit_3_zero_normal_pure.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_3_zero_normal : simplex_deduction_partial_solve_wit_3_zero_normal.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_4_matrix_negative_pure : simplex_deduction_partial_solve_wit_4_matrix_negative_pure.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_4_matrix_negative : simplex_deduction_partial_solve_wit_4_matrix_negative.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_5_matrix_normal_pure : simplex_deduction_partial_solve_wit_5_matrix_normal_pure.
+Proof. Admitted.
+
+Lemma proof_of_simplex_deduction_partial_solve_wit_5_matrix_normal : simplex_deduction_partial_solve_wit_5_matrix_normal.
+Proof. Admitted.
+

@@ -1,0 +1,470 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From SimpleC.EE.Applications_human.simplex_find_entering Require Import simplex_find_entering_goal.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import naive_C_Rules.
+Require Import SimpleC.EE.Applications_human.simplex_rat_compare.simplex_rat_compare_lib.
+Require Import SimpleC.EE.Applications_human.simplex_find_entering.simplex_find_entering_lib.
+Local Open Scope sac.
+
+Lemma proof_of_sx_find_entering_safety_wit_1_separated_search : sx_find_entering_safety_wit_1_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_2_separated_search : sx_find_entering_safety_wit_2_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_3_separated_search : sx_find_entering_safety_wit_3_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_4_separated_search : sx_find_entering_safety_wit_4_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_5_separated_search : sx_find_entering_safety_wit_5_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_6_separated_search : sx_find_entering_safety_wit_6_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_7_separated_search : sx_find_entering_safety_wit_7_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_8_separated_search : sx_find_entering_safety_wit_8_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_9_separated_search : sx_find_entering_safety_wit_9_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_10_separated_search : sx_find_entering_safety_wit_10_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_11_separated_search : sx_find_entering_safety_wit_11_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_12_separated_search : sx_find_entering_safety_wit_12_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_13_separated_search : sx_find_entering_safety_wit_13_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_14_separated_search : sx_find_entering_safety_wit_14_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_15_separated_search : sx_find_entering_safety_wit_15_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_16_separated_search : sx_find_entering_safety_wit_16_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_17_separated_search : sx_find_entering_safety_wit_17_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_18_separated_search : sx_find_entering_safety_wit_18_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_19_separated_search : sx_find_entering_safety_wit_19_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_20_separated_search : sx_find_entering_safety_wit_20_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_21_separated_search : sx_find_entering_safety_wit_21_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_22_separated_search : sx_find_entering_safety_wit_22_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_23_separated_search : sx_find_entering_safety_wit_23_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_24_separated_search : sx_find_entering_safety_wit_24_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_25_separated_search : sx_find_entering_safety_wit_25_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_26_separated_search : sx_find_entering_safety_wit_26_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_27_separated_search : sx_find_entering_safety_wit_27_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_28_separated_search : sx_find_entering_safety_wit_28_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_29_separated_search : sx_find_entering_safety_wit_29_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_30_separated_search : sx_find_entering_safety_wit_30_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_31_separated_search : sx_find_entering_safety_wit_31_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_32_separated_search : sx_find_entering_safety_wit_32_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_33_separated_search : sx_find_entering_safety_wit_33_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_34_separated_search : sx_find_entering_safety_wit_34_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_35_separated_search : sx_find_entering_safety_wit_35_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_36_separated_search : sx_find_entering_safety_wit_36_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_37_separated_search : sx_find_entering_safety_wit_37_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_38_separated_search : sx_find_entering_safety_wit_38_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_39_separated_search : sx_find_entering_safety_wit_39_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_40_separated_search : sx_find_entering_safety_wit_40_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_41_separated_search : sx_find_entering_safety_wit_41_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_42_separated_search : sx_find_entering_safety_wit_42_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_43_separated_search : sx_find_entering_safety_wit_43_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_44_separated_search : sx_find_entering_safety_wit_44_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_45_separated_search : sx_find_entering_safety_wit_45_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_46_separated_search : sx_find_entering_safety_wit_46_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_47_separated_search : sx_find_entering_safety_wit_47_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_48_separated_search : sx_find_entering_safety_wit_48_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_49_separated_search : sx_find_entering_safety_wit_49_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_50_separated_search : sx_find_entering_safety_wit_50_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_51_separated_search : sx_find_entering_safety_wit_51_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_52_separated_search : sx_find_entering_safety_wit_52_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_53_separated_search : sx_find_entering_safety_wit_53_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_54_separated_search : sx_find_entering_safety_wit_54_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_55_separated_search : sx_find_entering_safety_wit_55_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_56_separated_search : sx_find_entering_safety_wit_56_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_57_separated_search : sx_find_entering_safety_wit_57_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_58_separated_search : sx_find_entering_safety_wit_58_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_59_separated_search : sx_find_entering_safety_wit_59_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_60_separated_search : sx_find_entering_safety_wit_60_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_61_separated_search : sx_find_entering_safety_wit_61_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_62_separated_search : sx_find_entering_safety_wit_62_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_63_separated_search : sx_find_entering_safety_wit_63_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_64_separated_search : sx_find_entering_safety_wit_64_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_65_separated_search : sx_find_entering_safety_wit_65_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_66_separated_search : sx_find_entering_safety_wit_66_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_67_separated_search : sx_find_entering_safety_wit_67_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_68_separated_search : sx_find_entering_safety_wit_68_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_69_separated_search : sx_find_entering_safety_wit_69_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_70_separated_search : sx_find_entering_safety_wit_70_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_71_separated_search : sx_find_entering_safety_wit_71_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_72_separated_search : sx_find_entering_safety_wit_72_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_73_separated_search : sx_find_entering_safety_wit_73_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_74_separated_search : sx_find_entering_safety_wit_74_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_75_separated_search : sx_find_entering_safety_wit_75_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_76_separated_search : sx_find_entering_safety_wit_76_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_77_separated_search : sx_find_entering_safety_wit_77_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_78_separated_search : sx_find_entering_safety_wit_78_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_79_separated_search : sx_find_entering_safety_wit_79_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_80_separated_search : sx_find_entering_safety_wit_80_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_81_separated_search : sx_find_entering_safety_wit_81_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_82_separated_search : sx_find_entering_safety_wit_82_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_83_separated_search : sx_find_entering_safety_wit_83_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_84_separated_search : sx_find_entering_safety_wit_84_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_85_separated_search : sx_find_entering_safety_wit_85_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_86_separated_search : sx_find_entering_safety_wit_86_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_87_separated_search : sx_find_entering_safety_wit_87_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_88_separated_search : sx_find_entering_safety_wit_88_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_89_separated_search : sx_find_entering_safety_wit_89_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_90_separated_search : sx_find_entering_safety_wit_90_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_91_separated_search : sx_find_entering_safety_wit_91_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_92_separated_search : sx_find_entering_safety_wit_92_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_93_separated_search : sx_find_entering_safety_wit_93_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_94_separated_search : sx_find_entering_safety_wit_94_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_95_separated_search : sx_find_entering_safety_wit_95_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_96_separated_search : sx_find_entering_safety_wit_96_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_97_separated_search : sx_find_entering_safety_wit_97_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_98_separated_search : sx_find_entering_safety_wit_98_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_99_separated_search : sx_find_entering_safety_wit_99_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_100_separated_search : sx_find_entering_safety_wit_100_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_101_separated_search : sx_find_entering_safety_wit_101_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_102_separated_search : sx_find_entering_safety_wit_102_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_103_separated_search : sx_find_entering_safety_wit_103_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_104_separated_search : sx_find_entering_safety_wit_104_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_105_separated_search : sx_find_entering_safety_wit_105_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_106_separated_search : sx_find_entering_safety_wit_106_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_107_separated_search : sx_find_entering_safety_wit_107_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_108_separated_search : sx_find_entering_safety_wit_108_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_109_separated_search : sx_find_entering_safety_wit_109_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_110_separated_search : sx_find_entering_safety_wit_110_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_111_separated_search : sx_find_entering_safety_wit_111_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_112_separated_search : sx_find_entering_safety_wit_112_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_113_separated_search : sx_find_entering_safety_wit_113_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_114_separated_search : sx_find_entering_safety_wit_114_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_115_separated_search : sx_find_entering_safety_wit_115_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_116_separated_search : sx_find_entering_safety_wit_116_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_117_separated_search : sx_find_entering_safety_wit_117_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_118_separated_search : sx_find_entering_safety_wit_118_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_119_separated_search : sx_find_entering_safety_wit_119_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_120_separated_search : sx_find_entering_safety_wit_120_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_safety_wit_121_separated_search : sx_find_entering_safety_wit_121_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_1_separated_search : sx_find_entering_partial_solve_wit_1_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_2_separated_search : sx_find_entering_partial_solve_wit_2_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_3_separated_search : sx_find_entering_partial_solve_wit_3_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_4_separated_search : sx_find_entering_partial_solve_wit_4_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_5_separated_search : sx_find_entering_partial_solve_wit_5_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_6_separated_search : sx_find_entering_partial_solve_wit_6_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_7_separated_search : sx_find_entering_partial_solve_wit_7_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_8_separated_search : sx_find_entering_partial_solve_wit_8_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_9_separated_search : sx_find_entering_partial_solve_wit_9_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_10_separated_search : sx_find_entering_partial_solve_wit_10_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_11_separated_search : sx_find_entering_partial_solve_wit_11_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_12_separated_search : sx_find_entering_partial_solve_wit_12_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_13_separated_search : sx_find_entering_partial_solve_wit_13_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_14_separated_search : sx_find_entering_partial_solve_wit_14_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_15_separated_search : sx_find_entering_partial_solve_wit_15_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_16_separated_search : sx_find_entering_partial_solve_wit_16_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_17_separated_search : sx_find_entering_partial_solve_wit_17_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_18_separated_search : sx_find_entering_partial_solve_wit_18_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_19_separated_search : sx_find_entering_partial_solve_wit_19_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_20_separated_search : sx_find_entering_partial_solve_wit_20_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_21_separated_search : sx_find_entering_partial_solve_wit_21_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_22_separated_search : sx_find_entering_partial_solve_wit_22_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_23_separated_search : sx_find_entering_partial_solve_wit_23_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_24_separated_search : sx_find_entering_partial_solve_wit_24_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_25_separated_search : sx_find_entering_partial_solve_wit_25_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_26_separated_search : sx_find_entering_partial_solve_wit_26_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_27_separated_search : sx_find_entering_partial_solve_wit_27_separated_search.
+Proof. Admitted. 
+
+Lemma proof_of_sx_find_entering_partial_solve_wit_28_separated_search : sx_find_entering_partial_solve_wit_28_separated_search.
+Proof. Admitted. 
+

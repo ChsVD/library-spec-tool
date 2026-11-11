@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import montg_add_jpoint_compare_strategy_goal montg_add_jpoint_compare_strategy_proof.
+
+Module montg_add_jpoint_compare_Strategy_Correctness : montg_add_jpoint_compare_Strategy_Correct.
+  Include montg_add_jpoint_compare_strategy_proof.
+End montg_add_jpoint_compare_Strategy_Correctness.

@@ -4,7 +4,7 @@ stage2.select 和人工请求的 stage2.demand_scope 都输出 scope-plan.json�
 
 先审核函数组与边界，再向本阶段传入 --scope-plan 和 --approve-scope 对应的 plan_digest。不要将选择运行目录直接当作已经生成规约的目录，也不要因为选择器报告 within_limits 就跳过本阶段的输入预算检查。选择结果不构成已证明契约。
 
-[阶段二选择说明](../stage2/SELECTION.md)
+阶段二选择说明
 
 > **适用范围**：本阶段面向一个待证明库和若干个已证明参考库。下文 OpenSSL BN、SM2、mini-GMP 及相关路径是当前案例；参考库数量不限定为两个。通用设计与当前实现限制见 [开发指南](../DEVELOPMENT.md)。
 
@@ -18,7 +18,7 @@ stage2.select 和人工请求的 stage2.demand_scope 都输出 scope-plan.json�
 
 ## 多目标函数组入口
 
-现在可以从已保存的模块图规划一批目标函数的需求子图并集，再开始自然规约生成。读取图、按确切函数 ID 选组、向下展开目标的被调用依赖并补齐 SCC，再向上汇总需求路径、保留边界背景，详见 [函数组需求范围](../stage2/DEMAND_SCOPE.md)。该入口不重复构图，范围规划不运行模型；执行时通过 --scope-plan 和 --approve-scope 绑定已审核计划。原有按整个 manifest 处理的入口仍兼容。
+现在可以从已保存的模块图规划一批目标函数的需求子图并集，再开始自然规约生成。读取图、按确切函数 ID 选组、向下展开目标的被调用依赖并补齐 SCC，再向上汇总需求路径、保留边界背景，详见 函数组需求范围。该入口不重复构图，范围规划不运行模型；执行时通过 --scope-plan 和 --approve-scope 绑定已审核计划。原有按整个 manifest 处理的入口仍兼容。
 
 ## 工作流程
 
@@ -57,7 +57,7 @@ python3 -m stage3 --manifest stage2/manifests/openssl-bn-module.json --output ru
 - `identity.json`：输入快照、材料和模型配置；输入变化后拒绝沿用旧结果续跑。
 - `SUMMARY.md`、`status.json`：草稿生成进度，不是证明进度。
 
-当前默认复用固定版本 FM-Agent 的 C 后端：CodeGraph 建立函数索引，Clang JSON AST 建立直接调用边，未覆盖函数回退到 CodeGraph，并加入函数指针值流/类型匹配候选。详见 [依赖图与环境配置](../stage2/FM_AGENT_GRAPH.md)。旧词法图仅通过 --graph-backend lexical 显式选择。SCC 只针对当前识别出的候选图，未知关系不会伪装成没有依赖。单个函数、模块说明或邻居上下文太大时保存输入并标记 context_too_large，不静默截断源码。
+当前默认复用固定版本 FM-Agent 的 C 后端：CodeGraph 建立函数索引，Clang JSON AST 建立直接调用边，未覆盖函数回退到 CodeGraph，并加入函数指针值流/类型匹配候选。详见 依赖图与环境配置。旧词法图仅通过 --graph-backend lexical 显式选择。SCC 只针对当前识别出的候选图，未知关系不会伪装成没有依赖。单个函数、模块说明或邻居上下文太大时保存输入并标记 context_too_large，不静默截断源码。
 
 ## 旧流程
 
@@ -79,7 +79,7 @@ python3 -m stage3 --manifest stage2/manifests/openssl-bn-module.json --continue-
 
 ## 多分支汇总同一底层函数（旧辅助入口）
 
-新的多目标流程使用 [demand_scope](../stage2/DEMAND_SCOPE.md)；下面的单目标辅助函数保留兼容，不作为新版默认范围规划器。
+新的多目标流程使用 demand_scope；下面的单目标辅助函数保留兼容，不作为新版默认范围规划器。
 
 `stage2.branch_scope.select` 根据完整模块图，保留指定入口到目标函数的所有已识别路径；另外加入尚未覆盖的直接调用者。路径外兄弟依赖仍记为未知，同名但没有目标路径的平台版本单独记录，不伪造调用边。按 caller-first 为各分支逐层生成需求，目标函数最后接收全部已识别直接调用者的草稿、需求和原始调用点窗口。
 
@@ -135,6 +135,6 @@ bn_add_words 多分支试验在各链完成后增加一次 Sol 汇总，比较�
 
 ## 材料交付优化
 
-当前入口已接入按任务筛选背景、自动交付必读材料及批量补读，具体协议、证据边界和兼容说明见 [材料交付](../MATERIAL_DELIVERY.md)。材料策略变化需要新运行目录，不直接迁移历史会话。
+当前入口已接入按任务筛选背景、自动交付必读材料及批量补读，具体协议、证据边界和兼容说明见 材料交付。材料策略变化需要新运行目录，不直接迁移历史会话。
 
 整体入口、代码结构和详细流程图见 [开发指南](../DEVELOPMENT.md)。

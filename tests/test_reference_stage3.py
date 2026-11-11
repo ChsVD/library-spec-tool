@@ -62,7 +62,7 @@ class ReferenceStage3Tests(unittest.TestCase):
     def common(self, **kwargs):
         return run_pipeline(self.root,self.output,self.source,
             kwargs.pop('factory',lambda role,ident:ReferenceCommonModel(role)),
-            budgets=self.budgets,**kwargs)
+            budgets=self.budgets,protocol_version=2,**kwargs)
 
     def test_complete_chain_preserves_unreviewed_inputs_and_resumes(self):
         self.generate()

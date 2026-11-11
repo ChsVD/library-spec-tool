@@ -1,0 +1,6 @@
+From SimpleC.EE.Applications_human.simplex_positive_gcd Require Import simplex_positive_gcd_goal simplex_positive_gcd_proof_auto simplex_positive_gcd_proof_manual.
+
+Module VC_Correctness : VC_Correct.
+  Include simplex_positive_gcd_proof_auto.
+  Include simplex_positive_gcd_proof_manual.
+End VC_Correctness.

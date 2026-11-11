@@ -1,0 +1,53 @@
+#include "../include/sm3.h"
+
+/* Pointer-local views for byte arrays.  The built-in array rules recognize
+ * direct base-plus-index expressions; these rules add the equivalent case in
+ * which a C pointer local carries that address through a proved equality. */
+
+id : 1
+priority : core(1)
+left : ?cursor == ?base + (?index * sizeof(U8)) at 0
+       UCharArray::full(base, ?length, ?bytes) at 1
+right : store(cursor, U8, ?value) at 2
+check : infer(0 <= index);
+        infer(index < length);
+action : left_erase(1);
+         right_erase(2);
+         left_add(UCharArray::missing_i(
+           base, index, 0, length, bytes));
+         right_add(value == Znth{Z}(index, bytes, 0));
+
+id : 2
+priority : post(1)
+left : ?cursor == ?base + (?index * sizeof(U8)) at 0
+       UCharArray::missing_i(base, index, 0, ?length, ?bytes) at 1
+       store(cursor, U8, Znth{Z}(index, bytes, 0)) at 2
+check : infer(0 <= index);
+        infer(index < length);
+action : left_erase(1);
+         left_erase(2);
+         left_add(UCharArray::full(base, length, bytes));
+
+id : 3
+priority : post(3)
+left : ?cursor == ?base + (?index * sizeof(U8)) at 0
+       UCharArray::missing_i(base, index, 0, ?length, ?bytes) at 1
+       store(cursor, U8, ?value) at 2
+check : infer(0 <= index);
+        infer(index < length);
+action : left_erase(1);
+         left_erase(2);
+         left_add(UCharArray::full(
+           base, length, replace_Znth{Z}(index, value, bytes)));
+
+id : 4
+priority : core(1)
+left : ?cursor == ?base + (?index * sizeof(U8)) at 0
+       UCharArray::full(base, ?length, ?bytes) at 1
+right : undef_data_at(cursor, U8) at 2
+check : infer(0 <= index);
+        infer(index < length);
+action : left_erase(1);
+         right_erase(2);
+         left_add(UCharArray::missing_i(
+           base, index, 0, length, bytes));

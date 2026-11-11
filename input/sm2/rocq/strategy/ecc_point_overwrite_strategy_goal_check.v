@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import ecc_point_overwrite_strategy_goal ecc_point_overwrite_strategy_proof.
+
+Module ecc_point_overwrite_Strategy_Correctness : ecc_point_overwrite_Strategy_Correct.
+  Include ecc_point_overwrite_strategy_proof.
+End ecc_point_overwrite_Strategy_Correctness.

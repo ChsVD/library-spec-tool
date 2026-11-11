@@ -35,7 +35,7 @@ class BundledStage3Tests(unittest.TestCase):
         self.assertEqual(result['status'],'candidates_reviewed')
     def test_common_stage_reads_only_source_bundles(self):
         f=self.fixture;target=f.base/'common'
-        result=run_pipeline(f.root,target,f.output,lambda r,t:ScopedModel(r),budgets=Budgets(calls=24,seconds=30,context_chars=60000,reserve_seconds=0))
+        result=run_pipeline(f.root,target,f.output,lambda r,t:ScopedModel(r),protocol_version=2,budgets=Budgets(calls=24,seconds=30,context_chars=60000,reserve_seconds=0))
         self.assertEqual(result['status'],'common_candidates_reviewed',result)
         for log in (target/'tasks').glob('*/reads.jsonl'):
             for line in log.read_text().splitlines():

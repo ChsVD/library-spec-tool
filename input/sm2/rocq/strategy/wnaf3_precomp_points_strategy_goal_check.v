@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import wnaf3_precomp_points_strategy_goal wnaf3_precomp_points_strategy_proof.
+
+Module wnaf3_precomp_points_Strategy_Correctness : wnaf3_precomp_points_Strategy_Correct.
+  Include wnaf3_precomp_points_strategy_proof.
+End wnaf3_precomp_points_Strategy_Correctness.

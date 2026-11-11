@@ -82,8 +82,8 @@ observations 只记录关键源码依据；assumptions 说明具体缺口、条�
 
 ## 依据和验证边界
 
-- [TOOL_OPTIMIZATION.md](../TOOL_OPTIMIZATION.md) 第三、四、七节。
-- [规约书写优化](../runs/isolated-bn-words-sol61-high-20261020-01/evaluation/SPECIFICATION_WRITING_OPTIMIZATION.md)：入口快照、输出精确性、内存和覆盖范围要求。本模板按当前要求把原示例的内存与边界内容纳入前后条件，历史文档不改写。
+- TOOL_OPTIMIZATION.md 第三、四、七节。
+- [规约书写优化](../SPECIFICATION_WRITING_GUIDE.md)：入口快照、输出精确性、内存和覆盖范围要求。本模板按当前要求把原示例的内存与边界内容纳入前后条件，历史文档不改写。
 - 本地 QCP 教程：QCP_maxu/tutorial 下 T1-1《描述C函数安全性的规约标注》、T2-1《内存操作有关的规约标注》、T2-2《断言常见形式和分离合取的常用性质》。分别说明 With/Require/Ensure、初始化与权限、分离合取与存在量。
 - [SM2 点加案例](../input/sm2/annotated_C/ecc_montg/montg_add_jpoint_and_apoint_ex.c)：non_alias 与 r_eq_a 各有独立的 With/Require/Ensure。
 - [SM2 复制案例](../input/sm2/annotated_C/ecc_montg/copy_bignum.c)：输入资源归还、未初始化输出及规约推导关系。

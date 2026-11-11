@@ -76,7 +76,7 @@ class PlanningTests(unittest.TestCase):
 
     def test_snapshot_and_policy_prevent_old_resume(self):
         output=self.base/"common"
-        result=fixtures.run_pipeline(self.root,output,self.upstream,lambda r,t:fixtures.Model(r),budgets=self.budgets)
+        result=fixtures.run_pipeline(self.root,output,self.upstream,lambda r,t:fixtures.Model(r),budgets=self.budgets,protocol_version=2)
         self.assertEqual(result["status"],"common_candidates_reviewed")
         plan=json.loads((output/"planning.json").read_text())
         self.assertEqual(plan["candidate_digest"],fixtures.digest(json.loads((output/"candidate.json").read_text())))
@@ -85,4 +85,4 @@ class PlanningTests(unittest.TestCase):
         path=output/"identity.json";identity=json.loads(path.read_text());identity.pop("planning_policy")
         path.write_text(json.dumps(identity))
         with self.assertRaisesRegex(ValueError,"planning policy"):
-            fixtures.run_pipeline(self.root,output,self.upstream,lambda *args:None,resume=True)
+            fixtures.run_pipeline(self.root,output,self.upstream,lambda *args:None,resume=True,protocol_version=2)

@@ -1,0 +1,73 @@
+#include "../include/montg_add_jpoint_strategy.h"
+
+/* Forget the seven initialized precomputation locals on the equal-point
+ * early return.  Exact trace shapes keep input coordinates out of scope. */
+id : 1
+priority : mont_aj_equal_cleanup(0)
+left : store_fp(?u1, mont_p(aj_u1(?x1, ?z2))) at 0
+       store_fp(?u2, mont_p(aj_u2(?x2, ?z1))) at 1
+       store_fp(?s1, mont_p(aj_s1(?y1, z2))) at 2
+       store_fp(?s2, mont_p(aj_s2(?y2, z1))) at 3
+       store_fp(?pz2, mont_p(aj_pz2(z1))) at 4
+       store_fp(?qz2, mont_p(aj_qz2(z2))) at 5
+       store_fp(?tmp, mont_p(aj_qz3(z2))) at 6
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_erase(4);
+         left_erase(5);
+         left_erase(6);
+         left_add(UndefStructPredu32(u1));
+         left_add(UndefStructPredu32(u2));
+         left_add(UndefStructPredu32(s1));
+         left_add(UndefStructPredu32(s2));
+         left_add(UndefStructPredu32(pz2));
+         left_add(UndefStructPredu32(qz2));
+         left_add(UndefStructPredu32(tmp));
+
+/* Forget every initialized trace local after the generic result has been
+ * connected to the public point.  Output and input point fields do not match
+ * this complete 13-resource trace. */
+id : 2
+priority : mont_aj_generic_cleanup(0)
+left : store_fp(?u1, mont_p(aj_u1(?x1, ?z2))) at 0
+       store_fp(?u2, mont_p(aj_u2(?x2, ?z1))) at 1
+       store_fp(?h, mont_p(aj_h(x1, z1, x2, z2))) at 2
+       store_fp(?s1, mont_p(aj_s1(?y1, z2))) at 3
+       store_fp(?s2, mont_p(aj_s2(?y2, z1))) at 4
+       store_fp(?rr, mont_p(aj_rr(y1, z1, y2, z2))) at 5
+       store_fp(?usum, mont_p(aj_u_sum(x1, z1, x2, z2))) at 6
+       store_fp(?ssum, mont_p(aj_s_sum(y1, z1, y2, z2))) at 7
+       store_fp(?bmx, mont_p(
+         aj_base_minus_twice_rx(x1, y1, z1, x2, y2, z2))) at 8
+       store_fp(?pz2, mont_p(aj_pz2(z1))) at 9
+       store_fp(?qz2, mont_p(aj_qz2(z2))) at 10
+       store_fp(?h2, mont_p(aj_h2(x1, z1, x2, z2))) at 11
+       store_fp(?zbase, mont_p(aj_zbase(z1, z2))) at 12
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_erase(4);
+         left_erase(5);
+         left_erase(6);
+         left_erase(7);
+         left_erase(8);
+         left_erase(9);
+         left_erase(10);
+         left_erase(11);
+         left_erase(12);
+         left_add(UndefStructPredu32(u1));
+         left_add(UndefStructPredu32(u2));
+         left_add(UndefStructPredu32(h));
+         left_add(UndefStructPredu32(s1));
+         left_add(UndefStructPredu32(s2));
+         left_add(UndefStructPredu32(rr));
+         left_add(UndefStructPredu32(usum));
+         left_add(UndefStructPredu32(ssum));
+         left_add(UndefStructPredu32(bmx));
+         left_add(UndefStructPredu32(pz2));
+         left_add(UndefStructPredu32(qz2));
+         left_add(UndefStructPredu32(h2));
+         left_add(UndefStructPredu32(zbase));

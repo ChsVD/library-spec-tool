@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import array_bridges_strategy_goal array_bridges_strategy_proof.
+
+Module array_bridges_Strategy_Correctness : array_bridges_Strategy_Correct.
+  Include array_bridges_strategy_proof.
+End array_bridges_Strategy_Correctness.

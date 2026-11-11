@@ -1,0 +1,304 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From SimpleC.EE.Applications_human.sm2.vc.ecc Require Import add_JPoint_and_AFPoint_def.
+From SimpleC.EE.Applications_human.sm2.vc.ecc Require Import add_JPoint_and_AFPoint_goal.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import Snaive_C_Rules.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.sm2_common_lib.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.basicOp_lib.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.ecc
+      SimpleC.EE.Applications_human.sm2.lib.ecc_scalar_mul.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.add_JPoint_and_AFPoint_lib.
+Local Open Scope sac.
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_1_impl_non_alias : add_JPoint_and_AFPoint_safety_wit_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_2_impl_r_eq_point1 : add_JPoint_and_AFPoint_safety_wit_2_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_3_impl_non_alias : add_JPoint_and_AFPoint_safety_wit_3_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_4_impl_r_eq_point1 : add_JPoint_and_AFPoint_safety_wit_4_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_5_impl_non_alias : add_JPoint_and_AFPoint_safety_wit_5_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_6_impl_r_eq_point1 : add_JPoint_and_AFPoint_safety_wit_6_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_7_impl_non_alias : add_JPoint_and_AFPoint_safety_wit_7_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_safety_wit_8_impl_r_eq_point1 : add_JPoint_and_AFPoint_safety_wit_8_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_1_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_1_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_1_2_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_1_2_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_1_3_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_1_3_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_1_4_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_1_4_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_2_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_2_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_2_2_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_2_2_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_2_3_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_2_3_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_2_4_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_2_4_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_3_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_3_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_3_2_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_3_2_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_4_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_4_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_4_2_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_4_2_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_5_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_5_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_5_2_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_5_2_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_6_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_6_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_6_2_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_6_2_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_6_3_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_6_3_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_6_4_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_6_4_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_7_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_7_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_7_2_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_7_2_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_7_3_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_7_3_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_7_4_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_7_4_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_8_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_8_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_8_2_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_8_2_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_9_1_impl_non_alias : add_JPoint_and_AFPoint_entail_wit_9_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_entail_wit_9_2_impl_r_eq_point1 : add_JPoint_and_AFPoint_entail_wit_9_2_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_1_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_1_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_2_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_2_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_3_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_3_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_4_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_4_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_5_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_5_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_6_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_6_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_7_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_7_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_8_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_8_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_9_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_9_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_10_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_10_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_11_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_11_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_12_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_12_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_13_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_13_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_14_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_14_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_15_impl_non_alias_pure : add_JPoint_and_AFPoint_partial_solve_wit_15_impl_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_15_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_15_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_16_impl_r_eq_point1_pure : add_JPoint_and_AFPoint_partial_solve_wit_16_impl_r_eq_point1_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_16_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_16_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_17_impl_non_alias_pure : add_JPoint_and_AFPoint_partial_solve_wit_17_impl_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_17_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_17_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_18_impl_r_eq_point1_pure : add_JPoint_and_AFPoint_partial_solve_wit_18_impl_r_eq_point1_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_18_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_18_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_19_impl_non_alias_pure : add_JPoint_and_AFPoint_partial_solve_wit_19_impl_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_19_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_19_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_20_impl_r_eq_point1_pure : add_JPoint_and_AFPoint_partial_solve_wit_20_impl_r_eq_point1_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_20_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_20_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_21_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_21_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_22_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_22_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_23_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_23_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_24_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_24_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_25_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_25_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_26_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_26_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_27_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_27_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_28_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_28_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_29_impl_non_alias_pure : add_JPoint_and_AFPoint_partial_solve_wit_29_impl_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_29_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_29_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_30_impl_r_eq_point1_pure : add_JPoint_and_AFPoint_partial_solve_wit_30_impl_r_eq_point1_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_30_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_30_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_31_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_31_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_32_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_32_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_33_impl_non_alias_pure : add_JPoint_and_AFPoint_partial_solve_wit_33_impl_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_33_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_33_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_34_impl_r_eq_point1_pure : add_JPoint_and_AFPoint_partial_solve_wit_34_impl_r_eq_point1_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_34_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_34_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_35_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_35_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_36_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_36_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_37_impl_non_alias_pure : add_JPoint_and_AFPoint_partial_solve_wit_37_impl_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_37_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_37_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_38_impl_r_eq_point1_pure : add_JPoint_and_AFPoint_partial_solve_wit_38_impl_r_eq_point1_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_38_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_38_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_39_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_39_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_40_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_40_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_41_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_41_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_42_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_42_impl_r_eq_point1.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_43_impl_non_alias : add_JPoint_and_AFPoint_partial_solve_wit_43_impl_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_44_impl_r_eq_point1_pure : add_JPoint_and_AFPoint_partial_solve_wit_44_impl_r_eq_point1_pure.
+Proof. Admitted. 
+
+Lemma proof_of_add_JPoint_and_AFPoint_partial_solve_wit_44_impl_r_eq_point1 : add_JPoint_and_AFPoint_partial_solve_wit_44_impl_r_eq_point1.
+Proof. Admitted. 
+

@@ -1,0 +1,89 @@
+#include "../include/ecc.h"
+
+/* Canonical resources for SM2 curve and point constants. */
+
+id : 10
+priority : core(0)
+left : store_sm2_a() at 0
+right : store_sm2_a() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 11
+priority : open_sm2_a(0)
+left : store_sm2_a() at 0
+action : left_erase(0);
+         left_add(store_fp(SM2_a, SM2_A_Z()));
+
+id : 13
+priority : core(0)
+left : store_fp(SM2_a, ?x) at 0
+right : store_sm2_a() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_A_Z());
+
+id : 20
+priority : core(0)
+left : store_sm2_b() at 0
+right : store_sm2_b() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 21
+priority : open_sm2_b(0)
+left : store_sm2_b() at 0
+action : left_erase(0);
+         left_add(store_fp(SM2_b, SM2_B_Z()));
+
+id : 23
+priority : core(0)
+left : store_fp(SM2_b, ?x) at 0
+right : store_sm2_b() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_B_Z());
+
+id : 30
+priority : core(0)
+left : store_jpoint_zero() at 0
+right : store_jpoint_zero() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 31
+priority : open_jpoint_zero(0)
+left : store_jpoint_zero() at 0
+action : left_erase(0);
+         left_add(store_jpoint_fields(JPoint_ZERO, 1, 1, 0));
+
+id : 33
+priority : core(0)
+left : store_jpoint_fields(JPoint_ZERO, ?x, ?y, ?z) at 0
+right : store_jpoint_zero() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == 1);
+         right_add(y == 1);
+         right_add(z == 0);
+
+id : 40
+priority : core(0)
+left : store_sm2_inv2p() at 0
+right : store_sm2_inv2p() at 1
+action : left_erase(0);
+         right_erase(1);
+
+id : 41
+priority : open_sm2_inv2p(0)
+left : store_sm2_inv2p() at 0
+action : left_erase(0);
+         left_add(store_fp(SM2_inv2P, SM2_P_INV2_Z()));
+
+id : 43
+priority : core(0)
+left : store_fp(SM2_inv2P, ?x) at 0
+right : store_sm2_inv2p() at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == SM2_P_INV2_Z());

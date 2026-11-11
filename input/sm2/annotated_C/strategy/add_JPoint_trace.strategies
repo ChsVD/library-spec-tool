@@ -1,0 +1,150 @@
+/* Case-local normalization from leaf arithmetic results to the stable names
+ * used by add_JPoint's straight-line proof trace. */
+#include "../include/add_JPoint_trace.h"
+
+id : 10
+priority : aj_pz2_step(0)
+left : store_fp(?p, Zmod(?z * ?z, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_pz2(z)));
+
+id : 11
+priority : aj_qz2_step(0)
+left : store_fp(?p, Zmod(?z * ?z, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_qz2(z)));
+
+id : 12
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_pz2(?z) * z, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_pz3(z)));
+
+id : 13
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_qz2(?z) * z, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_qz3(z)));
+
+id : 14
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(?x * aj_qz2(?z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_u1(x, z)));
+
+id : 15
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(?x * aj_pz2(?z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_u2(x, z)));
+
+id : 16
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(?y * aj_qz3(?z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_s1(y, z)));
+
+id : 17
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(?y * aj_pz3(?z), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_s2(y, z)));
+
+id : 18
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_s1(?y1, ?z2) + aj_s2(?y2, ?z1), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_s_sum(y1, z1, y2, z2)));
+
+id : 19
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_u1(?x1, ?z2) - aj_u2(?x2, ?z1), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_h(x1, z1, x2, z2)));
+
+id : 20
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_s1(?y1, ?z2) - aj_s2(?y2, ?z1), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_rr(y1, z1, y2, z2)));
+
+id : 21
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_u1(?x1, ?z2) + aj_u2(?x2, ?z1), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_u_sum(x1, z1, x2, z2)));
+
+id : 22
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_rr(?y1, ?z1, ?y2, ?z2) * aj_rr(y1, z1, y2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_rr2(y1, z1, y2, z2)));
+
+id : 23
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_h(?x1, ?z1, ?x2, ?z2) * aj_h(x1, z1, x2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_h2(x1, z1, x2, z2)));
+
+id : 24
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_u_sum(?x1, ?z1, ?x2, ?z2) * aj_h2(x1, z1, x2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_base(x1, z1, x2, z2)));
+
+id : 25
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_rr2(?y1, ?z1, ?y2, ?z2) - aj_base(?x1, z1, ?x2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_rx(x1, y1, z1, x2, y2, z2)));
+
+id : 26
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_rx(?x1, ?y1, ?z1, ?x2, ?y2, ?z2) + aj_rx(x1, y1, z1, x2, y2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_twice_rx(x1, y1, z1, x2, y2, z2)));
+
+id : 27
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_base(?x1, ?z1, ?x2, ?z2) - aj_twice_rx(x1, ?y1, z1, x2, ?y2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_base_minus_twice_rx(x1, y1, z1, x2, y2, z2)));
+
+id : 28
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_base_minus_twice_rx(?x1, ?y1, ?z1, ?x2, ?y2, ?z2) * aj_rr(y1, z1, y2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_left_y(x1, y1, z1, x2, y2, z2)));
+
+id : 29
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(Zmod(aj_s_sum(?y1, ?z1, ?y2, ?z2) * aj_h2(?x1, z1, ?x2, z2), SM2_P_Z()) * aj_h(x1, z1, x2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_right_y(x1, y1, z1, x2, y2, z2)));
+
+id : 30
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_left_y(?x1, ?y1, ?z1, ?x2, ?y2, ?z2) - aj_right_y(x1, y1, z1, x2, y2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_y_num(x1, y1, z1, x2, y2, z2)));
+
+id : 31
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_y_num(?x1, ?y1, ?z1, ?x2, ?y2, ?z2) * SM2_P_INV2_Z(), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_ry(x1, y1, z1, x2, y2, z2)));
+
+id : 32
+priority : aj_zbase_step(0)
+left : store_fp(?p, Zmod(?z1 * ?z2, SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_zbase(z1, z2)));
+
+id : 33
+priority : aj_trace_step(0)
+left : store_fp(?p, Zmod(aj_zbase(?z1, ?z2) * aj_h(?x1, z1, ?x2, z2), SM2_P_Z())) at 0
+action : left_erase(0); left_add(store_fp(p, aj_rz(x1, z1, x2, z2)));
+
+/* Exceptional public-point branches.  These rules expose only the abstract
+ * group identities; their generated soundness goals are proved in Rocq. */
+id : 34
+priority : aj_inf_left(0)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       jpoint_represents(?x2, ?y2, ?z2, ?P2) at 1
+       x1 == 1 at 2
+       y1 == 1 at 3
+       z1 == 0 at 4
+action : left_add(sm2_point_add(P1, P2) == P2);
+
+id : 35
+priority : aj_inf_right(0)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       jpoint_represents(?x2, ?y2, ?z2, ?P2) at 1
+       x2 == 1 at 2
+       y2 == 1 at 3
+       z2 == 0 at 4
+action : left_add(sm2_point_add(P1, P2) == P1);
+
+id : 36
+priority : aj_finite(0)
+left : jpoint_represents(?x, ?y, ?z, ?P) at 0
+       jpoint_canonical_infinity_encoding(x, y, z, P) at 1
+       aj_noncanonical_infinity(x, y, z) at 2
+action : left_add(z != 0);

@@ -4,7 +4,7 @@ from pathlib import Path
 from stage1.runner import snapshot
 from stage2.graph import digest
 from .recovery import sha
-from . import strategies
+from . import strategies, planning, materials
 
 def transition(root, source, original, path):
     manifest=json.loads(Path(path).read_text())
@@ -28,10 +28,19 @@ def transition(root, source, original, path):
     return inventory,{"manifest":manifest,"manifest_digest":digest(manifest),
                       "baseline_snapshot_digest":digest(original),"new_snapshot_digest":digest(inventory)}
 
-def seed(previous, graph, nodes, old_inventory, model):
+def seed(previous, graph, nodes, old_inventory, model, *, protocol_version=3):
     previous=Path(previous).resolve(strict=True)
     load=lambda name:json.loads((previous/name).read_text())
     identity=load("identity.json");data=load("checkpoint.json");state=load("status.json")
+    if identity.get('planning_policy') != protocol_version:
+        raise ValueError('revision seed protocol/planning policy changed; use a fresh run')
+    expected_material_policy = materials.VERSION if protocol_version == 3 else 1
+    if identity.get('material_policy') != expected_material_policy:
+        raise ValueError('revision seed material policy changed; use a fresh run')
+    if (data.get('candidate') or {}).get('protocol_version') == 3:
+        if (not isinstance(data.get('review'), dict) or data['review'].get('protocol_version') != 3
+                or data['review'].get('candidate_digest') != planning.candidate_digest(data['candidate'])):
+            raise ValueError('revision review belongs to another candidate or protocol')
     if identity["model"]!=model or identity["graph_digest"]!=digest(graph):
         raise ValueError("revision seed model or upstream scope changed")
     if load("input_snapshot.json")!=old_inventory or state.get("checkpoint_digest")!=digest(data):

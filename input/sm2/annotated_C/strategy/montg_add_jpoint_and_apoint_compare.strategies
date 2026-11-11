@@ -1,0 +1,40 @@
+#include "../include/montg_add_jpoint_and_apoint_trace.h"
+
+/* Cross the field/raw boundary only around the two zero comparisons. */
+id : 1
+priority : mont_maja_compare_open(0)
+left : store_fp(?h,
+         Zmod(mont_p(maja_u2(?x2, ?z1)) - mont_p(?x1),
+              SM2_P_Z())) at 0
+       store_fp(?r,
+         Zmod(mont_p(maja_s2(?y2, z1)) - mont_p(?y1),
+              SM2_P_Z())) at 1
+action : left_erase(0);
+         left_erase(1);
+         left_add(0 <= mont_p(maja_h(x1, x2, z1)));
+         left_add(mont_p(maja_h(x1, x2, z1)) < SM2_P_Z());
+         left_add(0 <= mont_p(maja_r(y1, y2, z1)));
+         left_add(mont_p(maja_r(y1, y2, z1)) < SM2_P_Z());
+         left_add(store_u256_limbs(
+           field_addr(h, u32, v) + (0 * sizeof(U64)),
+           mont_p(maja_h(x1, x2, z1))));
+         left_add(store_u256_limbs(
+           field_addr(r, u32, v) + (0 * sizeof(U64)),
+           mont_p(maja_r(y1, y2, z1))));
+
+id : 2
+priority : mont_maja_compare_close(0)
+left : store_u256_limbs(
+         field_addr(?h, u32, v) + (0 * sizeof(U64)),
+         mont_p(maja_h(?x1, ?x2, ?z1))) at 0
+       store_u256_limbs(
+         field_addr(?r, u32, v) + (0 * sizeof(U64)),
+         mont_p(maja_r(?y1, ?y2, z1))) at 1
+check : infer(0 <= mont_p(maja_h(x1, x2, z1)));
+        infer(mont_p(maja_h(x1, x2, z1)) < SM2_P_Z());
+        infer(0 <= mont_p(maja_r(y1, y2, z1)));
+        infer(mont_p(maja_r(y1, y2, z1)) < SM2_P_Z());
+action : left_erase(0);
+         left_erase(1);
+         left_add(store_fp(h, mont_p(maja_h(x1, x2, z1))));
+         left_add(store_fp(r, mont_p(maja_r(y1, y2, z1))));

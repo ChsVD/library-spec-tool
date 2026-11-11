@@ -1,0 +1,150 @@
+#include "../include/sm3.h"
+
+/* Focus one uint32 word while keeping the remaining array behind the
+ * protocol-level predicate. */
+id : 1
+priority : core(11)
+left : store_u32_words(?p, ?n, ?words) at 0
+right : store(?p + (?i * sizeof(U32)), U32, ?value) at 1
+check : infer(0 <= i);
+        infer(i < n);
+action : left_erase(0);
+         right_erase(1);
+         left_add(store_u32_words_missing_i(p, n, i, words));
+         right_add(value == Znth{Z}(i, words, 0));
+
+id : 2
+priority : post(1)
+left : store_u32_words_missing_i(?p, ?n, ?i, ?words) at 0
+       store(p + (i * sizeof(U32)), U32, Znth{Z}(i, words, 0)) at 1
+action : left_erase(0);
+         left_erase(1);
+         left_add(store_u32_words(p, n, words));
+
+/* Split only the exact writable prefix requested by memcpy. */
+id : 3
+priority : focus_undef_prefix(0)
+left : UCharArray::undef_full(?p, ?capacity) at 0
+       store_bytes(?src, ?count, ?bytes) at 1
+       count < capacity at 2
+action : left_erase(0);
+         left_add(UCharArray::undef_full(p, count));
+         left_add(UCharArray::undef_full(
+           p + count * sizeof(U8), capacity - count));
+
+/* Split a read-only byte array at the exact copy boundary. */
+id : 4
+priority : focus_store_bytes_prefix(0)
+left : store_bytes(?p, ?total, ?bytes) at 0
+       UCharArray::undef_full(?dest, ?count) at 1
+check : infer(0 <= count);
+        infer(count <= total);
+action : left_erase(0);
+         left_add(Zlength{Z}(bytes) == total);
+         left_add(u8_list_bounded(bytes));
+         left_add(Zlength{Z}(sublist{Z}(0, count, bytes)) == count);
+         left_add(u8_list_bounded(sublist{Z}(0, count, bytes)));
+         left_add(UCharArray::full(
+           p, count, sublist{Z}(0, count, bytes)));
+         left_add(UCharArray::full(
+           p + count * sizeof(U8), total - count,
+           sublist{Z}(count, total, bytes)));
+
+id : 5
+priority : merge_full_byte_regions(0)
+left : UCharArray::full(?p, ?prefix_len, ?prefix) at 0
+       UCharArray::full(
+         p + prefix_len * sizeof(U8),
+         ?total - prefix_len, ?suffix) at 1
+check : infer(0 <= prefix_len);
+        infer(prefix_len <= total);
+action : left_erase(0);
+         left_erase(1);
+         left_add(UCharArray::full(
+           p, total, app{Z}(prefix, suffix)));
+
+/* Normalize zero-index array decay only when a call target requests it. */
+id : 6
+priority : core(0)
+left : UCharArray::full(?p, ?n, ?bytes) at 0
+right : UCharArray::full(
+          pointer_offset(?q, 0, sizeof(U8), U8), ?m, ?required) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+         right_add(bytes == required);
+
+id : 7
+priority : core(0)
+left : UIntArray::full(?p, ?n, ?words) at 0
+right : UIntArray::full(
+          pointer_offset(?q, 0, sizeof(U32), U32), ?m, ?required) at 1
+check : infer(p == q);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+         right_add(words == required);
+
+id : 8
+priority : core(0)
+left : UCharArray::undef_full(?p + ?i, ?n) at 0
+right : UCharArray::undef_full(
+          pointer_offset(?q, ?j, sizeof(U8), U8), ?m) at 1
+check : infer(p == q);
+        infer(i == j);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+
+id : 13
+priority : core(0)
+left : UCharArray::undef_full(
+         pointer_offset(?p, ?i, sizeof(U8), U8), ?n) at 0
+right : UCharArray::undef_full(
+          pointer_offset(?q, ?j, sizeof(U8), U8), ?m) at 1
+check : infer(p == q);
+        infer(i == j);
+        infer(n == m);
+action : left_erase(0);
+         right_erase(1);
+
+/* Segment views are introduced by phase assertions and restored explicitly
+ * after exact-range calls. */
+id : 9
+priority : merge_uchar_segments(0)
+left : UCharArray::seg(?p, ?lo, ?mid, ?left_bytes) at 0
+       UCharArray::seg(p, ?next, ?hi, ?right_bytes) at 1
+check : infer(mid == next);
+        infer(lo <= mid);
+        infer(mid <= hi);
+action : left_erase(0);
+         left_erase(1);
+         left_add(UCharArray::seg(
+           p, lo, hi, app{Z}(left_bytes, right_bytes)));
+
+id : 10
+priority : close_uchar_seg0(0)
+left : UCharArray::seg(?p, 0, ?hi, ?bytes) at 0
+action : left_erase(0);
+         left_add(UCharArray::full(p, hi, bytes));
+
+id : 11
+priority : core(1)
+left : UCharArray::seg(?base, ?lo, ?hi, ?bytes) at 0
+right : UCharArray::full(?address, ?count, ?required) at 1
+check : infer(address == base + lo * sizeof(U8));
+        infer(count == hi - lo);
+action : left_erase(0);
+         right_erase(1);
+         right_add(bytes == required);
+
+id : 12
+priority : restore_uchar_segment(0)
+left : store_bytes(
+         ?base + ?lo * sizeof(U8), ?count, ?bytes) at 0
+action : left_erase(0);
+         left_add(Zlength{Z}(bytes) == count);
+         left_add(u8_list_bounded(bytes));
+         left_add(UCharArray::seg(
+           base, lo, lo + count, bytes));

@@ -1,0 +1,18 @@
+#include "../include/ecc.h"
+
+/* Forget an initialized Montgomery JPoint only when a complete overwrite
+ * requests all three coordinate objects at the same address. */
+id : 1
+priority : core(1)
+left : store_mont_jpoint(?p, ?point) at 0
+right : UInt64Array::undef_full(
+          field_addr(field_addr(?q, JPoint, x), u32, v), 4) at 1
+        UInt64Array::undef_full(
+          field_addr(field_addr(q, JPoint, y), u32, v), 4) at 2
+        UInt64Array::undef_full(
+          field_addr(field_addr(q, JPoint, z), u32, v), 4) at 3
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         right_erase(2);
+         right_erase(3);

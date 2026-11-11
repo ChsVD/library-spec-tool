@@ -1,0 +1,16 @@
+From SimpleC.EE.Applications_human.sm2.vc.ecc_montg Require Import montg_add_jpoint_and_apoint_goal montg_add_jpoint_and_apoint_proof_auto montg_add_jpoint_and_apoint_proof_manual.
+
+Module VC_Correctness : VC_Correct.
+  Include montg_add_jpoint_and_apoint_precompute_strategy_proof.
+  Include montg_add_jpoint_and_apoint_x_strategy_proof.
+  Include montg_add_jpoint_and_apoint_y_strategy_proof.
+  Include sm2_representation_strategy_proof.
+  Include ecc_representation_strategy_proof.
+  Include ecc_point_overwrite_strategy_proof.
+  Include ecc_point_facts_strategy_proof.
+  Include montg_add_jpoint_and_apoint_compare_strategy_proof.
+  Include montg_add_jpoint_and_apoint_result_strategy_proof.
+  Include montg_add_jpoint_and_apoint_cleanup_strategy_proof.
+  Include montg_add_jpoint_and_apoint_proof_auto.
+  Include montg_add_jpoint_and_apoint_proof_manual.
+End VC_Correctness.

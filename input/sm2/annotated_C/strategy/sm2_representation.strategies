@@ -1,0 +1,270 @@
+#include "../include/basicOp.h"
+
+/* Core value-representation predicates. */
+
+/* One complete u32 object. */
+id : 10
+priority : core(0)
+left : store_u256(?p, ?x) at 0
+right : store_u256(p, ?y) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == y);
+
+id : 11
+priority : open_store_u256(0)
+left : store_u256(?p, ?x) at 0
+action : left_erase(0);
+         left_add(store_u256_limbs(field_addr(p, u32, v), x));
+
+id : 12
+priority : core(3)
+right : store_u256(?p, ?x) at 0
+action : right_erase(0);
+         right_add(store_u256_limbs(field_addr(p, u32, v), x));
+
+/* Forget an initialized u32 only when a complete overwrite explicitly asks
+ * for undefined storage at the same address. */
+id : 13
+priority : core(0)
+left : store_u256(?p, ?x) at 0
+right : UInt64Array::undef_full(field_addr(?q, u32, v), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+/* A wrapper may pass an abstract u32 value to a raw four-limb callee without
+ * forcing the wrapper itself down to individual cells. */
+id : 14
+priority : core(0)
+left : store_u256(?p, ?x) at 0
+right : store_u256_limbs(
+          field_addr(?q, u32, v) + (0 * sizeof(U64)), ?y) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == y);
+
+/* Whole-record assignments require the source [u32] as one exact array.
+ * Keep this conversion dormant outside an explicit assignment boundary. */
+id : 15
+priority : materialize_u256_record(0)
+left : store_u256(?p, ?x) at 0
+action : left_erase(0);
+         left_exist_add(xs : list{Z});
+         left_add(Zlength{Z}(xs) == 4);
+         left_add(u64_list_bounded(xs));
+         left_add(u64_list_value(xs) == x);
+         left_add(UInt64Array::full(field_addr(p, u32, v), 4, xs));
+
+/* Exactly four little-endian uint64 limbs. */
+id : 20
+priority : core(0)
+left : store_u256_limbs(?p, ?x) at 0
+right : store_u256_limbs(p, ?y) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == y);
+
+id : 21
+priority : open_store_u256(0)
+left : store_u256_limbs(?p, ?x) at 0
+action : left_erase(0);
+         left_exist_add(x0);
+         left_exist_add(x1);
+         left_exist_add(x2);
+         left_exist_add(x3);
+         left_add(0 <= x0);
+         left_add(x0 < U64_MOD());
+         left_add(0 <= x1);
+         left_add(x1 < U64_MOD());
+         left_add(0 <= x2);
+         left_add(x2 < U64_MOD());
+         left_add(0 <= x3);
+         left_add(x3 < U64_MOD());
+         left_add(x == u256_of_limbs(x0, x1, x2, x3));
+         left_add(data_at(p + (0 * sizeof(U64)), U64, x0));
+         left_add(data_at(p + (1 * sizeof(U64)), U64, x1));
+         left_add(data_at(p + (2 * sizeof(U64)), U64, x2));
+         left_add(data_at(p + (3 * sizeof(U64)), U64, x3));
+
+id : 22
+priority : core(3)
+right : store_u256_limbs(?p, ?x) at 0
+action : right_erase(0);
+         right_exist_add(x0);
+         right_exist_add(x1);
+         right_exist_add(x2);
+         right_exist_add(x3);
+         right_add(0 <= x0);
+         right_add(x0 < U64_MOD());
+         right_add(0 <= x1);
+         right_add(x1 < U64_MOD());
+         right_add(0 <= x2);
+         right_add(x2 < U64_MOD());
+         right_add(0 <= x3);
+         right_add(x3 < U64_MOD());
+         right_add(x == u256_of_limbs(x0, x1, x2, x3));
+         right_add(data_at(p + (0 * sizeof(U64)), U64, x0));
+         right_add(data_at(p + (1 * sizeof(U64)), U64, x1));
+         right_add(data_at(p + (2 * sizeof(U64)), U64, x2));
+         right_add(data_at(p + (3 * sizeof(U64)), U64, x3));
+
+/* Match a four-element array without exposing its list expression. */
+id : 23
+priority : core(0)
+left : UInt64Array::full(?p, 4, ?xs) at 0
+right : store_u256_limbs(p, ?x) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(u64_list_value(xs) == x);
+
+/* Forget limb values while retaining write permission. */
+id : 25
+priority : core(0)
+left : store_u256_limbs(
+         field_addr(?source, u32, v) + (0 * sizeof(U64)), ?x) at 0
+       (?result == source || source == ?result) at 1
+right : UInt64Array::undef_full(field_addr(result, u32, v), 4) at 2
+action : left_erase(0);
+         right_erase(2);
+
+id : 24
+priority : core(0)
+left : store_u256_limbs(?p, ?x) at 0
+right : UInt64Array::undef_full(?q, 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+/* A variable number of little-endian uint64 limbs. */
+id : 30
+priority : core(0)
+left : store_u64_limbs(?p, ?n, ?x) at 0
+right : store_u64_limbs(p, n, ?y) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == y);
+
+id : 31
+priority : open_store_u64_limbs(0)
+left : store_u64_limbs(?p, ?n, ?x) at 0
+action : left_erase(0);
+         left_exist_add(xs : list{Z});
+         left_add(Zlength{Z}(xs) == n);
+         left_add(u64_list_bounded(xs));
+         left_add(u64_list_value(xs) == x);
+         left_add(UInt64Array::full(p, n, xs));
+
+id : 32
+priority : core(3)
+right : store_u64_limbs(?p, ?n, ?x) at 0
+action : right_erase(0);
+         right_exist_add(xs : list{Z});
+         right_add(Zlength{Z}(xs) == n);
+         right_add(u64_list_bounded(xs));
+         right_add(u64_list_value(xs) == x);
+         right_add(UInt64Array::full(p, n, xs));
+
+/* Canonical field elements. */
+id : 40
+priority : core(0)
+left : store_fp(?p, ?x) at 0
+right : store_fp(p, ?y) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == y);
+
+id : 41
+priority : open_store_fp(0)
+left : store_fp(?p, ?x) at 0
+action : left_erase(0);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         left_add(store_u256(p, x));
+
+id : 42
+priority : core(3)
+right : store_fp(?p, ?x) at 0
+action : right_erase(0);
+         right_add(0 <= x);
+         right_add(x < SM2_P_Z());
+         right_add(store_u256(p, x));
+
+/* Field-level analogue of rule 13.  This is a goal-directed overwrite
+ * boundary, not an eager representation expansion. */
+id : 46
+priority : core(0)
+left : store_fp(?p, ?x) at 0
+right : UInt64Array::undef_full(field_addr(?q, u32, v), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+/* A u32-level observer may consume a canonical field resource directly.
+ * This boundary is target-driven and therefore does not expose limb cells. */
+id : 47
+priority : core(0)
+left : store_fp(?p, ?x) at 0
+right : store_u256(?q, ?y) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_P_Z());
+         right_add(x == y);
+
+/* Canonical group-order elements. */
+id : 43
+priority : core(0)
+left : store_fn(?p, ?x) at 0
+right : store_fn(p, ?y) at 1
+action : left_erase(0);
+         right_erase(1);
+         right_add(x == y);
+
+id : 44
+priority : open_store_fn(0)
+left : store_fn(?p, ?x) at 0
+action : left_erase(0);
+         left_add(0 <= x);
+         left_add(x < SM2_N_Z());
+         left_add(store_u256(p, x));
+
+id : 45
+priority : core(3)
+right : store_fn(?p, ?x) at 0
+action : right_erase(0);
+         right_add(0 <= x);
+         right_add(x < SM2_N_Z());
+         right_add(store_u256(p, x));
+
+id : 48
+priority : core(0)
+left : store_fn(?p, ?x) at 0
+right : store_u256(?q, ?y) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+         left_add(0 <= x);
+         left_add(x < SM2_N_Z());
+         right_add(x == y);
+
+/* Group-order analogue of rule 46 for a complete overwrite. */
+id : 51
+priority : core(0)
+left : store_fn(?p, ?x) at 0
+right : UInt64Array::undef_full(field_addr(?q, u32, v), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);
+
+/* The same overwrite boundary after C array-to-pointer decay at index zero. */
+id : 52
+priority : core(0)
+left : store_fn(?p, ?x) at 0
+right : UInt64Array::undef_full(
+          field_addr(?q, u32, v) + (0 * sizeof(U64)), 4) at 1
+check : infer(p == q);
+action : left_erase(0);
+         right_erase(1);

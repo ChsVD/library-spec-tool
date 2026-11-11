@@ -1,0 +1,105 @@
+#include "../include/ecc.h"
+
+/* Exact, goal-directed cancellation across equivalent array-base expressions.
+ * This file is loaded only by the WNAF scalar-multiplication caller. */
+id : 1
+priority : core(0)
+left : wnaf3_precomp_undef(?positive, ?negative) at 0
+right : wnaf3_precomp_undef(?required_positive, ?required_negative) at 1
+check : infer(positive == required_positive);
+        infer(negative == required_negative);
+action : left_erase(0);
+         right_erase(1);
+
+id : 2
+priority : core(0)
+left : store_mont_wnaf3_precomp(?positive, ?negative, ?point) at 0
+right : store_mont_wnaf3_precomp(
+          ?required_positive, ?required_negative, ?required_point) at 1
+check : infer(positive == required_positive);
+        infer(negative == required_negative);
+        infer(point == required_point);
+action : left_erase(0);
+         right_erase(1);
+
+id : 3
+priority : core(0)
+left : wnaf3_precomp_unused(?positive, ?negative) at 0
+right : wnaf3_precomp_unused(?required_positive, ?required_negative) at 1
+check : infer(positive == required_positive);
+        infer(negative == required_negative);
+action : left_erase(0);
+         right_erase(1);
+
+id : 4
+priority : core(0)
+left : CharArray::undef_full(?address, ?length) at 0
+right : CharArray::undef_full(?required_address, ?required_length) at 1
+check : infer(address == required_address);
+        infer(length == required_length);
+action : left_erase(0);
+         right_erase(1);
+
+id : 5
+priority : core(0)
+left : CharArray::full(?address, ?length, ?digits) at 0
+right : CharArray::full(
+          ?required_address, ?required_length, ?required_digits) at 1
+check : infer(address == required_address);
+        infer(length == required_length);
+        infer(digits == required_digits);
+action : left_erase(0);
+         right_erase(1);
+
+/* Keep a WNAF suffix accumulator abstract across loop-index normalization.
+ * Match the semantic components separately because infer does not perform
+ * congruence through the complete scalar-multiplication term. */
+id : 6
+priority : core(0)
+left : store_mont_jpoint(
+         ?address,
+         sm2_point_mul(
+           wnaf3_value(sublist{Z}(?start, 257, ?digits)), ?base_point)) at 0
+right : store_mont_jpoint(
+          ?required_address,
+          sm2_point_mul(
+            wnaf3_value(
+              sublist{Z}(?required_start, 257, ?required_digits)),
+            ?required_base_point)) at 1
+check : infer(address == required_address);
+        infer(start == required_start);
+        infer(digits == required_digits);
+        infer(base_point == required_base_point);
+action : left_erase(0);
+         right_erase(1);
+
+/* Consume equal abstract point resources once the loop-finalization
+ * assertion has made the semantic point equality explicit. */
+id : 7
+priority : core(0)
+left : store_mont_jpoint(?address, ?point) at 0
+right : store_mont_jpoint(?required_address, ?required_point) at 1
+check : infer(address == required_address);
+        infer(point == required_point);
+action : left_erase(0);
+         right_erase(1);
+
+/* Reuse an explicitly proved WNAF point equality across loop-index
+ * normalization without opening the point representation. */
+id : 8
+priority : core(0)
+left : ?point == sm2_point_mul(
+         wnaf3_value(sublist{Z}(?start, 257, ?digits)), ?base_point) at 0
+       store_mont_jpoint(?address, point) at 1
+right : store_mont_jpoint(
+          ?required_address,
+          sm2_point_mul(
+            wnaf3_value(
+              sublist{Z}(?required_start, 257, ?required_digits)),
+            ?required_base_point)) at 2
+check : infer(address == required_address);
+        infer(start == required_start);
+        infer(digits == required_digits);
+        infer(base_point == required_base_point);
+action : left_erase(1);
+         right_erase(2);

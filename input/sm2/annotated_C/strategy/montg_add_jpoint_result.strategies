@@ -1,0 +1,48 @@
+#include "../include/montg_add_jpoint_strategy.h"
+
+/* Equal scaled coordinates identify equal finite input points. */
+id : 1
+priority : mont_aj_equal_points(0)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       jpoint_represents(?x2, ?y2, ?z2, ?P2) at 1
+check : infer(z1 != 0);
+        infer(z2 != 0);
+        infer(mont_p(aj_u1(x1, z2)) == mont_p(aj_u2(x2, z1)));
+        infer(mont_p(aj_s1(y1, z2)) == mont_p(aj_s2(y2, z1)));
+        absense(P1 == P2);
+action : left_add(P1 == P2);
+
+/* The generic formula covers both a distinct scaled x-coordinate and the
+ * inverse-point path.  Both rules add the same abstract result fact. */
+id : 2
+priority : mont_aj_generic_result(0)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       jpoint_represents(?x2, ?y2, ?z2, ?P2) at 1
+check : infer(z1 != 0);
+        infer(z2 != 0);
+        infer(mont_p(aj_u1(x1, z2)) != mont_p(aj_u2(x2, z1)));
+        absense(jpoint_represents(
+          aj_rx(x1, y1, z1, x2, y2, z2),
+          aj_ry(x1, y1, z1, x2, y2, z2),
+          aj_rz(x1, z1, x2, z2), sm2_point_add(P1, P2)));
+action : left_add(jpoint_represents(
+           aj_rx(x1, y1, z1, x2, y2, z2),
+           aj_ry(x1, y1, z1, x2, y2, z2),
+           aj_rz(x1, z1, x2, z2), sm2_point_add(P1, P2)));
+
+id : 3
+priority : mont_aj_generic_result(1)
+left : jpoint_represents(?x1, ?y1, ?z1, ?P1) at 0
+       jpoint_represents(?x2, ?y2, ?z2, ?P2) at 1
+check : infer(z1 != 0);
+        infer(z2 != 0);
+        infer(mont_p(aj_u1(x1, z2)) == mont_p(aj_u2(x2, z1)));
+        infer(mont_p(aj_s1(y1, z2)) != mont_p(aj_s2(y2, z1)));
+        absense(jpoint_represents(
+          aj_rx(x1, y1, z1, x2, y2, z2),
+          aj_ry(x1, y1, z1, x2, y2, z2),
+          aj_rz(x1, z1, x2, z2), sm2_point_add(P1, P2)));
+action : left_add(jpoint_represents(
+           aj_rx(x1, y1, z1, x2, y2, z2),
+           aj_ry(x1, y1, z1, x2, y2, z2),
+           aj_rz(x1, z1, x2, z2), sm2_point_add(P1, P2)));

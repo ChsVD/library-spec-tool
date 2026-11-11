@@ -7,13 +7,122 @@ CATEGORIES = ('mathematical_model', 'representation', 'word_size', 'array_length
               'capacity', 'memory_aliasing', 'range_conversion', 'arithmetic', 'invariant', 'failure_state')
 CHECKS = ('coverage', 'strength', 'assumptions', 'representation', 'dependencies',
           'reference_adaptation', 'counterexamples', 'spec_compatibility')
+REFERENCE_CHECKS = ('source_accuracy', 'premises_representation',
+                    'use_differences', 'target_unvalidated')
 
 
 def base(report, max_report_chars=24000):
     if not isinstance(report, dict): return ['report object required']
     errors=[]
+    if 'protocol_version' in report and (type(report['protocol_version']) is not int or report['protocol_version'] not in (2, 3)):
+        errors.append('unsupported protocol_version')
     if max_report_chars is not None and len(json.dumps(report,ensure_ascii=False))>max_report_chars: errors.append(f'report exceeds {max_report_chars} characters')
     if report.get('proof_status')!='not_proved':errors.append('proof_status must be not_proved')
+    return errors
+
+
+def extraction_v3(report, reader, reads, *, node, max_report_chars=24000):
+    errors = base(report, max_report_chars)
+    if report.get('function_id') != node['id']: errors.append('wrong function')
+    if 'spec' not in reads: errors.append('must inspect spec')
+    errors += check_evidence([node['source']], reader)
+    if node.get('status') == 'reference_draft' and 'upstream-context' not in reads:
+        errors.append('must inspect reference upstream context')
+    if not nonempty(report.get('analysis')): errors.append('analysis required')
+    needs = report.get('needs')
+    if not isinstance(needs, list): return errors + ['needs list required']
+    errors += planning.requirements(report)
+    upstream = node['spec'].get('common_needs', [])
+    expected = {'present': 'common_needs' in node['spec'], 'items': upstream,
+                'ids': ['upstream-' + str(i) for i in range(len(upstream))]}
+    if 'upstream_needs' in report and report['upstream_needs'] != expected:
+        errors.append('upstream_needs must exactly retain program supplied provenance')
+    for need in needs:
+        if not isinstance(need, dict): continue
+        if need.get('function_id') != node['id']: errors.append('need function_id mismatch')
+        if need.get('source') == 'upstream' and need.get('upstream_need_id') not in expected['ids']:
+            errors.append('upstream need must identify existing upstream_need_id')
+        errors += check_evidence(need.get('evidence'), reader)
+    return errors
+
+
+def candidate_v3(report, reader, reads, *, nodes, extracts, max_report_chars=24000):
+    errors = base(report, max_report_chars) + check_upstream_conditions(report, nodes)
+    if any(n.get('status') == 'reference_draft' for n in nodes.values()) and 'upstream-context' not in reads:
+        errors.append('must inspect reference upstream context')
+    if 'needs-summary' not in reads:
+        errors.append('must inspect program-generated needs-summary')
+    errors += planning.records(report, reader)
+    expected = {(ident, need) for ident, node in nodes.items()
+                for need in planning.common_need_ids(node, extracts[ident])}
+    seen = set()
+    for use in report.get('uses', []) if isinstance(report.get('uses'), list) else []:
+        if not isinstance(use, dict): continue
+        f, need = use.get('function_id'), use.get('need_id')
+        if not isinstance(f, str) or not isinstance(need, str): continue
+        key = (f, need)
+        if key not in expected: errors.append('use identifies unknown function/need: ' + str(key))
+        if key in seen: errors.append('each function/need requires exactly one use record')
+        seen.add(key)
+    if seen != expected: errors.append('uses must cover every original and extracted need')
+    return errors
+
+
+def review_v3(report, reader, reads, *, proposal, nodes, max_report_chars=24000):
+    from .components import validate_v3
+    errors = base(report, max_report_chars)
+    if not isinstance(report, dict): return errors
+    if report.get('protocol_version') != 3: errors.append('review protocol_version must match candidate version 3')
+    if report.get('candidate_digest') != planning.candidate_digest(proposal):
+        errors.append('candidate_digest must match the exact reviewed candidate')
+    if 'candidate' not in reads: errors.append('must inspect candidate')
+    errors += check_upstream_conditions(proposal, nodes)
+    for ident, node in nodes.items():
+        if 'spec:' + ident not in reads: errors.append('must inspect each original spec')
+        errors += check_evidence([node['source']], reader)
+    if any(n.get('status') == 'reference_draft' for n in nodes.values()) and 'upstream-context' not in reads:
+        errors.append('must inspect reference upstream context')
+    expected = {(f, row['id']) for f, rows in upstream_conditions(nodes).items() for row in rows}
+    seen = set()
+    conditions = report.get('upstream_condition_checks', [])
+    if not isinstance(conditions, list): errors.append('upstream_condition_checks list required'); conditions = []
+    for condition in conditions:
+        if not isinstance(condition, dict): errors.append('condition check object required'); continue
+        f, ident = condition.get('function_id'), condition.get('assumption_id')
+        if not isinstance(f, str) or not isinstance(ident, str): errors.append('invalid condition identity'); continue
+        key = (f, ident)
+        if key not in expected or key in seen: errors.append('unknown or duplicate condition check')
+        seen.add(key)
+        if condition.get('decision') not in ('preserved', 'needs_revision', 'unknown') or not nonempty(condition.get('explanation')):
+            errors.append('condition check needs decision and explanation')
+        if report.get('verdict') == 'pass' and condition.get('decision') != 'preserved':
+            errors.append('unpreserved upstream condition cannot pass')
+    if seen != expected: errors.append('review every upstream condition explicitly')
+    if report.get('verdict') not in ('pass', 'partial', 'needs_revision', 'insufficient', 'tool_blocked'):
+        errors.append('invalid verdict')
+    checks = report.get('checks')
+    for key in REFERENCE_CHECKS:
+        if not isinstance(checks, dict) or not nonempty(checks.get(key)): errors.append('missing check: ' + key)
+    errors += check_evidence(report.get('evidence'), reader)
+    if report.get('verdict') == 'tool_blocked': errors += check_evidence(report.get('tool_evidence'), reader)
+    errors += validate_v3(report, proposal)
+    # Only accepted claims require the independent reviewer to have received their
+    # source intervals. A missing source can instead be an insufficient judgment.
+    accepted_refs = {r.get('reference_id') for r in report.get('reference_reviews', [])
+                     if isinstance(r, dict) and isinstance(r.get('reference_id'), str) and r.get('verdict') == 'pass'} if isinstance(report.get('reference_reviews'), list) else set()
+    for ref in proposal.get('references', []):
+        if ref['id'] in accepted_refs: errors += check_evidence(ref.get('evidence'), reader)
+    accepted_uses = {r.get('use_id') for r in report.get('use_reviews', [])
+                     if isinstance(r, dict) and isinstance(r.get('use_id'), str) and r.get('verdict') == 'pass'} if isinstance(report.get('use_reviews'), list) else set()
+    for use in proposal.get('uses', []):
+        if use['id'] in accepted_uses:
+            errors += check_evidence(use.get('search_evidence', []), reader, required=use.get('result') == 'not_found')
+    if report.get('verdict') in ('pass', 'partial'):
+        # Review must independently inspect any exported rule and its proof.
+        from .strategies import validate
+        accepted_rules = [row for row in proposal.get('reference_strategies', [])
+                          if all(ident in accepted_refs for ident in row.get('reference_ids', []))]
+        errors += validate(dict(proposal, reference_strategies=accepted_rules), reader)
     return errors
 
 
@@ -39,6 +148,8 @@ def check_upstream_conditions(report,nodes):
 
 
 def extraction(report, reader, reads, *, node, max_report_chars=24000):
+    if isinstance(report, dict) and report.get('protocol_version') == 3:
+        return extraction_v3(report, reader, reads, node=node, max_report_chars=max_report_chars)
     errors=base(report,max_report_chars)
     if not isinstance(report,dict):return errors
     if report.get('function_id')!=node['id']:errors.append('wrong function')
@@ -64,6 +175,8 @@ def extraction(report, reader, reads, *, node, max_report_chars=24000):
 
 
 def candidate(report, reader, reads, *, nodes, extracts, max_report_chars=24000):
+    if isinstance(report, dict) and report.get('protocol_version') == 3:
+        return candidate_v3(report, reader, reads, nodes=nodes, extracts=extracts, max_report_chars=max_report_chars)
     errors=base(report,max_report_chars)
     if not isinstance(report,dict):return errors
     errors+=check_upstream_conditions(report,nodes)
@@ -132,6 +245,8 @@ def candidate(report, reader, reads, *, nodes, extracts, max_report_chars=24000)
 
 
 def review(report, reader, reads, *, proposal, nodes, max_report_chars=24000, component_review=False):
+    if isinstance(proposal, dict) and proposal.get('protocol_version') == 3:
+        return review_v3(report, reader, reads, proposal=proposal, nodes=nodes, max_report_chars=max_report_chars)
     errors=base(report,max_report_chars)
     if not isinstance(report,dict):return errors
     if 'candidate' not in reads:errors.append('must inspect candidate')

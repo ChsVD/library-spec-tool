@@ -1,0 +1,5 @@
+From SimpleC.EE.Applications_human.sm2.strategy Require Import sm2_za_buffers_strategy_goal sm2_za_buffers_strategy_proof.
+
+Module sm2_za_buffers_Strategy_Correctness : sm2_za_buffers_Strategy_Correct.
+  Include sm2_za_buffers_strategy_proof.
+End sm2_za_buffers_Strategy_Correctness.

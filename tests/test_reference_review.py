@@ -196,7 +196,7 @@ class ReferenceReviewTests(unittest.TestCase):
         self.execute()
         result=run_pipeline(self.root,self.base/'common',self.output,
             lambda role,ident:ReferenceCommonModel(role),
-            budgets=Budgets(calls=24,seconds=30,context_chars=60000,reserve_seconds=0))
+            protocol_version=2,budgets=Budgets(calls=24,seconds=30,context_chars=60000,reserve_seconds=0))
         self.assertEqual(result['status'],'common_candidates_reviewed')
         self.assertTrue(result['upstream_context']['semantic_review'])
         self.assertEqual(result['proof_status'],'not_proved')

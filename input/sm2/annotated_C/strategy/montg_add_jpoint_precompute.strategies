@@ -1,0 +1,99 @@
+#include "../include/montg_add_jpoint_strategy.h"
+
+/* Goal-directed normalization for the Montgomery precomputation trace. */
+id : 1
+priority : core(0)
+left : store_fp(?p, mont_p(?z * ?z)) at 0
+right : store_fp(p, mont_p(aj_pz2(z))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 2
+priority : core(0)
+left : store_fp(?p, mont_p(?z * ?z)) at 0
+right : store_fp(p, mont_p(aj_qz2(z))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 3
+priority : core(0)
+left : store_fp(?p, mont_p(?x * aj_qz2(?z))) at 0
+right : store_fp(p, mont_p(aj_u1(x, z))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 4
+priority : core(0)
+left : store_fp(?p, mont_p(?x * aj_pz2(?z))) at 0
+right : store_fp(p, mont_p(aj_u2(x, z))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 5
+priority : core(0)
+left : store_fp(?p, mont_p(?z * aj_pz2(z))) at 0
+right : store_fp(p, mont_p(aj_pz3(z))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 6
+priority : core(0)
+left : store_fp(?p, mont_p(?y * aj_pz3(?z))) at 0
+right : store_fp(p, mont_p(aj_s2(y, z))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 7
+priority : core(0)
+left : store_fp(?p, mont_p(?z * aj_qz2(z))) at 0
+right : store_fp(p, mont_p(aj_qz3(z))) at 1
+action : left_erase(0); right_erase(1);
+
+id : 8
+priority : core(0)
+left : store_fp(?p, mont_p(?y * aj_qz3(?z))) at 0
+right : store_fp(p, mont_p(aj_s1(y, z))) at 1
+action : left_erase(0); right_erase(1);
+
+/* These facts are callee preconditions, not persistent caller state. */
+id : 101
+priority : core(0)
+right : 0 <= aj_pz2(?z) at 0
+        aj_pz2(z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 102
+priority : core(0)
+right : 0 <= aj_qz2(?z) at 0
+        aj_qz2(z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 103
+priority : core(0)
+right : 0 <= aj_pz3(?z) at 0
+        aj_pz3(z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 104
+priority : core(0)
+right : 0 <= aj_qz3(?z) at 0
+        aj_qz3(z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 105
+priority : core(0)
+right : 0 <= aj_u1(?x, ?z) at 0
+        aj_u1(x, z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 106
+priority : core(0)
+right : 0 <= aj_u2(?x, ?z) at 0
+        aj_u2(x, z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 107
+priority : core(0)
+right : 0 <= aj_s1(?y, ?z) at 0
+        aj_s1(y, z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);
+
+id : 108
+priority : core(0)
+right : 0 <= aj_s2(?y, ?z) at 0
+        aj_s2(y, z) < SM2_P_Z() at 1
+action : right_erase(0); right_erase(1);

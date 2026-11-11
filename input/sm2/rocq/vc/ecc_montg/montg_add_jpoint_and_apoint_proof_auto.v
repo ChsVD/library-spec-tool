@@ -1,0 +1,575 @@
+Require Import Coq.ZArith.ZArith.
+Require Import Coq.Bool.Bool.
+Require Import Coq.Strings.String.
+Require Import Coq.Strings.Ascii.
+Require Import Coq.Lists.List.
+Require Import Coq.Classes.RelationClasses.
+Require Import Coq.Classes.Morphisms.
+Require Import Coq.micromega.Psatz.
+Require Import Coq.Sorting.Permutation.
+From AUXLib Require Import int_auto Axioms Feq Idents ListLib VMap.
+Require Import SetsClass.SetsClass. Import SetsNotation.
+From SimpleC.SL Require Import Mem SeparationLogic.
+From SimpleC.EE.Applications_human.sm2.vc.ecc_montg Require Import montg_add_jpoint_and_apoint_goal.
+Require Import Logic.LogicGenerator.demo932.Interface.
+Local Open Scope Z_scope.
+Local Open Scope sets.
+Local Open Scope string_scope.
+Local Open Scope list.
+Import Snaive_C_Rules.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.sm2_common_lib.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.basicOp_lib.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.ecc
+      SimpleC.EE.Applications_human.sm2.lib.ecc_scalar_mul.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.fieldOp_lib.
+Require Import
+      SimpleC.EE.Applications_human.sm2.lib.montg_add_jpoint_and_apoint_lib.
+Local Open Scope sac.
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_1_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_2_non_alias : montg_add_jpoint_and_apoint_safety_wit_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_3_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_3_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_4_non_alias : montg_add_jpoint_and_apoint_safety_wit_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_5_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_5_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_6_non_alias : montg_add_jpoint_and_apoint_safety_wit_6_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_7_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_7_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_8_non_alias : montg_add_jpoint_and_apoint_safety_wit_8_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_9_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_9_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_10_non_alias : montg_add_jpoint_and_apoint_safety_wit_10_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_11_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_11_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_12_non_alias : montg_add_jpoint_and_apoint_safety_wit_12_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_13_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_13_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_14_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_14_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_15_non_alias : montg_add_jpoint_and_apoint_safety_wit_15_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_16_non_alias : montg_add_jpoint_and_apoint_safety_wit_16_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_17_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_17_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_18_non_alias : montg_add_jpoint_and_apoint_safety_wit_18_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_19_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_19_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_20_non_alias : montg_add_jpoint_and_apoint_safety_wit_20_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_21_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_21_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_22_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_22_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_23_non_alias : montg_add_jpoint_and_apoint_safety_wit_23_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_24_non_alias : montg_add_jpoint_and_apoint_safety_wit_24_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_25_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_25_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_26_non_alias : montg_add_jpoint_and_apoint_safety_wit_26_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_27_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_27_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_28_non_alias : montg_add_jpoint_and_apoint_safety_wit_28_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_29_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_29_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_30_non_alias : montg_add_jpoint_and_apoint_safety_wit_30_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_31_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_31_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_32_non_alias : montg_add_jpoint_and_apoint_safety_wit_32_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_33_r_eq_a : montg_add_jpoint_and_apoint_safety_wit_33_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_safety_wit_34_non_alias : montg_add_jpoint_and_apoint_safety_wit_34_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_1_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_1_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_1_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_1_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_1_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_1_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_1_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_1_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_2_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_2_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_2_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_2_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_2_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_2_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_2_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_2_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_3_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_3_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_3_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_3_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_3_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_3_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_3_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_3_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_4_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_4_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_4_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_4_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_4_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_4_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_4_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_4_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_5_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_5_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_5_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_5_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_6_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_6_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_6_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_6_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_7_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_7_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_7_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_7_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_8_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_8_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_8_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_8_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_9_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_9_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_9_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_9_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_10_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_10_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_10_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_10_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_11_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_11_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_11_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_11_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_12_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_12_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_12_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_12_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_12_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_12_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_12_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_12_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_13_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_13_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_13_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_13_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_13_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_13_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_13_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_13_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_14_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_14_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_14_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_14_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_14_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_14_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_14_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_14_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_15_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_15_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_15_2_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_15_2_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_15_3_non_alias : montg_add_jpoint_and_apoint_entail_wit_15_3_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_15_4_non_alias : montg_add_jpoint_and_apoint_entail_wit_15_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_16_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_16_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_16_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_16_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_17_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_17_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_17_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_17_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_18_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_18_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_18_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_18_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_19_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_19_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_19_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_19_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_20_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_20_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_20_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_20_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_21_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_21_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_21_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_21_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_22_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_22_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_22_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_22_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_23_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_23_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_23_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_23_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_24_1_r_eq_a : montg_add_jpoint_and_apoint_entail_wit_24_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_entail_wit_24_2_non_alias : montg_add_jpoint_and_apoint_entail_wit_24_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_1_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_1_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_2_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_2_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_3_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_3_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_4_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_4_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_5_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_5_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_6_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_6_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_7_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_7_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_7_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_7_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_8_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_8_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_9_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_9_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_9_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_9_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_10_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_10_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_10_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_10_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_11_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_11_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_11_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_11_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_12_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_12_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_12_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_12_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_13_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_13_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_13_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_13_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_14_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_14_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_14_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_14_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_15_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_15_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_15_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_15_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_16_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_16_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_16_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_16_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_17_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_17_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_18_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_18_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_19_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_19_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_20_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_20_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_21_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_21_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_22_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_22_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_23_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_23_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_24_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_24_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_25_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_25_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_26_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_26_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_27_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_27_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_28_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_28_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_29_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_29_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_30_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_30_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_31_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_31_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_31_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_31_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_32_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_32_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_32_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_32_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_33_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_33_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_33_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_33_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_34_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_34_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_34_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_34_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_35_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_35_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_35_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_35_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_36_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_36_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_36_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_36_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_37_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_37_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_38_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_38_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_39_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_39_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_39_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_39_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_40_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_40_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_40_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_40_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_41_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_41_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_41_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_41_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_42_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_42_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_42_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_42_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_43_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_43_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_43_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_43_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_44_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_44_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_44_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_44_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_45_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_45_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_46_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_46_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_47_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_47_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_47_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_47_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_48_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_48_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_48_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_48_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_49_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_49_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_49_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_49_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_50_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_50_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_50_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_50_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_51_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_51_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_51_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_51_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_52_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_52_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_52_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_52_non_alias.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_53_r_eq_a_pure : montg_add_jpoint_and_apoint_partial_solve_wit_53_r_eq_a_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_53_r_eq_a : montg_add_jpoint_and_apoint_partial_solve_wit_53_r_eq_a.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_54_non_alias_pure : montg_add_jpoint_and_apoint_partial_solve_wit_54_non_alias_pure.
+Proof. Admitted. 
+
+Lemma proof_of_montg_add_jpoint_and_apoint_partial_solve_wit_54_non_alias : montg_add_jpoint_and_apoint_partial_solve_wit_54_non_alias.
+Proof. Admitted. 
+

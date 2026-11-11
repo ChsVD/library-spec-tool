@@ -1,0 +1,27 @@
+#include "../include/basicOp.h"
+
+/* Expose the initialized prefix produced by raw_pow's three zero writes. */
+id : 1
+priority : core(0)
+left : UInt64Array::mixed_full(
+         ?p,
+         8,
+         replace_Znth{option{Z}}(0, Some{Z}(?x0),
+           replace_Znth{option{Z}}(1, Some{Z}(?x1),
+             replace_Znth{option{Z}}(2, Some{Z}(?x2),
+               repeat_Z{option{Z}}(None{Z}(), 8))))) at 0
+action : left_erase(0);
+         left_add(data_at(p + (0 * sizeof(U64)), U64, x0));
+         left_add(data_at(p + (1 * sizeof(U64)), U64, x1));
+         left_add(data_at(p + (2 * sizeof(U64)), U64, x2));
+         left_add(UInt64Array::undef_seg(p, 3, 8));
+
+/* Match equivalent uint64 cell indices without fixing their syntax. */
+id : 2
+priority : core(0)
+left : data_at(?p + (?i * sizeof(U64)), U64, ?v) at 0
+right : data_at(p + (?j * sizeof(U64)), U64, ?read_v) at 1
+check : infer(i == j);
+action : right_erase(1);
+         left_erase(0);
+         right_add(read_v == v);

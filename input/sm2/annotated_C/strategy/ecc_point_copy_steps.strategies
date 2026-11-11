@@ -1,0 +1,84 @@
+#include "../include/ecc.h"
+
+/* Structure-assignment views for destination point objects. */
+id : 10
+priority : afpoint_undef_fields(0)
+left : UInt64Array::undef_full(
+         field_addr(field_addr(?p, AFPoint, x), u32, v), 4) at 0
+       UInt64Array::undef_full(
+         field_addr(field_addr(p, AFPoint, y), u32, v), 4) at 1
+action : left_erase(0);
+         left_erase(1);
+         left_add(UndefStructPredu32(field_addr(p, AFPoint, x)));
+         left_add(UndefStructPredu32(field_addr(p, AFPoint, y)));
+
+id : 15
+priority : jpoint_xy_undef_fields(0)
+left : UInt64Array::undef_full(
+         field_addr(field_addr(?p, JPoint, x), u32, v), 4) at 0
+       UInt64Array::undef_full(
+         field_addr(field_addr(p, JPoint, y), u32, v), 4) at 1
+action : left_erase(0);
+         left_erase(1);
+         left_add(UndefStructPredu32(field_addr(p, JPoint, x)));
+         left_add(UndefStructPredu32(field_addr(p, JPoint, y)));
+
+id : 20
+priority : jpoint_undef_fields(0)
+left : UInt64Array::undef_full(
+         field_addr(field_addr(?p, JPoint, x), u32, v), 4) at 0
+       UInt64Array::undef_full(
+         field_addr(field_addr(p, JPoint, y), u32, v), 4) at 1
+       UInt64Array::undef_full(
+         field_addr(field_addr(p, JPoint, z), u32, v), 4) at 2
+action : left_erase(0);
+         left_erase(1);
+         left_erase(2);
+         left_add(UndefStructPredJPoint(p));
+
+/* Prepare an abstractly undefined point for three u32 structure writes. */
+id : 25
+priority : jpoint_undef_to_fields(0)
+left : UndefStructPredJPoint(?p) at 0
+action : left_erase(0);
+         left_add(UndefStructPredu32(field_addr(p, JPoint, x)));
+         left_add(UndefStructPredu32(field_addr(p, JPoint, y)));
+         left_add(UndefStructPredu32(field_addr(p, JPoint, z)));
+
+/* Forget an initialized destination only in an in-place branch.  The two
+ * address orientations cover the normalized pure states produced by QCP. */
+id : 30
+priority : jpoint_in_place_destination(0)
+left : ?result == ?point at 0
+       store_jpoint_fields(point, ?x, ?y, ?z) at 1
+action : left_erase(1);
+         left_add(UndefStructPredJPoint(result));
+
+id : 31
+priority : jpoint_in_place_destination(0)
+left : ?point == ?result at 0
+       store_jpoint_fields(point, ?x, ?y, ?z) at 1
+action : left_erase(1);
+         left_add(UndefStructPredJPoint(result));
+
+id : 32
+priority : jpoint_in_place_destination(0)
+left : ?result == ?point at 0
+       store_fp(field_addr(point, JPoint, x), ?x) at 1
+       store_fp(field_addr(point, JPoint, y), ?y) at 2
+       store_fp(field_addr(point, JPoint, z), ?z) at 3
+action : left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_add(UndefStructPredJPoint(result));
+
+id : 33
+priority : jpoint_in_place_destination(0)
+left : ?point == ?result at 0
+       store_fp(field_addr(point, JPoint, x), ?x) at 1
+       store_fp(field_addr(point, JPoint, y), ?y) at 2
+       store_fp(field_addr(point, JPoint, z), ?z) at 3
+action : left_erase(1);
+         left_erase(2);
+         left_erase(3);
+         left_add(UndefStructPredJPoint(result));
