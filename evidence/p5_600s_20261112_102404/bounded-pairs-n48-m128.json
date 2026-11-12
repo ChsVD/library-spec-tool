@@ -1,0 +1,13 @@
+{
+  "id": "bounded-pairs-n48-m128",
+  "family": "bounded-pair-growth",
+  "rows": 128,
+  "variables": 48,
+  "expected_q": "FEASIBLE",
+  "sha256": "93a9783f4d87a4441d2cc04fa9dc06769fd679faed5f843f6c5dc336178f349b",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000235954\n",
+  "wall_seconds": 0.001566610997542739
+}

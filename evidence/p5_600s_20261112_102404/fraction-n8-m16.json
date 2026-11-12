@@ -1,0 +1,13 @@
+{
+  "id": "fraction-n8-m16",
+  "family": "unique-fractional",
+  "rows": 16,
+  "variables": 8,
+  "expected_q": "FEASIBLE",
+  "sha256": "d59867ce6f9f7865ae52dd2f67ff12d4cdbab9dcd9b49aa9f2a856d6ca0bf0ee",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000029561\n",
+  "wall_seconds": 0.0025666889850981534
+}

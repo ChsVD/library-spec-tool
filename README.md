@@ -1,21 +1,15 @@
-# 最小 GMP 整数单纯形初始版
+# 最小 GMP 整数单纯形 首批优化版
 
-此分支保存首批优化之前的精简内核：只返回0（有理可行）或1（不可行），不返回整数SAT、见证、UNKNOWN或资源诊断。
+本分支在精简初始版基础上增加常数矛盾快判和换基后整行GCD约简，作为后续消融实验的一个基线。详细变更和父提交见 [VERSION.md](VERSION.md)。
 
-自有代码及头文件228行，其中solver.c为155行。无常数矛盾预扫描，无换基后整行本原化；保留GCD缩小消元乘数。输入只读，NULL终止，无尾哨兵。
+接口 `int sx_check_qcp(const struct InequList *head, size_t variables)`：0表示有理可行，不意味着整数SAT；1表示有理不可行。只读NULL终止链表，无尾哨兵，每行n+1个项目MiniGMP整数表示c0+Σcj*xj<=0。
 
-## 构建和测试
+## 构建与测试
 
-在Linux/WSL运行 `make test`；`make sanitize`执行ASan/UBSan；`make normal`恢复普通-O2 -g并测试。静态库为build/libsx.a，调用者使用-Iinclude -Ivendor。只使用本目录项目MiniGMP，不链接系统GMP。
+Linux/WSL运行 `make test`，`make sanitize`执行ASan/UBSan，`make normal`恢复-O2 -g并测试。生成build/libsx.a；调用者使用-Iinclude -Ivendor，不链接系统GMP。
 
-588个数学案例和90次换基检查记录见ACCEPTANCE.md。历史52例每例600秒实验为46通过、6超时，见evidence/p5_600s_20261111_143645/REPORT.md。历史批量脚本需要原案例目录，普通make test使用自编生成案例，无此依赖。
+[开发规约](DEVELOPMENT.md)、[输入前置条件](INPUT_CONTRACT.md)、[优化验收及52例对照](evidence/optimization_batch1/REPORT.md)。历史批量脚本需要原52例数据目录；make test使用自编生成案例，无外部案例依赖。
 
-## 来源与重建边界
+本版没有预算、UNKNOWN、失败恢复或生产独立数学复核。合法输入、尺寸及后端容量可表示、分配成功是前置条件。工程测试不替代形式化证明。
 
-2026-11-12从优化前留档baseline_solver.c恢复；生产源码、头文件和两个实验脚本逐项匹配初始实验source_hashes.json。其他依赖复制自未改变的项目文件。不是从Git历史检出的原始提交。
-
-README是本次新写的发布说明；DEVELOPMENT.md和INPUT_CONTRACT.md根据当前文档移除首批优化修订，恢复初始实现语义，不声称逐字节恢复全部初始文档。ACCEPTANCE.md和历史实验保留阶段含义。绝对路径是原实验来源信息，不是构建依赖。
-
-合法输入、尺寸与容量可表示、分配成功和MiniGMP契约是前置条件，详见INPUT_CONTRACT.md。形式化正确性和终止性证明尚未完成。
-
-后端许可证见vendor/QCP_LICENSE。该分支独立起始，不包含旧完整单纯形的工程历史或后续两项优化。
+MiniGMP保持项目来源字节不变，许可证见vendor/QCP_LICENSE。初始版记录继续保留，不将它们表述为当前版本记录。

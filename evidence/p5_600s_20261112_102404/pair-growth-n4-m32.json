@@ -1,0 +1,13 @@
+{
+  "id": "pair-growth-n4-m32",
+  "family": "two-sided-growth",
+  "rows": 32,
+  "variables": 4,
+  "expected_q": "FEASIBLE",
+  "sha256": "1e84ac397475f548623c23ce69d50254748e0626caa89971197d9eb6460ceb90",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000018217\n",
+  "wall_seconds": 0.005156775005161762
+}

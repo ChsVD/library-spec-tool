@@ -21,6 +21,34 @@ static void release(mpz_ptr p, size_t n)
     free(p);
 }
 
+/* Positive D makes the row gcd positive; every division is exact. */
+static void normalize(struct table *t, size_t r)
+{
+    mpz_t g, tmp;
+    mpz_init(g);
+    mpz_init(tmp);
+    mpz_set(g, t->d + r);
+    for (size_t j = 0; j <= t->cols; ++j) {
+        if (g->_mp_size == 1 && g->_mp_d[0] == 1) break;
+        mpz_srcptr x = j == t->cols ? t->c + r : t->a + r * t->cols + j;
+        if (x->_mp_size == 0) continue;
+        mpz_gcd(tmp, g, x);
+        mpz_set(g, tmp);
+    }
+    if (!(g->_mp_size == 1 && g->_mp_d[0] == 1)) {
+        mpz_divexact(tmp, t->d + r, g);
+        mpz_set(t->d + r, tmp);
+        for (size_t j = 0; j <= t->cols; ++j) {
+            mpz_ptr x = j == t->cols ? t->c + r : t->a + r * t->cols + j;
+            if (x->_mp_size == 0) continue;
+            mpz_divexact(tmp, x, g);
+            mpz_set(x, tmp);
+        }
+    }
+    mpz_clear(g);
+    mpz_clear(tmp);
+}
+
 /* All arithmetic outputs use scratch distinct from their input operands. */
 static void pivot(struct table *t, size_t r, size_t e)
 {
@@ -50,6 +78,8 @@ static void pivot(struct table *t, size_t r, size_t e)
     }
     mpz_set_ui(a + e, 0);
     mpz_set(t->d + r, p);
+    normalize(t, r);
+    mpz_set(p, t->d + r);
     for (size_t i = 0; i < t->rows; ++i) {
         if (i == r) continue;
         mpz_ptr ai = t->a + i * k;
@@ -69,6 +99,7 @@ static void pivot(struct table *t, size_t r, size_t e)
             mpz_set(ai + v, tmp);
         }
         mpz_set_ui(ai + e, 0);
+        normalize(t, i);
     }
     t->basic[r] = e;
     t->row[e] = r;
@@ -135,6 +166,13 @@ static size_t entering(const struct table *t, size_t variables, size_t r)
 
 int sx_check_qcp(const struct InequList *head, size_t variables)
 {
+    /* A positive constant-only input row is already a contradiction. */
+    for (const struct InequList *q = head; q; q = q->next) {
+        if (q->coef[0]._mp_size <= 0) continue;
+        size_t j = 0;
+        while (j < variables && q->coef[j + 1]._mp_size == 0) ++j;
+        if (j == variables) return 1;
+    }
     struct table t = build(head, variables);
     int result;
     for (;;) {

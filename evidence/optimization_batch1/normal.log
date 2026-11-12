@@ -1,0 +1,72 @@
+make clean
+make[1]: Entering directory '/home/maxu/Projects/qcp-simplex-gmp-minimal'
+rm -rf build
+make[1]: Leaving directory '/home/maxu/Projects/qcp-simplex-gmp-minimal'
+make test
+make[1]: Entering directory '/home/maxu/Projects/qcp-simplex-gmp-minimal'
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -Wall -Wextra -Werror -Wpedantic -MMD -MP -c src/solver.c -o build/solver.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -Wall -Wextra -Werror -Wpedantic -MMD -MP -c src/backend_alloc.c -o build/backend_alloc.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/gmp_base.c -o build/vendor/gmp_base.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/gmp_clz.c -o build/vendor/gmp_clz.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/gmp_udiv_qr_3by2.c -o build/vendor/gmp_udiv_qr_3by2.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/gmp_udiv_qrnnd_preinv.c -o build/vendor/gmp_udiv_qrnnd_preinv.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_add.c -o build/vendor/mpn_add.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_add_1.c -o build/vendor/mpn_add_1.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_add_n.c -o build/vendor/mpn_add_n.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_addmul_1.c -o build/vendor/mpn_addmul_1.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_copyi.c -o build/vendor/mpn_copyi.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr.c -o build/vendor/mpn_div_qr.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr_1_invert.c -o build/vendor/mpn_div_qr_1_invert.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr_1_preinv.c -o build/vendor/mpn_div_qr_1_preinv.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr_2_invert.c -o build/vendor/mpn_div_qr_2_invert.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr_2_preinv.c -o build/vendor/mpn_div_qr_2_preinv.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr_invert.c -o build/vendor/mpn_div_qr_invert.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr_pi1.c -o build/vendor/mpn_div_qr_pi1.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_div_qr_preinv.c -o build/vendor/mpn_div_qr_preinv.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_gcd_11.c -o build/vendor/mpn_gcd_11.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_invert_3by2.c -o build/vendor/mpn_invert_3by2.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_lshift.c -o build/vendor/mpn_lshift.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_mul.c -o build/vendor/mpn_mul.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_normalized_size.c -o build/vendor/mpn_normalized_size.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_rshift.c -o build/vendor/mpn_rshift.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_sub.c -o build/vendor/mpn_sub.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_sub_1.c -o build/vendor/mpn_sub_1.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_sub_n.c -o build/vendor/mpn_sub_n.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpn_submul_1.c -o build/vendor/mpn_submul_1.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_abs.c -o build/vendor/mpz_abs.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_abs_add.c -o build/vendor/mpz_abs_add.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_abs_sub.c -o build/vendor/mpz_abs_sub.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_add.c -o build/vendor/mpz_add.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_add_ui.c -o build/vendor/mpz_add_ui.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_addmul.c -o build/vendor/mpz_addmul.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_cmp.c -o build/vendor/mpz_cmp.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_div_qr.c -o build/vendor/mpz_div_qr.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_divexact.c -o build/vendor/mpz_divexact.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_gcd.c -o build/vendor/mpz_gcd.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_init.c -o build/vendor/mpz_init.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_init2.c -o build/vendor/mpz_init2.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_init_set.c -o build/vendor/mpz_init_set.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_init_set_ui.c -o build/vendor/mpz_init_set_ui.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_make_odd.c -o build/vendor/mpz_make_odd.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_mul.c -o build/vendor/mpz_mul.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_mul_2exp.c -o build/vendor/mpz_mul_2exp.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_neg.c -o build/vendor/mpz_neg.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_realloc.c -o build/vendor/mpz_realloc.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_set.c -o build/vendor/mpz_set.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_set_si.c -o build/vendor/mpz_set_si.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_set_ui.c -o build/vendor/mpz_set_ui.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_sub.c -o build/vendor/mpz_sub.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_sub_ui.c -o build/vendor/mpz_sub_ui.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_swap.c -o build/vendor/mpz_swap.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_tdiv_q_2exp.c -o build/vendor/mpz_tdiv_q_2exp.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_tdiv_r.c -o build/vendor/mpz_tdiv_r.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mpz_ui_sub.c -o build/vendor/mpz_ui_sub.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -c vendor/gmp/minigmp/mrz_realloc_if.c -o build/vendor/mrz_realloc_if.o
+ar rcs build/libsx.a build/solver.o build/backend_alloc.o build/vendor/gmp_base.o build/vendor/gmp_clz.o build/vendor/gmp_udiv_qr_3by2.o build/vendor/gmp_udiv_qrnnd_preinv.o build/vendor/mpn_add.o build/vendor/mpn_add_1.o build/vendor/mpn_add_n.o build/vendor/mpn_addmul_1.o build/vendor/mpn_copyi.o build/vendor/mpn_div_qr.o build/vendor/mpn_div_qr_1_invert.o build/vendor/mpn_div_qr_1_preinv.o build/vendor/mpn_div_qr_2_invert.o build/vendor/mpn_div_qr_2_preinv.o build/vendor/mpn_div_qr_invert.o build/vendor/mpn_div_qr_pi1.o build/vendor/mpn_div_qr_preinv.o build/vendor/mpn_gcd_11.o build/vendor/mpn_invert_3by2.o build/vendor/mpn_lshift.o build/vendor/mpn_mul.o build/vendor/mpn_normalized_size.o build/vendor/mpn_rshift.o build/vendor/mpn_sub.o build/vendor/mpn_sub_1.o build/vendor/mpn_sub_n.o build/vendor/mpn_submul_1.o build/vendor/mpz_abs.o build/vendor/mpz_abs_add.o build/vendor/mpz_abs_sub.o build/vendor/mpz_add.o build/vendor/mpz_add_ui.o build/vendor/mpz_addmul.o build/vendor/mpz_cmp.o build/vendor/mpz_div_qr.o build/vendor/mpz_divexact.o build/vendor/mpz_gcd.o build/vendor/mpz_init.o build/vendor/mpz_init2.o build/vendor/mpz_init_set.o build/vendor/mpz_init_set_ui.o build/vendor/mpz_make_odd.o build/vendor/mpz_mul.o build/vendor/mpz_mul_2exp.o build/vendor/mpz_neg.o build/vendor/mpz_realloc.o build/vendor/mpz_set.o build/vendor/mpz_set_si.o build/vendor/mpz_set_ui.o build/vendor/mpz_sub.o build/vendor/mpz_sub_ui.o build/vendor/mpz_swap.o build/vendor/mpz_tdiv_q_2exp.o build/vendor/mpz_tdiv_r.o build/vendor/mpz_ui_sub.o build/vendor/mrz_realloc_if.o
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -Wall -Wextra -Werror -Wpedantic tests/driver.c build/libsx.a -o build/driver
+cc -Iinclude -Isrc -Ivendor -std=c11 -O2 -g -Wall -Wextra -Werror -Wpedantic tests/pivot.c build/libsx.a -o build/pivot
+python3 tests/check.py
+588 exact cases passed; 329 feasible, 259 infeasible; input preserved
+./build/pivot
+pivot identities passed: positive=36 negative=54 auxiliary=54
+make[1]: Leaving directory '/home/maxu/Projects/qcp-simplex-gmp-minimal'

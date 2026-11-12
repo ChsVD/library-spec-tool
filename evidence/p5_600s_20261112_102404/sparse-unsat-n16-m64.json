@@ -1,0 +1,13 @@
+{
+  "id": "sparse-unsat-n16-m64",
+  "family": "sparse-conflict",
+  "rows": 64,
+  "variables": 16,
+  "expected_q": "UNSAT",
+  "sha256": "b504dac4e1af8970fddab1ea348734c4e182cace00ce9df8735971e63d8522ad",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "1\n",
+  "stderr": "kernel_seconds=0.016252460\n",
+  "wall_seconds": 0.017398966010659933
+}

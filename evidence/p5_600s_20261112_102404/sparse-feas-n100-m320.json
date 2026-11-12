@@ -1,0 +1,13 @@
+{
+  "id": "sparse-feas-n100-m320",
+  "family": "sparse-feasible",
+  "rows": 320,
+  "variables": 100,
+  "expected_q": "FEASIBLE",
+  "sha256": "865366bed66b995c1e7518b73ca940e4b8aac9f9110813e2fb824e831f939c10",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=287.544217610\n",
+  "wall_seconds": 287.551059166959
+}

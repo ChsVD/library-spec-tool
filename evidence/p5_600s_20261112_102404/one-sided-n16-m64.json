@@ -1,0 +1,13 @@
+{
+  "id": "one-sided-n16-m64",
+  "family": "one-sided",
+  "rows": 64,
+  "variables": 16,
+  "expected_q": "FEASIBLE",
+  "sha256": "2c67a266c9f3cc41cf1f74245e06d10137fa4833c79be31442cd3f4e35ceb7fd",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.037844122\n",
+  "wall_seconds": 0.03936811501625925
+}

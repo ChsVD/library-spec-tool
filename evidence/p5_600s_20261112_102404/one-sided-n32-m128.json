@@ -1,0 +1,13 @@
+{
+  "id": "one-sided-n32-m128",
+  "family": "one-sided",
+  "rows": 128,
+  "variables": 32,
+  "expected_q": "FEASIBLE",
+  "sha256": "915420d70f9e1a468b658b963c75fd3da819c751bac6a18d636f1a893cc5b91a",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.897602400\n",
+  "wall_seconds": 0.8997560470015742
+}

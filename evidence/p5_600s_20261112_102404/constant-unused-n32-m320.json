@@ -1,0 +1,13 @@
+{
+  "id": "constant-unused-n32-m320",
+  "family": "constant-and-unused",
+  "rows": 320,
+  "variables": 32,
+  "expected_q": "FEASIBLE",
+  "sha256": "9a15e5a12d8c3ed2f0c11962a0f7bded157fb3f23e8e192d7a5fbb34cd9797cd",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.010696253\n",
+  "wall_seconds": 0.012949703028425574
+}

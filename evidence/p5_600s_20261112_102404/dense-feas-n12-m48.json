@@ -1,0 +1,13 @@
+{
+  "id": "dense-feas-n12-m48",
+  "family": "dense-feasible",
+  "rows": 48,
+  "variables": 12,
+  "expected_q": "FEASIBLE",
+  "sha256": "137d367566239432a6adbbfe33cb864c1b97719cb2b8e471dd6cbca4d99349fe",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.030922006\n",
+  "wall_seconds": 0.03391621302580461
+}

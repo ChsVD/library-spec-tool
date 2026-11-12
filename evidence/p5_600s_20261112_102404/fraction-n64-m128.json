@@ -1,0 +1,13 @@
+{
+  "id": "fraction-n64-m128",
+  "family": "unique-fractional",
+  "rows": 128,
+  "variables": 64,
+  "expected_q": "FEASIBLE",
+  "sha256": "ea3d7d7bc2b7fadc26014e6977ffefd6442c089b83e2163151ed9f79a50c643b",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000522605\n",
+  "wall_seconds": 0.0020526450243778527
+}

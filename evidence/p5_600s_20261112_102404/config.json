@@ -1,0 +1,8 @@
+{
+  "cases_sha256": "05af067afbd04070fb60bfb2dbc9391b5e174fd371c5cbab9ea6e19f5b107e73",
+  "timeout_seconds_per_case": 600,
+  "parallel_workers": 4,
+  "driver_sha256": "9546b70b7fea58b615f93268a7abf0794cc9ba9f238cd2a2bcb8f035ab789d8e",
+  "timing": "wall includes loading and test input preservation; kernel_seconds covers sx_check_qcp only",
+  "no_solver_budget": true
+}

@@ -1,0 +1,13 @@
+{
+  "id": "common-factor-k32-n8-m16",
+  "family": "multi-limb-common-factor",
+  "rows": 16,
+  "variables": 8,
+  "expected_q": "FEASIBLE",
+  "sha256": "432a99afa11e87942d028645d871206fbd5971e7b059f92294a5194c737ebb6f",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000018899\n",
+  "wall_seconds": 0.0013609309680759907
+}
