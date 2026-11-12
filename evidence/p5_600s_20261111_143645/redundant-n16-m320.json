@@ -1,0 +1,13 @@
+{
+  "id": "redundant-n16-m320",
+  "family": "scaled-redundancy",
+  "rows": 320,
+  "variables": 16,
+  "expected_q": "FEASIBLE",
+  "sha256": "377a723153b3c70a563b19d9c3da1d2e675eb149d9bc15fc8149ac7b653c4cae",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.003839283\n",
+  "wall_seconds": 0.008421213016845286
+}

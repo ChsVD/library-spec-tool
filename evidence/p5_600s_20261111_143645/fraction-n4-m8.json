@@ -1,0 +1,13 @@
+{
+  "id": "fraction-n4-m8",
+  "family": "unique-fractional",
+  "rows": 8,
+  "variables": 4,
+  "expected_q": "FEASIBLE",
+  "sha256": "08ef286bac57cf474a4c70d207e1218b8d34a0df06ed1a68a59b1619efde47f9",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000028424\n",
+  "wall_seconds": 0.0037675760104320943
+}

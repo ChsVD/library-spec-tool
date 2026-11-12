@@ -1,0 +1,13 @@
+{
+  "id": "pair-growth-n3-m24",
+  "family": "two-sided-growth",
+  "rows": 24,
+  "variables": 3,
+  "expected_q": "FEASIBLE",
+  "sha256": "7bd1b677889c0f12376ce5694f63d91781b2de01df0cbc5d0ba4d23b6a1fca32",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000588567\n",
+  "wall_seconds": 0.0046905120252631605
+}

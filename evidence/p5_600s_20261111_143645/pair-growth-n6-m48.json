@@ -1,0 +1,13 @@
+{
+  "id": "pair-growth-n6-m48",
+  "family": "two-sided-growth",
+  "rows": 48,
+  "variables": 6,
+  "expected_q": "FEASIBLE",
+  "sha256": "5a37b0c72cd528476c44a86bf09247805edc6da5ccb9fe97ed722e55fe35437b",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000056321\n",
+  "wall_seconds": 0.0016748019843362272
+}

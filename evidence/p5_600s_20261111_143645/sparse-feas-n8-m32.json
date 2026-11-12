@@ -1,0 +1,13 @@
+{
+  "id": "sparse-feas-n8-m32",
+  "family": "sparse-feasible",
+  "rows": 32,
+  "variables": 8,
+  "expected_q": "FEASIBLE",
+  "sha256": "8ef1256924d429aacf7308ef945bd3a96463caeaccd3a99218589b08a424bfa9",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000760986\n",
+  "wall_seconds": 0.0033826360013335943
+}

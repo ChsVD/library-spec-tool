@@ -1,0 +1,13 @@
+{
+  "id": "redundant-n4-m80",
+  "family": "scaled-redundancy",
+  "rows": 80,
+  "variables": 4,
+  "expected_q": "FEASIBLE",
+  "sha256": "7f09b13d9070a36441912a22de50e2c89a5c3fc960f457716fbf208fef40af6c",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000440146\n",
+  "wall_seconds": 0.0026023779646493495
+}

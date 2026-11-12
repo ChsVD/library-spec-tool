@@ -1,0 +1,13 @@
+{
+  "id": "bounded-pairs-n24-m64",
+  "family": "bounded-pair-growth",
+  "rows": 64,
+  "variables": 24,
+  "expected_q": "FEASIBLE",
+  "sha256": "db94a546a11b9e537bbd75eefc5454ab29806add71b19ad059495ae36ea5228f",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000067813\n",
+  "wall_seconds": 0.001930144033394754
+}

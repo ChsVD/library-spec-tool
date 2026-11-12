@@ -1,0 +1,13 @@
+{
+  "id": "sparse-feas-n64-m256",
+  "family": "sparse-feasible",
+  "rows": 256,
+  "variables": 64,
+  "expected_q": "FEASIBLE",
+  "sha256": "0cffd0282ad60323ed506d5bbf4de3638558282442d630ca0684d1eca99e053d",
+  "status": "TIMEOUT",
+  "returncode": null,
+  "stdout": "",
+  "stderr": "",
+  "wall_seconds": 600.1130569879897
+}

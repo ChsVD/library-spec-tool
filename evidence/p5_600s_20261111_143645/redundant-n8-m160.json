@@ -1,0 +1,13 @@
+{
+  "id": "redundant-n8-m160",
+  "family": "scaled-redundancy",
+  "rows": 160,
+  "variables": 8,
+  "expected_q": "FEASIBLE",
+  "sha256": "c1c1ecd4be21bf76f6462a647672dd64fb68145fc58da9978fff64d12033e371",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.001438305\n",
+  "wall_seconds": 0.0042823999538086355
+}

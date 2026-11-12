@@ -1,0 +1,13 @@
+{
+  "id": "one-sided-n16-m64-reversed",
+  "family": "one-sided-permuted",
+  "rows": 64,
+  "variables": 16,
+  "expected_q": "FEASIBLE",
+  "sha256": "b6c32b55ef14cc13a41600f8ea0cf9d6c793045d1c1f3d88b9ea733b9561da3e",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.039758836\n",
+  "wall_seconds": 0.04113826696993783
+}

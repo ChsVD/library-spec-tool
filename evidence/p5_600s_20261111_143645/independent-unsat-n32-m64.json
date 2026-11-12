@@ -1,0 +1,13 @@
+{
+  "id": "independent-unsat-n32-m64",
+  "family": "independent-conflict-control",
+  "rows": 64,
+  "variables": 32,
+  "expected_q": "UNSAT",
+  "sha256": "5ca99dfa620fa861ef36918999e17b1b6bea163dbaf95cd0a6d8be555ffb5d22",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "1\n",
+  "stderr": "kernel_seconds=0.000064391\n",
+  "wall_seconds": 0.001006442995276302
+}

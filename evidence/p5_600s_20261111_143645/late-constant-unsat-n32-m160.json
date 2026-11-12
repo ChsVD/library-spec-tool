@@ -1,0 +1,13 @@
+{
+  "id": "late-constant-unsat-n32-m160",
+  "family": "late-constant-conflict",
+  "rows": 160,
+  "variables": 32,
+  "expected_q": "UNSAT",
+  "sha256": "604a510d2ec3a3dddd5d10d2feb014d73d0768d73746e32c9c86e48d8ba5e7e3",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "1\n",
+  "stderr": "kernel_seconds=19.195021693\n",
+  "wall_seconds": 19.197226999036502
+}

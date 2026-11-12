@@ -1,0 +1,13 @@
+{
+  "id": "sparse-unsat-n100-m320",
+  "family": "sparse-conflict",
+  "rows": 320,
+  "variables": 100,
+  "expected_q": "UNSAT",
+  "sha256": "3ccc752056d9450e435726df14ea905264f73f60f16201d4135bd34c11bcf038",
+  "status": "TIMEOUT",
+  "returncode": null,
+  "stdout": "",
+  "stderr": "",
+  "wall_seconds": 600.1156044760137
+}

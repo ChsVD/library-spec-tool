@@ -1,0 +1,13 @@
+{
+  "id": "coprime-fraction-k128-n8-m16",
+  "family": "multi-limb-coprime-fraction",
+  "rows": 16,
+  "variables": 8,
+  "expected_q": "FEASIBLE",
+  "sha256": "7c95e1ed92f0170a50b82b88e0082c4df471893e4946a90f1376d7e9736aae4a",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "0\n",
+  "stderr": "kernel_seconds=0.000077674\n",
+  "wall_seconds": 0.003764076973311603
+}

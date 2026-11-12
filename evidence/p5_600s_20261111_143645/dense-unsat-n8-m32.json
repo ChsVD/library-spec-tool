@@ -1,0 +1,13 @@
+{
+  "id": "dense-unsat-n8-m32",
+  "family": "dense-conflict",
+  "rows": 32,
+  "variables": 8,
+  "expected_q": "UNSAT",
+  "sha256": "beabbd859ceb02675a4253a10552482dacae414ef18252a737514a4822c013c2",
+  "status": "PASS",
+  "returncode": 0,
+  "stdout": "1\n",
+  "stderr": "kernel_seconds=0.002223792\n",
+  "wall_seconds": 0.004011833982076496
+}
