@@ -232,19 +232,22 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
     if max_report_chars is not None and (type(max_report_chars) is not int or max_report_chars<1):
         raise ValueError('max_report_chars must be positive or unlimited')
     if max_revisions<0:raise ValueError('max_revisions must be nonnegative')
-    if bool(input_transition)!=bool(revise_from):
-        raise ValueError('input-transition and revise-from must be supplied together')
+    if revise_from and not input_transition:
+        raise ValueError('revise-from requires input-transition')
     if revise_from and output.is_relative_to(Path(revise_from).resolve()):
         raise ValueError('input revision requires a separate output')
     graph,nodes,inventory=load_upstream(root,source,input_transition)
     identity={'max_report_chars':max_report_chars,'recovery_policy':1,'strategy_policy':strategies.VERSION,'material_policy':materials.VERSION if protocol_version == 3 else 1,'planning_policy':protocol_version,'writing_guidance_digest':writing_guidance()['sha256'],'prompt_digest':digest({r:prompt(r,{},max_report_chars,component_review) for r in ('extract','common','review')}),'graph_digest':digest(graph),'source':str(source),'condition_policy':1,'model':model_identity or {'mode':label},'mode':label}
     transition_record=None;revision_data=None;revision_record=None
     if component_review:identity['component_policy']=1
-    if revise_from:
+    if input_transition:
         from . import input_revision
-        old_inventory=json.loads((Path(revise_from)/'input_snapshot.json').read_text())
         manifest=json.loads(Path(input_transition).read_text())
         _,transition_record=input_revision.transition(root,source,snapshot(Path(manifest['baseline_root'])),input_transition)
+        identity['input_transition']=transition_record
+        if not revise_from:identity['transition_delivery_policy']='initial-on-demand-v1'
+    if revise_from:
+        old_inventory=json.loads((Path(revise_from)/'input_snapshot.json').read_text())
         current_hashes={r['path']:r['sha256'] for r in inventory}
         if any(current_hashes.get(r['path'])!=r['sha256'] for r in old_inventory):
             raise ValueError('revision changed or removed an earlier input material')
@@ -286,6 +289,8 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
                 for filename in ('candidate.json','candidate.md','planning.json'):
                     shutil.copyfile(Path(recover_from)/filename,output/filename)
                 shutil.copytree(Path(recover_from)/'reference_strategies',output/'reference_strategies')
+        if transition_record is not None:
+            write_json(output/'input-transition.json',transition_record)
         if revision_data is not None and not resume and recover_from is None:
             data=revision_data;data['needs_input_revision']=True
             write_json(output/'input-transition.json',transition_record)
@@ -340,14 +345,25 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
             if resumed is not None and recovery_record['role']!=role:
                 raise ValueError('recovery task role does not match next pipeline step')
             if transition_record is not None:
-                from stage1.reader import Reader
-                transition_reader=Reader(root,output/'unused-transition-read-log')
-                for entry in transition_record['manifest']['added_files']:
-                    lines,_=transition_reader.lines(entry['path'])
-                    mandatory.extend({'tool':'read','path':entry['path'],'start':i,'count':min(120,len(lines)-i+1)}
-                                     for i in range(1,len(lines)+1,120))
                 task_artifacts['input-transition']=transition_record
-                mandatory.insert(0,{'tool':'artifact','id':'input-transition'})
+                if revision_record is not None:
+                    from stage1.reader import Reader
+                    transition_reader=Reader(root,output/'unused-transition-read-log')
+                    for entry in transition_record['manifest']['added_files']:
+                        lines,_=transition_reader.lines(entry['path'])
+                        mandatory.extend({'tool':'read','path':entry['path'],'start':i,'count':min(120,len(lines)-i+1)}
+                                         for i in range(1,len(lines)+1,120))
+                    mandatory.insert(0,{'tool':'artifact','id':'input-transition'})
+                else:
+                    task_artifacts['input-transition-summary']={
+                        'manifest_digest':transition_record['manifest_digest'],
+                        'baseline_snapshot_digest':transition_record['baseline_snapshot_digest'],
+                        'new_snapshot_digest':transition_record['new_snapshot_digest'],
+                        'added_file_count':len(transition_record['manifest']['added_files']),
+                        'added_roots':sorted({Path(e['path']).parts[0] for e in transition_record['manifest']['added_files']}),
+                        'full_manifest_artifact':'input-transition',
+                        'note':'Original input unchanged. Added references are available on demand; only delivered original lines may support citations.'}
+                    mandatory.insert(0,{'tool':'artifact','id':'input-transition-summary'})
             def versioned_validator(report, reader, reads):
                 actual = report.get('protocol_version', 2) if isinstance(report, dict) else None
                 if actual != protocol_version:
@@ -422,7 +438,16 @@ def run_pipeline(root, output, source, factory, *, budgets=None, max_revisions=1
                     data['candidate']=report;data['review']=None;state['review_status']='pending';data.pop('needs_input_revision',None);save()
                     write_json(output/'planning.json',planning_index(report, data['extracts']))
                     write_json(output/'candidate.json',report);write_text(output/'candidate.md',render(report))
-                result=execute('review',assignment,{**artifacts,'candidate':data['candidate']},
+                review_assignment=assignment
+                if protocol_version == 3:
+                    conditions=contracts.upstream_conditions(nodes)
+                    review_assignment={
+                        **assignment,'candidate_digest':planning.candidate_digest(data['candidate']),
+                        'upstream_condition_checks_shape':[
+                            {'function_id':ident,'assumption_id':condition['id'],
+                             'decision':'preserved/needs_revision/unknown','explanation':'说明逐项判断依据'}
+                            for ident,rows in conditions.items() for condition in rows]}
+                result=execute('review',review_assignment,{**artifacts,'candidate':data['candidate']},
                     partial(contracts.review,proposal=data['candidate'],nodes=nodes,max_report_chars=max_report_chars,component_review=component_review))
                 if result is None:return state
                 data['review']=result;state['review_status']=result['verdict'];save();write_json(output/'review.json',result)

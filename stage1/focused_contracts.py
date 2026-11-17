@@ -3,8 +3,8 @@ from .contracts import (validate_plan, check_evidence, require_artifacts, nonemp
                         safe_id, validate_review)
 
 
-def validate_graph_plan(report, reader, reads, *, max_modules=24):
-    errors = validate_plan(report, reader, reads, max_modules=max_modules)
+def validate_graph_plan(report, reader, reads, *, max_modules=24, library_config=None):
+    errors = validate_plan(report, reader, reads, max_modules=max_modules, library_config=library_config)
     if not isinstance(report, dict) or not isinstance(report.get('modules'), list):
         return errors
     modules = {m['id']: m for m in report['modules'] if isinstance(m, dict) and safe_id(m.get('id'))}
@@ -44,7 +44,7 @@ def validate_graph_plan(report, reader, reads, *, max_modules=24):
     return errors
 
 
-def dependency_frontier(plan):
+def dependency_frontier(plan, target_library="openssl"):
     """A -> B means A requires B. No proof-completion state is inferred."""
     modules = {m['id']: m for m in plan['modules']}
     adjacent = {i: {e['prerequisite'] for e in m['dependencies']
@@ -64,7 +64,7 @@ def dependency_frontier(plan):
             handled.update(group); cycles.append(group)
     blocked, eligible = {}, []
     for ident, m in modules.items():
-        if m['library'] != 'openssl': continue
+        if m['library'] != target_library: continue
         reasons = []
         if m['dependency_status'] != 'checked': reasons.append('dependency_inventory_unknown')
         for edge in m['dependencies']:
@@ -73,14 +73,14 @@ def dependency_frontier(plan):
         if ident in reach[ident]: reasons.append('dependency_cycle')
         if reasons: blocked[ident] = reasons
         else: eligible.append(ident)
-    impact = {i: sum(i in reach[j] for j, m in modules.items() if m['library'] == 'openssl' and j != i)
+    impact = {i: sum(i in reach[j] for j, m in modules.items() if m['library'] == target_library and j != i)
               for i in eligible}
     return {'edge_direction': 'dependent -> prerequisite', 'eligible': sorted(eligible, key=lambda i: (-impact[i], i)),
             'blocked': blocked, 'cycles': cycles, 'dependent_counts': impact,
             'proof_state': 'No target module is assumed proved; checked means planning inspection only.'}
 
 
-def validate_selection(report, reader, reads, *, plan, frontier):
+def validate_selection(report, reader, reads, *, plan, frontier, target_library="openssl"):
     errors = require_artifacts(reads, {'plan', 'dependency_frontier'})
     if not isinstance(report, dict): return errors + ['selection must be an object']
     primary = report.get('primary')
@@ -92,7 +92,7 @@ def validate_selection(report, reader, reads, *, plan, frontier):
         errors.append('primary must be in the unblocked dependency frontier')
     for field in ('rationale', 'scope', 'blockers'):
         if not nonempty(report.get(field)): errors.append('selection.' + field + ' required')
-    errors += check_evidence(report.get('evidence'), reader, libraries={'openssl'}, required=True)
+    errors += check_evidence(report.get('evidence'), reader, libraries={target_library}, required=True)
     if primary in {m['id'] for m in plan['modules']}:
         module = next(m for m in plan['modules'] if m['id'] == primary)
         errors += check_evidence(module['evidence'], reader)
@@ -127,7 +127,7 @@ def validate_pair(report, reader, reads, *, target, reference):
         errors.append('comparison relation must be candidate/none/unknown')
     for field in ('basis', 'differences', 'unknowns', 'representation', 'preconditions', 'dependencies', 'proof_status', 'adaptation'):
         if not nonempty(report.get(field)): errors.append('comparison.' + field + ' required')
-    errors += check_evidence(report.get('evidence'), reader, libraries={'openssl', reference['library']})
+    errors += check_evidence(report.get('evidence'), reader, libraries={target['library'], reference['library']})
     return errors
 
 

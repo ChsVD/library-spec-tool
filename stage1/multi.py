@@ -28,6 +28,8 @@ def role_prompt(role, assignment=None):
     base = Path(__file__).resolve().parent.parent
     common = (base / 'TASK_STAGE1_MULTI.md').read_text(encoding='utf-8')
     contracts = json.loads((base / 'templates/multi-contracts.json').read_text(encoding='utf-8'))
+    from .libraries import LEGACY_CONFIG
+    common += '\n本轮库配置：\n' + json.dumps(LEGACY_CONFIG, ensure_ascii=False)
     return (common + '\n\n' + ROLE_INSTRUCTIONS[role] + '\n\n本角色输出契约：\n' +
             json.dumps(contracts[role], ensure_ascii=False, indent=2) + '\n\n本轮任务：\n' +
             json.dumps(assignment or {}, ensure_ascii=False, indent=2))
@@ -251,6 +253,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--input', default='input')
     parser.add_argument('--output', required=True)
+    parser.add_argument('--library-config', help='JSON with target_library and reference_libraries; IDs are input subdirectories')
     parser.add_argument('--backend', choices=['codex', 'api'], default='codex')
     parser.add_argument('--model')
     parser.add_argument('--reasoning-effort', choices=['low', 'medium', 'high', 'xhigh', 'max'],
@@ -276,7 +279,7 @@ def main():
         label = 'real_codex' if args.backend == 'codex' else 'real_api'
         status = run_pipeline(args.input, args.output, factory, budgets=budget,
             concurrency=args.concurrency, max_modules=args.max_modules,
-            max_rework_rounds=args.max_rework_rounds, label=label)
+            max_rework_rounds=args.max_rework_rounds, label=label, library_config=args.library_config)
     except (ValueError, OSError, BackendError) as exc:
         parser.error(str(exc))
     print(json.dumps(status, ensure_ascii=False, indent=2))

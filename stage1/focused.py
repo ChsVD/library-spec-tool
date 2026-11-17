@@ -9,10 +9,11 @@ from .contracts import validate_module, nonempty
 from .focused_contracts import (validate_graph_plan, dependency_frontier, validate_selection,
                                 validate_screening, validate_pair, validate_focused_review)
 from .codex_backend import BackendError
+from .libraries import load_library_config, library_ids, LEGACY_CONFIG
 
 BASE = Path(__file__).resolve().parent.parent
 INSTRUCTIONS = {
- 'planner': '分别划分三库全部主要区域，输出轻量模块卡片和初步依赖图。职责与边界应足以筛选对应模块。A.dependencies中的prerequisite=B表示证明A需要先处理B，不能反向。区分call/representation/specification/build，证据不足标unknown；外部依赖用prerequisite=null及external名称。跨库相似不是依赖。dependency_status=checked仅表示已在规划深度核对依赖，不表示证明完成；没有依赖也须说明核对范围和证据，不能从没有搜索到调用推出无依赖。不要深读全部实现或比较参考适用性。循环如实保留；不要为制造叶节点删边。',
+ 'planner': '分别划分配置中各库的全部主要区域，输出轻量模块卡片和初步依赖图。职责与边界应足以筛选对应模块。A.dependencies中的prerequisite=B表示证明A需要先处理B，不能反向。区分call/representation/specification/build，证据不足标unknown；外部依赖用prerequisite=null及external名称。跨库相似不是依赖。dependency_status=checked仅表示已在规划深度核对依赖，不表示证明完成；没有依赖也须说明核对范围和证据，不能从没有搜索到调用推出无依赖。不要深读全部实现或比较参考适用性。循环如实保留；不要为制造叶节点删边。',
  'selection': '先读plan与dependency_frontier，从eligible目标模块中提出一个下一步模块。依据依赖、职责、范围可控性和影响解释选择，不按是否有参考库反向挑选。独立读取所选模块卡片的全部原文引用以核对边界。eligible只是图上的未阻断候选，不保证可证。无合适候选输出unable，不把unknown依赖当已解决，也不能越过循环。scope明确整个模块或职责完整的函数组及其源文件边界，供阶段2枚举组内全部函数；不得因单个函数更容易而默默缩成单函数试验。未处理函数保留为待处理，批次大小不是选择范围。最终需用户审核。',
  'screening': '只读取所选目标和所有参考模块的card产物，按职责与边界逐项筛选。只可用artifact/draft/checkpoint/finish；不能读取源码、完整模块报告或做表示/lemma适用性判断。每个参考卡片恰好出现一次：match表示值得深入，no_match说明职责或边界不符，unknown说明卡片不足。不能跳过不确定项，不能把match当可复用。目标不可更换。',
  'module': '只深入分配的目标或初筛match参考模块，必要时定向读取依赖原文，形成七项说明。区分材料、解释和未知，明确长度/容量/范围、前提、表示和证明状态。dependency_check.status使用confirmed/conflict/unknown，并用notes说明深读是否支持卡片依赖与范围；发现新先决条件不得隐去。不能选择新目标、生成新规约/lemma/strategy或证明。',
@@ -21,9 +22,16 @@ INSTRUCTIONS = {
 }
 
 
-def prompt(role, assignment):
+def prompt(role, assignment, library_config=None):
+    config = LEGACY_CONFIG if library_config is None else library_config
     common = (BASE/'TASK_STAGE1_MULTI.md').read_text(encoding='utf-8')
     contracts = json.loads((BASE/'templates/focused-contracts.json').read_text(encoding='utf-8'))
+    if role == 'planner':
+        sample = next(iter(contracts[role]['coverage'].values()))
+        contracts[role]['coverage'] = {lib: dict(sample) for lib in sorted(library_ids(config))}
+        contracts[role]['modules'][0]['library'] = config['target_library']
+        contracts[role]['modules'][0]['scope'] = [config['target_library'] + '/实际路径']
+    common += '\n本轮库配置（library ID 同时为输入根目录下路径）：\n' + json.dumps(config, ensure_ascii=False)
     return common + '\n\n' + INSTRUCTIONS[role] + '\n输出契约：\n' + json.dumps(contracts[role], ensure_ascii=False) + '\n任务：\n' + json.dumps(assignment, ensure_ascii=False)
 
 
@@ -78,17 +86,23 @@ def validate_deep(report, reader, reads, *, task):
 
 
 def run_pipeline(root, output, model_factory, *, budgets=None, concurrency=2, max_modules=24,
-                 max_rework_rounds=1, label='fixture'):
+                 max_rework_rounds=1, label='fixture', library_config=None):
     from .multi import module_markdown
     budgets = budgets or Budgets()
-    if concurrency < 1 or max_modules < 3 or max_rework_rounds < 0: raise ValueError('invalid pipeline limits')
+    if concurrency < 1 or max_modules < 1 or max_rework_rounds < 0: raise ValueError('invalid pipeline limits')
     root, output = Path(root).resolve(strict=True), Path(output).resolve()
+    library_config = load_library_config(root, library_config)
+    target_library = library_config['target_library']
+    if max_modules < len(library_ids(library_config)):
+        raise ValueError('max_modules must cover all configured libraries')
     if output.is_relative_to(root): raise ValueError('Pipeline output must be outside input')
     output.mkdir(parents=True, exist_ok=False)
     state = {'status':'running', 'workflow':'dependency_first_v1', 'stage':1, 'mode':label,
              'user_approved':False, 'tasks':{}, 'completed_modules':[], 'failed_modules':[],
              'planned_modules':[], 'deep_read_modules':[], 'selected_module':None,
              'rework_policy':'stop_with_artifacts_on_dependency_conflict; legacy max_rework_rounds is not used'}
+    state['library_config'] = library_config
+    write_json(output/'library_config.json', library_config)
     inventory = snapshot(root)
     write_json(output/'input_snapshot.json',inventory)
     def persist(): write_json(output/'status.json', state)
@@ -97,7 +111,7 @@ def run_pipeline(root, output, model_factory, *, budgets=None, concurrency=2, ma
     def save(name, report, title):
         write_json(output/(name+'.json'),report); readable(output/(name+'.md'),title,report)
     def task(role, ident, validator, assignment, artifacts=None, restricted=False):
-        result = run_task(root, output/'tasks'/ident, model_factory(role, ident), prompt(role,assignment),
+        result = run_task(root, output/'tasks'/ident, model_factory(role, ident), prompt(role,assignment,library_config),
                           validator, role=role, task_id=ident, budgets=budgets, artifacts=artifacts, label=label,
                           allowed_tools={'artifact','draft','checkpoint','finish'} if restricted else None)
         return result
@@ -107,23 +121,23 @@ def run_pipeline(root, output, model_factory, *, budgets=None, concurrency=2, ma
         result=task(role,ident,validator,assignment,artifacts,restricted); register(ident,result); return result
     persist()
     try:
-        result=execute('planner','planner',partial(validate_graph_plan,max_modules=max_modules),{'max_modules':max_modules})
+        result=execute('planner','planner',partial(validate_graph_plan,max_modules=max_modules,library_config=library_config),{'max_modules':max_modules})
         if result['status']!='task_completed': return stop('planner_'+result['status'])
         plan=result['report']; save('plan',plan,'全库模块卡片与依赖规划')
         state['planned_modules']=[m['id'] for m in plan['modules']]
-        frontier=dependency_frontier(plan); save('dependency_frontier',frontier,'依赖候选与阻断')
+        frontier=dependency_frontier(plan,target_library); save('dependency_frontier',frontier,'依赖候选与阻断')
         write_json(output/'dependency_graph.json', {'nodes': [m['id'] for m in plan['modules']],
             'edges': [{'dependent': m['id'], **e} for m in plan['modules'] for e in m['dependencies']],
             'frontier': frontier})
         graph_markdown(plan,frontier,output/'dependency_graph.md')
         artifacts={'plan':plan,'dependency_frontier':frontier}
-        result=execute('selection','selection',partial(validate_selection,plan=plan,frontier=frontier),{},artifacts)
+        result=execute('selection','selection',partial(validate_selection,plan=plan,frontier=frontier,target_library=target_library),{},artifacts)
         if result['status']!='task_completed': return stop('selection_'+result['status'])
         selection=result['report']; save('selection',selection,'依赖优先选择（待审核）')
         if selection['status']=='unable': return stop('no_supported_target','needs_revision')
         state['selected_module']=selection['primary']; persist()
         target=next(m for m in plan['modules'] if m['id']==selection['primary'])
-        references=[m for m in plan['modules'] if m['library']!='openssl']
+        references=[m for m in plan['modules'] if m['library'] in library_config['reference_libraries']]
         result=execute('screening','screening',partial(validate_screening,target=target,references=references),
                        {'target':target['id']},{'card:'+m['id']:card(m) for m in [target]+references},True)
         if result['status']!='task_completed': return stop('screening_'+result['status'])

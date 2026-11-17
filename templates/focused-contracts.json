@@ -1,29 +1,19 @@
 {
   "planner": {
     "coverage": {
-      "openssl": {
+      "configured-library-id": {
         "mapped_areas": "主要区域及归属",
         "unread_areas": "未读或不完整部分",
         "configuration_unknowns": "配置未知"
-      },
-      "sm2": {
-        "mapped_areas": "主要区域及归属",
-        "unread_areas": "未读部分",
-        "configuration_unknowns": "未知"
-      },
-      "mini-gmp": {
-        "mapped_areas": "主要区域及归属",
-        "unread_areas": "未读部分",
-        "configuration_unknowns": "未知"
       }
     },
     "modules": [
       {
         "id": "unique-id",
-        "library": "openssl",
+        "library": "configured-library-id",
         "title": "模块名",
         "scope": [
-          "openssl/真实路径"
+          "configured-library-id/实际路径"
         ],
         "questions": "该模块子agent需要理解和核对的问题",
         "responsibilities": "模块解决什么问题",

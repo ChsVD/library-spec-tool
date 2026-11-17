@@ -35,10 +35,11 @@ def check_evidence(items, reader, *, libraries=None, required=True):
     return errors
 
 
-def check_coverage(value):
+def check_coverage(value, libraries=None):
+    libraries = LIBRARIES if libraries is None else set(libraries)
     if not isinstance(value, dict):
-        return ['coverage must describe the three libraries']
-    return [f'coverage.{library}.{field} is required' for library in LIBRARIES
+        return ['coverage must describe the configured libraries']
+    return [f'coverage.{library}.{field} is required' for library in libraries
             for field in ('mapped_areas', 'unread_areas', 'configuration_unknowns')
             if not isinstance(value.get(library), dict) or not nonempty(value[library].get(field))]
 
@@ -48,10 +49,14 @@ def require_artifacts(reads, expected):
     return ['Derived artifacts must be inspected: ' + ', '.join(sorted(missing))] if missing else []
 
 
-def validate_plan(report, reader, artifact_reads, *, max_modules=24):
+def validate_plan(report, reader, artifact_reads, *, max_modules=24, library_config=None):
     if not isinstance(report, dict):
         return ['planner report must be an object']
-    errors = check_coverage(report.get('coverage')) + check_evidence(report.get('evidence'), reader, libraries=LIBRARIES)
+    from .libraries import LEGACY_CONFIG, library_ids
+    expected = library_ids(LEGACY_CONFIG if library_config is None else library_config)
+    errors = check_coverage(report.get('coverage'), expected) + check_evidence(report.get('evidence'), reader, libraries=expected)
+    if isinstance(report.get('coverage'), dict) and set(report['coverage']) != expected:
+        errors.append('coverage must contain exactly the configured libraries')
     modules = report.get('modules')
     if not isinstance(modules, list) or not modules:
         return errors + ['modules must be a nonempty task list']
@@ -66,8 +71,8 @@ def validate_plan(report, reader, artifact_reads, *, max_modules=24):
         if not safe_id(ident) or ident in ids:
             errors.append('module IDs must be unique safe identifiers')
         ids.add(str(ident))
-        if library not in LIBRARIES:
-            errors.append('module library must be openssl/sm2/mini-gmp')
+        if library not in expected:
+            errors.append('module library must belong to the configured libraries')
         libraries.add(str(library))
         for key in ('title', 'questions'):
             if not nonempty(module.get(key)):
@@ -82,8 +87,8 @@ def validate_plan(report, reader, artifact_reads, *, max_modules=24):
                         raise ValueError('scope must belong to the task library')
                 except (ValueError, OSError, TypeError) as exc:
                     errors.append(f'{ident}.scope: {exc}')
-    if libraries != LIBRARIES:
-        errors.append('planner must assign modules for all three libraries')
+    if libraries != expected:
+        errors.append('planner must assign modules for all configured libraries')
     return errors
 
 

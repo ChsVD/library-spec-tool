@@ -18,3 +18,25 @@ examples/simplex-int 保存 int 版单纯形实验的 C、头文件、Rocq 和�
 运行产物默认写入 runs，目录按需新建。执行离线回归：
 
     python3 -m unittest discover -s tests -q
+
+后续 QCP 任务还须交付[QCP strategy 书写规范](QCP_STRATEGY_GUIDE.md)，与规约书写规范一并阅读；具体交接要求见 [AGENTS.md](AGENTS.md)。
+
+
+## 配置阶段一的目标库与参考库
+
+任意库集合通过 `--library-config` 明确指定角色，例如 `libraries.json`：
+
+```json
+{
+  "target_library": "solver",
+  "reference_libraries": ["arithmetic", "collections"]
+}
+```
+
+原始材料分别放在 `input/solver/`、`input/arithmetic/`、`input/collections/` 下。ID 使用小写字母、数字、连字符或下划线，以字母或数字开头，最多 80 字符；目录不得使用符号链接。参考列表可以为空。以下命令会运行模型：
+
+```bash
+python3 -m stage1.multi --input input --library-config libraries.json --output runs/new-module-selection
+```
+
+配置文件路径相对于命令执行目录，材料路径相对于 `--input`。每个角色收到相同的库角色配置；运行保存 `library_config.json`，结果仍需用户审核。省略参数时兼容原 OpenSSL / SM2 / mini-GMP 输入，不自动推断新库的角色。阶段二继续使用选定模块的 manifest。

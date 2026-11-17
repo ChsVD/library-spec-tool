@@ -149,12 +149,13 @@ class FixedReferenceModel:
                 report["references"] = []
         else:
             report = review(artifacts["candidate"])
+            report["candidate_digest"] = assignment["candidate_digest"]
             if self.mode == "partial_revision" and report["verdict"] == "needs_revision":
                 report["verdict"] = "partial"
             report["upstream_condition_checks"] = [
-                {"function_id": f, "assumption_id": row["id"], "decision": "preserved",
+                {**row, "decision": "preserved",
                  "explanation": "Retained as unvalidated upstream assumption."}
-                for f, rows in artifacts.get("upstream-context", {}).get("conditions", {}).items() for row in rows]
+                for row in assignment["upstream_condition_checks_shape"]]
             if self.mode == "stale_review":
                 report["candidate_digest"] = "0" * 64
             elif self.mode in ("partial_reference", "partial_use"):
