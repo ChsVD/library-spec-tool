@@ -1,0 +1,83 @@
+{
+  "architecture": "Arch32 BigEndian",
+  "rocq_toolchain": "Coq 8.20.1",
+  "solver_sha256": "fda3d68a9bec208fbf5ba13957cdc240f5c8d0b132063d6a2c394e611117b9cc",
+  "qcp_symexec_sha256": "2cb8aec65db3eee44720a7d16fc0c92e41b779f7786c2cb7c66ff11cad211914",
+  "qcp_controller_sha256": "cd18bd64376e829592d6fcdd69774b4ac75415cdefaa2dc0b48a10ea60c13bf9",
+  "cases": {
+    "combine_opt": {
+      "run_id": "combine_opt-20261118133343",
+      "receipt": "receipts/combine_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/combine_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/combine_opt_proof_manual.v"
+    },
+    "build_opt": {
+      "run_id": "build_opt-20261118133343",
+      "receipt": "receipts/build_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/build_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/build_opt_proof_manual.v"
+    },
+    "destroy_opt": {
+      "run_id": "destroy_opt-20261118135303",
+      "receipt": "receipts/destroy_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/destroy_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/destroy_opt_proof_manual.v"
+    },
+    "normalize_opt": {
+      "run_id": "normalize_opt-20261118140849",
+      "receipt": "receipts/normalize_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/normalize_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/normalize_opt_proof_manual.v"
+    },
+    "build_one_sided_policy_opt": {
+      "run_id": "build_one_sided_policy_opt-20261118161900",
+      "receipt": "receipts/build_one_sided_policy_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/build_one_sided_policy_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/build_one_sided_policy_opt_proof_manual.v"
+    },
+    "pivot_opt": {
+      "run_id": "pivot_opt-20261118150359",
+      "receipt": "receipts/pivot_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/pivot_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/pivot_opt_proof_manual.v"
+    },
+    "sx_check_qcp_opt": {
+      "run_id": "sx_check_qcp_opt-20261118172446",
+      "receipt": "receipts/sx_check_qcp_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/sx_check_qcp_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/sx_check_qcp_opt_proof_manual.v"
+    },
+    "mpz_tdiv_r_sep_opt": {
+      "run_id": "mpz_tdiv_r_sep_opt-20261118133950",
+      "receipt": "receipts/mpz_tdiv_r_sep_opt.json",
+      "annotated_c": "QCP_examples/Applications_human/simplex_gmp_optimized/mpz_tdiv_r_sep_opt.c",
+      "proof": "Rocq/examples/Applications_human/simplex_gmp_optimized/mpz_tdiv_r_sep_opt_proof_manual.v"
+    }
+  },
+  "qcp_core_imports": {
+    "Rocq/MonadLib/Examples/fme_rel.v": "514680c759327047651d2f4e119dfa3c522d9d8c6d0b568b91038eee08d1263f",
+    "Rocq/MonadLib/MonadLib.v": "d7aee96317498e48f7f991bb017ec982a2a48ba2f1fbc085dd480e874af05f79",
+    "Rocq/SeparationLogic/ArrayLibCore.v": "bb4319d3fc87d5f463c0a34cfffa3ab8fff9a099dc5b5290c79970d65ef80c61",
+    "Rocq/SeparationLogic/CommonAssertion.v": "48760be9ab01578cdf314aebff1504194899b20ce5af940057f6784127d289a7",
+    "Rocq/SeparationLogic/IntLib.v": "c816b3fe4716e2e23c024382db07b253f32ec3a842e5844e71822d7a9265826a",
+    "Rocq/SeparationLogic/Mem.v": "baf6b161617ec6e2fb41a903d1d259e4998ab6dbfc613c033f66254c1f37f207",
+    "Rocq/SeparationLogic/SeparationLogic.v": "e0d122b80f69a6af999f1b304ef1521c0f28bc5ce88785e87822a072afc50b23",
+    "Rocq/SumLib/SumLib.v": "f8887332886e3f57d89ae76c501a81333b620843ad3392744465f3928aba16c4",
+    "Rocq/SumLib/ZRange.v": "79eb2a9d9b33685dc4c200a860ffe8157b2808085fcb29be0052f19a42ea0e66",
+    "Rocq/Verification/StrategyPrelude.v": "5f112eed074f4cdfcdc27f92a6093ee0fedbd39bbd11558d5f976f1cbce4ab4f",
+    "Rocq/Verification/VCPrelude.v": "035967aa33cb1d1e8d6a3792bfc65c32dd0d287d17348e2c82547f9a72417047",
+    "Rocq/auxlibs/Axioms.v": "7339d255140875f4054b0e91d28b526fd55432dc05df9f6b0653fd1f5c5db52f",
+    "Rocq/auxlibs/Feq.v": "9699c1db9a29f2a44b36e280eeace09812ea8500a21dbc334397679343caae0b",
+    "Rocq/auxlibs/Idents.v": "d7bccf4835680c01ceb76c9296179f0c4aac5f5cdd39bff1bd0c6c132faf55fa",
+    "Rocq/auxlibs/ListLib.v": "964f34652a167d1a39665fc52b0c9501949b0daab8ca2c916e835b670e4b872f",
+    "Rocq/auxlibs/VMap.v": "70ecb7179bd8986e9d84dc630bb5a60cdddb8997a6a107ee9f89448eff145059",
+    "Rocq/auxlibs/int_auto.v": "511c4a4f97cac8259b58ddb01bac70949fa09963ea1776dd5ce5aa48431abe40",
+    "Rocq/auxlibs/relations.v": "f47caad0acc91cb1f4b700e4400560501f029cb4d10d06e5f4418d0c03359876",
+    "Rocq/fixedpoints/BourbakiWitt.v": "960a7158463492dc1d8db90a5f098695d8699209abd742d7af18bd3da7b87a0a",
+    "Rocq/fixedpoints/PartialOrder_Setoid.v": "6fb45af29eb06babaeac7c095a78e64e659130e67162bce39aaf81cb324ce03b",
+    "Rocq/listlib/Base/Positional.v": "3bfddb8b52aa7562284bd8bc4e6f1360929b23721a4543ffd37d273c52bad714",
+    "Rocq/listlib/General/Length.v": "75f7cd3702905cbda17c5426c692e5b6801be3e9eacc6370629b5ee957d5b946",
+    "Rocq/sets/SetsClass.v": "94ead3a34925866a9f739635fd3edeec45eec7c51583882427c425edb26fd1c2",
+    "Rocq/unifysl/LogicGenerator/demo932/Interface.v": "8185912d70ca3f0a09dfbc4cbf1e0af42a2a88362c57e8e1a09cf20d3c68319d"
+  }
+}

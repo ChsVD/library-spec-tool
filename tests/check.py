@@ -1,6 +1,6 @@
 from fractions import Fraction as F
 from itertools import combinations
-import random, subprocess
+import random, subprocess, sys
 
 def vertex(rows, n):
     if n == 0:
@@ -31,6 +31,17 @@ add(1,[[2,-2],[-2,2]],0)
 add(2,[[3,1,0]],0)
 add(2,[[1,-1,-1],[0,1,0],[0,0,1]],1)
 add(3,[[1,-1,0,0],[-2,1,0,0],[0,0,0,0]],0)
+# One-sided elimination: both directions, union deletion, retained conflicts,
+# constants/zero rows, and a mixed-sign variable becoming one-sided only later.
+add(1, [[8, 2], [3, 7]], 0)
+add(1, [[8, -2], [3, -7]], 0)
+add(2, [[20, 1, -1], [4, 2, 0], [7, 0, -3]], 0)
+add(2, [[9, 1, 1], [1, 0, -1], [0, 0, 1]], 1)
+add(2, [[9, 1, 1], [1, 0, -1], [-2, 0, 1]], 0)
+add(2, [[9, -1, 0], [0, 0, 0], [-3, 0, 0]], 0)
+add(2, [[9, -1, 0], [1, 0, 0]], 1)
+add(2, [[2, 1, 1], [3, 0, -1]], 0)
+add(3, [[1, 1, -1, 0], [2, 0, 1, -1], [3, 0, 0, -1]], 0)
 big=10**90+37
 add(1,[[big,-2*big],[-big,2*big]],0)
 add(1,[[big,-big],[0,big]],1)
@@ -52,10 +63,11 @@ for n in range(1,4):
             changed += changed[:2]; rng.shuffle(changed)
             add(n,changed,expected)
 text=''.join(f'{len(rows)} {n}\n'+''.join(' '.join(map(str,r))+'\n' for r in rows) for n,rows,_ in cases)
-p=subprocess.run(['./build/driver'],input=text,text=True,capture_output=True,timeout=90)
+p=subprocess.run([sys.argv[1] if len(sys.argv) > 1 else './build/one0-skip0-nb0-simple0-san0/driver'],input=text,text=True,capture_output=True,timeout=90)
 assert p.returncode==0, p.stderr
 answers=list(map(int,p.stdout.split()))
 assert len(answers)==len(cases)
 for i,(got,(_,rows,want)) in enumerate(zip(answers,cases)):
     assert got==want,(i,rows,want,got)
 print(f'{len(cases)} exact cases passed; {answers.count(0)} feasible, {answers.count(1)} infeasible; input preserved')
+

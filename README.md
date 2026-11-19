@@ -1,15 +1,13 @@
-# 最小 GMP 整数单纯形 首批优化版
+# 优化版 GMP 整数单纯形
 
-本分支在精简初始版基础上增加常数矛盾快判和换基后整行GCD约简，作为后续消融实验的一个基线。详细变更和父提交见 [VERSION.md](VERSION.md)。
+该版本固定开启五项优化。求解器使用整数表和 MiniGMP，实现自由有理变量上的线性不等式可行性判定。
 
-接口 `int sx_check_qcp(const struct InequList *head, size_t variables)`：0表示有理可行，不意味着整数SAT；1表示有理不可行。只读NULL终止链表，无尾哨兵，每行n+1个项目MiniGMP整数表示c0+Σcj*xj<=0。
+入口为 `sx_check_qcp(head, variables)`。在[输入契约](INPUT_CONTRACT.md)约定下，正常返回 `0` 当且仅当原约束系统存在有理数解，返回 `1` 当且仅当不存在有理数解。输入链表及系数资源归还给调用者。
 
 ## 构建与测试
 
-Linux/WSL运行 `make test`，`make sanitize`执行ASan/UBSan，`make normal`恢复-O2 -g并测试。生成build/libsx.a；调用者使用-Iinclude -Ivendor，不链接系统GMP。
+在 Linux 或 WSL 中运行 `make` 构建 `build/all-optimized-san0/libsx.a`。使用 `make test` 运行普通测试，使用 `make sanitize` 运行 ASan/UBSan 测试。调用方使用 `-Iinclude -Ivendor`，链接随库编译的 MiniGMP。
 
-[开发规约](DEVELOPMENT.md)、[输入前置条件](INPUT_CONTRACT.md)、[优化验收及52例对照](evidence/optimization_batch1/REPORT.md)。历史批量脚本需要原52例数据目录；make test使用自编生成案例，无外部案例依赖。
+## 规约和证明
 
-本版没有预算、UNKNOWN、失败恢复或生产独立数学复核。合法输入、尺寸及后端容量可表示、分配成功是前置条件。工程测试不替代形式化证明。
-
-MiniGMP保持项目来源字节不变，许可证见vendor/QCP_LICENSE。初始版记录继续保留，不将它们表述为当前版本记录。
+[验证目录](verification/README.md)包含顶层和各函数的 QCP 注释源码、Rocq 定义与证明、复用的模型依赖以及原版控制器终验回执。验证采用 Arch32 BigEndian。此前的[首批优化记录](VERSION.md)和[对应验收报告](evidence/optimization_batch1/REPORT.md)记录分支的上一版。

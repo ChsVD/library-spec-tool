@@ -11,6 +11,12 @@ static const long form[5][3] = {
 
 static void check(const struct table *t)
 {
+    for (size_t slot = 0; slot < t->cols - t->rows; ++slot) {
+        assert(t->nonbasic[slot] < t->cols);
+        assert(t->row[t->nonbasic[slot]] == SIZE_MAX);
+        for (size_t other = 0; other < slot; ++other)
+            assert(t->nonbasic[other] != t->nonbasic[slot]);
+    }
     mpz_t lhs, rhs, value;
     mpz_init(lhs);
     mpz_init(rhs);
@@ -45,6 +51,9 @@ static void check(const struct table *t)
 
 int main(void)
 {
+    struct table empty = build(NULL, 0);
+    check(&empty);
+    destroy(&empty);
     struct InequList nodes[3];
     for (size_t r = 0; r < 3; ++r) {
         nodes[r].coef = integers(3);
