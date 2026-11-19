@@ -1,0 +1,10 @@
+{
+  "file": "sm2/rocq/lib/basicOp_lib.v",
+  "entry": "F169/D0001",
+  "prefix_needed": 1,
+  "status": "match",
+  "correspondence": "The lemma addcarry64_mod_branches covers both additions in one word iteration. It sets m = U64_MOD, s = (a + b) mod m, and r = (s + (cin mod m)) mod m. The carry out is 0 when s >= a and r >= s. In each of the other three comparison cases it is 1. Every branch gives 0 <= r < m, a carry in [0, 1], and a + b + cin = r + carry_out * m.",
+  "direction": "The word and carry bounds together with the branch comparisons imply the decomposition. The lemma states the mathematical sum on the left. Use equality symmetry and multiplication commutativity to obtain low_word + base * carry_out = a + b + cin.",
+  "conditions_and_limits": "The operands are integers with 0 <= a < m and 0 <= b < m, and 0 <= cin <= 1. The reference uses the fixed modulus U64_MOD. Applying it requires identifying the target word base with that modulus or proving a width-general version, and showing that the target iteration computes the same low word and carry from its own operations and comparisons. The supplied declaration verifies the statement and its hypotheses for this local arithmetic step.",
+  "additional_evidence": []
+}

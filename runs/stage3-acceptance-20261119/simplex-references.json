@@ -1,0 +1,9 @@
+{
+  "libraries": [
+    {
+      "id": "ordinary",
+      "role": "reference",
+      "root": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/references/fme"
+    }
+  ]
+}

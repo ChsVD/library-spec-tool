@@ -1,0 +1,12 @@
+{
+  "file": "fme/QCP_examples/fme_gmp.strategies",
+  "entry": "F693/D0008",
+  "prefix_needed": 2,
+  "status": "match",
+  "correspondence": "Rule 12 reduces a goal of owning InequList(p, n, cons(x, l)) to ownership of p's coef field pointing to h, mpz_coef_array(h, n, x), p's next field pointing to y, and InequList(y, n, l).",
+  "direction": "The strategy reads a non-null guard on the left and replaces the folded predicate on the right with its components. In proof search this expands the goal. Discharging the component goals establishes ownership of the folded node.",
+  "conditions_and_limits": "The left must match p != NULL or NULL != p, and the right must have the cons shape. The rule introduces right-side existential witnesses h and y, requires h != 0, and uses the same n for the coefficient array and tail. The tail predicate governs whether y may be null. Adapting the rule requires matching the Simplex predicates and field stores and establishing both non-null facts.",
+  "additional_evidence": [
+    "F693/D0007 is rule 11. It expands the same nonempty predicate on the left and exposes the node resources."
+  ]
+}

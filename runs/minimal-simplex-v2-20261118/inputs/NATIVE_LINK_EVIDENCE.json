@@ -1,0 +1,816 @@
+[
+  {
+    "caller": "fn-550fd75e1583d0c8bae839f1",
+    "callee": "fn-90f7c40727a58b202ac4fd69",
+    "location": {
+      "path": "src/solver.c",
+      "line": 14,
+      "column": 36
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 4,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+      "start": 3,
+      "end": 21
+    },
+    "contract_source_sha256": "c73364ff7c11394c8a1776bc36a30e8455910d02417a188af21723ff5eca6c40"
+  },
+  {
+    "caller": "fn-02088b570862505f84e44fd6",
+    "callee": "fn-0292efe34640ae9f7774b2e5",
+    "location": {
+      "path": "src/solver.c",
+      "line": 20,
+      "column": 36
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 5,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+      "start": 233,
+      "end": 243
+    },
+    "contract_source_sha256": "f64861403edd07fead21e7acb8c43869fd674ce53eb52e4be2e92c0d57d845e0"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-90f7c40727a58b202ac4fd69",
+    "location": {
+      "path": "src/solver.c",
+      "line": 31,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 4,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+      "start": 3,
+      "end": 21
+    },
+    "contract_source_sha256": "c73364ff7c11394c8a1776bc36a30e8455910d02417a188af21723ff5eca6c40"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-90f7c40727a58b202ac4fd69",
+    "location": {
+      "path": "src/solver.c",
+      "line": 32,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 4,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+      "start": 3,
+      "end": 21
+    },
+    "contract_source_sha256": "c73364ff7c11394c8a1776bc36a30e8455910d02417a188af21723ff5eca6c40"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-90f7c40727a58b202ac4fd69",
+    "location": {
+      "path": "src/solver.c",
+      "line": 33,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 4,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+      "start": 3,
+      "end": 21
+    },
+    "contract_source_sha256": "c73364ff7c11394c8a1776bc36a30e8455910d02417a188af21723ff5eca6c40"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-90f7c40727a58b202ac4fd69",
+    "location": {
+      "path": "src/solver.c",
+      "line": 34,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 4,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+      "start": 3,
+      "end": 21
+    },
+    "contract_source_sha256": "c73364ff7c11394c8a1776bc36a30e8455910d02417a188af21723ff5eca6c40"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-90f7c40727a58b202ac4fd69",
+    "location": {
+      "path": "src/solver.c",
+      "line": 35,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 4,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_init.c",
+      "start": 3,
+      "end": 21
+    },
+    "contract_source_sha256": "c73364ff7c11394c8a1776bc36a30e8455910d02417a188af21723ff5eca6c40"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-119005b54f1a48fe047ce951",
+    "location": {
+      "path": "src/solver.c",
+      "line": 36,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 10,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_abs.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_abs.c",
+      "start": 21,
+      "end": 33
+    },
+    "contract_source_sha256": "f4f9f1e62af236db31774ccc99cc8cf5469df14f6cf0f83cd496241b10b75e61"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-74ff9d469e23f01aab7e7795",
+    "location": {
+      "path": "src/solver.c",
+      "line": 40,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 9,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_neg.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_neg.c",
+      "start": 15,
+      "end": 27
+    },
+    "contract_source_sha256": "07caba74a28edfa2d012ec9ee94ab2c94f16b1025fa570937ed3e5f9cd8a2266"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 41,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-74ff9d469e23f01aab7e7795",
+    "location": {
+      "path": "src/solver.c",
+      "line": 43,
+      "column": 13
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 9,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_neg.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_neg.c",
+      "start": 15,
+      "end": 27
+    },
+    "contract_source_sha256": "07caba74a28edfa2d012ec9ee94ab2c94f16b1025fa570937ed3e5f9cd8a2266"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 44,
+      "column": 13
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 46,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-74ff9d469e23f01aab7e7795",
+    "location": {
+      "path": "src/solver.c",
+      "line": 48,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 9,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_neg.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_neg.c",
+      "start": 15,
+      "end": 27
+    },
+    "contract_source_sha256": "07caba74a28edfa2d012ec9ee94ab2c94f16b1025fa570937ed3e5f9cd8a2266"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 49,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-9075fc1c33605934ba4c8a01",
+    "location": {
+      "path": "src/solver.c",
+      "line": 51,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 7,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, unsigned long)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set_ui.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set_ui.c",
+      "start": 74,
+      "end": 79
+    },
+    "contract_source_sha256": "076c07efc8308604310f25ba9642c9aa8365cdc6265cea619612645d49716c3d"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 52,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-c3ca4215c17db648442b248a",
+    "location": {
+      "path": "src/solver.c",
+      "line": 57,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 13,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_gcd.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_gcd.c",
+      "start": 155,
+      "end": 164
+    },
+    "contract_source_sha256": "1b880b1387e51fe609b5231c1d7a2cef956b715874979ef28ac31f0e7fd8d4ce"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-151b10442b70a3688d3ead8e",
+    "location": {
+      "path": "src/solver.c",
+      "line": 58,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 14,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_divexact.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_divexact.c",
+      "start": 32,
+      "end": 44
+    },
+    "contract_source_sha256": "f594457102a14afd56f25f9f6b491584709eee17e2be9d162ff9cd2f0d3d4899"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-151b10442b70a3688d3ead8e",
+    "location": {
+      "path": "src/solver.c",
+      "line": 59,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 14,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_divexact.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_divexact.c",
+      "start": 32,
+      "end": 44
+    },
+    "contract_source_sha256": "f594457102a14afd56f25f9f6b491584709eee17e2be9d162ff9cd2f0d3d4899"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-7bcca8f82897d783636905d9",
+    "location": {
+      "path": "src/solver.c",
+      "line": 60,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 11,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_mul.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_mul.c",
+      "start": 87,
+      "end": 115
+    },
+    "contract_source_sha256": "97cb8a84b9ea10aa9e6a802e011d53ec342f9420045b24d6b8e3b2e1fc564d38"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 61,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-7bcca8f82897d783636905d9",
+    "location": {
+      "path": "src/solver.c",
+      "line": 62,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 11,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_mul.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_mul.c",
+      "start": 87,
+      "end": 115
+    },
+    "contract_source_sha256": "97cb8a84b9ea10aa9e6a802e011d53ec342f9420045b24d6b8e3b2e1fc564d38"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-5f740ec3d540484cb98d3960",
+    "location": {
+      "path": "src/solver.c",
+      "line": 63,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 12,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_addmul.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_addmul.c",
+      "start": 60,
+      "end": 68
+    },
+    "contract_source_sha256": "f832e3ad4efd35f006280b45760b6320e248b2a043e52f6a0c0ee8be32e62c7c"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 64,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-7bcca8f82897d783636905d9",
+    "location": {
+      "path": "src/solver.c",
+      "line": 67,
+      "column": 13
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 11,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_mul.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_mul.c",
+      "start": 87,
+      "end": 115
+    },
+    "contract_source_sha256": "97cb8a84b9ea10aa9e6a802e011d53ec342f9420045b24d6b8e3b2e1fc564d38"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-5f740ec3d540484cb98d3960",
+    "location": {
+      "path": "src/solver.c",
+      "line": 68,
+      "column": 13
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 12,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_addmul.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_addmul.c",
+      "start": 60,
+      "end": 68
+    },
+    "contract_source_sha256": "f832e3ad4efd35f006280b45760b6320e248b2a043e52f6a0c0ee8be32e62c7c"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 69,
+      "column": 13
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-9075fc1c33605934ba4c8a01",
+    "location": {
+      "path": "src/solver.c",
+      "line": 71,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 7,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, unsigned long)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set_ui.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set_ui.c",
+      "start": 74,
+      "end": 79
+    },
+    "contract_source_sha256": "076c07efc8308604310f25ba9642c9aa8365cdc6265cea619612645d49716c3d"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-0292efe34640ae9f7774b2e5",
+    "location": {
+      "path": "src/solver.c",
+      "line": 76,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 5,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+      "start": 233,
+      "end": 243
+    },
+    "contract_source_sha256": "f64861403edd07fead21e7acb8c43869fd674ce53eb52e4be2e92c0d57d845e0"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-0292efe34640ae9f7774b2e5",
+    "location": {
+      "path": "src/solver.c",
+      "line": 77,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 5,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+      "start": 233,
+      "end": 243
+    },
+    "contract_source_sha256": "f64861403edd07fead21e7acb8c43869fd674ce53eb52e4be2e92c0d57d845e0"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-0292efe34640ae9f7774b2e5",
+    "location": {
+      "path": "src/solver.c",
+      "line": 78,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 5,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+      "start": 233,
+      "end": 243
+    },
+    "contract_source_sha256": "f64861403edd07fead21e7acb8c43869fd674ce53eb52e4be2e92c0d57d845e0"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-0292efe34640ae9f7774b2e5",
+    "location": {
+      "path": "src/solver.c",
+      "line": 79,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 5,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+      "start": 233,
+      "end": 243
+    },
+    "contract_source_sha256": "f64861403edd07fead21e7acb8c43869fd674ce53eb52e4be2e92c0d57d845e0"
+  },
+  {
+    "caller": "fn-ae6173af429c6b30a054481e",
+    "callee": "fn-0292efe34640ae9f7774b2e5",
+    "location": {
+      "path": "src/solver.c",
+      "line": 80,
+      "column": 5
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 5,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/gmp_base.c",
+      "start": 233,
+      "end": 243
+    },
+    "contract_source_sha256": "f64861403edd07fead21e7acb8c43869fd674ce53eb52e4be2e92c0d57d845e0"
+  },
+  {
+    "caller": "fn-1307838fa0bae641e6f393a3",
+    "callee": "fn-9075fc1c33605934ba4c8a01",
+    "location": {
+      "path": "src/solver.c",
+      "line": 99,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 7,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, unsigned long)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set_ui.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set_ui.c",
+      "start": 74,
+      "end": 79
+    },
+    "contract_source_sha256": "076c07efc8308604310f25ba9642c9aa8365cdc6265cea619612645d49716c3d"
+  },
+  {
+    "caller": "fn-1307838fa0bae641e6f393a3",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 100,
+      "column": 9
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  },
+  {
+    "caller": "fn-1307838fa0bae641e6f393a3",
+    "callee": "fn-073106bc1f4167af0bf9d628",
+    "location": {
+      "path": "src/solver.c",
+      "line": 102,
+      "column": 13
+    },
+    "source_declaration": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend.h",
+      "line": 6,
+      "column": 6
+    },
+    "canonical_type": "void (mpz_ptr, mpz_srcptr)",
+    "unique_native_defining_unit": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+    "contract": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp/mpz_set.c",
+      "start": 39,
+      "end": 51
+    },
+    "contract_source_sha256": "94d210f389582ca526ed134012ce2b13b3d5f10265534ee569594d6c55165d2e"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "file": "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+  "entry": "F006/D0057",
+  "prefix_needed": 5,
+  "status": "partial",
+  "correspondence": "The store_Z definition owns the three __mpz_struct field cells and describes the backing storage as an initialized limb prefix followed by an unspecified tail. _mp_d corresponds to d, abs(_mp_size) to top, and _mp_alloc to dmax. The prefix has exactly top limbs and represents abs(n). The recurrence list_to_Z(a :: rest) = a + Base * list_to_Z(rest) makes the lowest-addressed limb the least significant. The reference constrains the sign through same_sign(n, _mp_size), while BIGNUM stores a separate neg field.",
+  "direction": "Unfold store_Z to obtain the field cells, the prefix and tail assertions, and the magnitude and sign constraints. To build the analogous BIGNUM assertion, use its field cells and recover the signed integer from the prefix magnitude using neg once its encoding is established.",
+  "conditions_and_limits": "The first five entries verify the ownership and value interpretation of the prefix. The reference requires abs(_mp_size) <= _mp_alloc, bounded limbs, and a positive most-significant limb for a nonempty prefix. The empty prefix evaluates to zero. Adapt the field layout and C types, match Base and the limb bounds to the target limb width, and establish the neg encoding and zero convention. The payload leaves same_sign undefined and supplies no BIGNUM declaration or allocation and deallocation contract.",
+  "additional_evidence": [
+    "F006/D0009",
+    "F006/D0006",
+    "F006/D0005"
+  ]
+}

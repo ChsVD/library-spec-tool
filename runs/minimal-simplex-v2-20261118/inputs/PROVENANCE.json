@@ -1,0 +1,23 @@
+{
+  "top_level_source": "/home/maxu/Projects/library-spec-tool/runs/isolated-simplex-gmp-minimal-20261111-01/contracts/input-revision-20261113/INPUT_CONTRACT.md",
+  "top_level_source_sha256": "56e9fcafcc18df35fbbd869815d8a84ab4ba57185dfd35ed412a3c22bf59ede7",
+  "top_level_extract_sha256": "9f162c2fda225d686778a5e72b3a25bf67e2493b66e5b13099a38abeabae5d98",
+  "top_level_extracted_headings": [
+    "## 数学输入与公开结果",
+    "## 调用方必须提供的输入条件",
+    "## 尺寸与地址运算前置条件",
+    "## 外部运行环境与分配服务假设",
+    "## 大整数增长和后端调用条件"
+  ],
+  "omissions": [
+    "legacy allocator table",
+    "legacy internal invariants",
+    "legacy helper contracts",
+    "legacy proof discussion"
+  ],
+  "makefile": "/home/maxu/Projects/library-spec-tool/runs/isolated-simplex-gmp-minimal-20261111-01/target/simplex-baseline/Makefile",
+  "makefile_sha256": "25fa857c392cae41b7e2f8df4da5db852f7a95b03308867ee83741a411903d98",
+  "build_arch": "Linux x86-64 LP64, native GNU C build flags",
+  "specification_model": "QCP naive_C_Rules Arch32 BigEndian, not a tested ABI in this run",
+  "writing_guide_sha256": "2544f847c32941c6f659fbe8de1951d11adb8f502b8d1c5787dbb7f9f3bbbc1a"
+}

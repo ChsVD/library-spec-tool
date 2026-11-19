@@ -1,38 +1,40 @@
-"""Build a function graph without generating specifications.
-
-Use stage2.demand_scope to select the processing scope and stage3 to generate specs.
-"""
+"""Generate natural-language contracts from a v2 stage-one run."""
 import argparse
-from stage2.pipeline import load_manifest
+import json
+
+from .codex_backend import CodexModel
+from .pipeline import run
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--input', default='input')
-    parser.add_argument('--manifest', required=True)
-    parser.add_argument('--output', required=True)
-    parser.add_argument('--graph-backend', choices=['fm-agent', 'lexical'], default='fm-agent')
-    parser.add_argument('--graph-compile-commands')
-    parser.add_argument('--prepare-only', action='store_true', help='compatibility flag; stage2 is always static')
-    parser.add_argument('--resume', action='store_true')
+    parser.add_argument("--stage1", required=True, help="stage1.json")
+    parser.add_argument("--output", required=True)
+    parser.add_argument("--reuse-contracts", help="JSON mapping of reuse function IDs to contract intervals")
+    parser.add_argument("--background", action="append", default=[], help="repeatable path to supporting materials")
+    parser.add_argument("--model")
+    parser.add_argument("--reasoning-effort", choices=["low", "medium", "high", "xhigh", "max"])
+    parser.add_argument("--timeout", type=float, default=600, help="seconds per model exchange")
+    parser.add_argument("--context-chars", type=int, default=100_000)
+    parser.add_argument("--max-revisions", type=int, default=1)
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args(argv)
     try:
-        # Shared preparation preserves the saved graph schema. No model is created.
-        from stage3.reference import run
-        manifest, materials = load_manifest(args.manifest, args.input)
-        def no_model(_):
-            raise RuntimeError('stage2 must not invoke a model')
-        graph = run(args.input, args.output, manifest, materials, no_model,
-                    prepare_only=True, resume=args.resume,
-                    graph_backend=args.graph_backend,
-                    graph_compile_commands=args.graph_compile_commands)
-        import json
-        print(json.dumps({'functions': len(graph['nodes']),
-                          'components': len(graph['components']), 'status': 'planned'}))
-        return 0
-    except (ValueError, OSError, RuntimeError) as exc:
-        parser.error(str(exc))
+        # Initialize lazily so a completed run can be read without model access.
+        state = run(
+            stage1_result=args.stage1, output=args.output, reuse_contracts=args.reuse_contracts,
+            background=args.background, resume=args.resume, timeout=args.timeout,
+            max_chars=args.context_chars, max_revisions=args.max_revisions,
+            model_factory=lambda *_: CodexModel(args.model, reasoning_effort=args.reasoning_effort),
+            model_identity={"backend": "codex", "model": args.model, "reasoning_effort": args.reasoning_effort},
+        )
+    except KeyboardInterrupt:
+        parser.exit(130, "stage2 interrupted; resume with the same run directory and inputs\n")
+    except (KeyError, TypeError, ValueError, OSError, RuntimeError) as exc:
+        parser.exit(1, f"stage2: {exc}\n")
+    print(json.dumps({"status": state["status"], "functions": len(state["functions"])}))
+    return 2 if state["status"] == "partial" else 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     raise SystemExit(main())

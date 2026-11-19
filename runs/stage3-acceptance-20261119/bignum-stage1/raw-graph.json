@@ -1,0 +1,123 @@
+{
+  "functions": [],
+  "edges": [],
+  "indirect_sites": [],
+  "indirect_diagnostics": {},
+  "units": [
+    {
+      "source": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+      "declarations": {
+        "0x58d4f98e1af8": {
+          "name": "bn_top_probe",
+          "symbol": "bn_top_probe",
+          "type": "int (BIGNUM *)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+            "line": 9,
+            "column": 5
+          },
+          "end_line": 12,
+          "definition": true,
+          "previous": null
+        },
+        "0x58d4f98e1dc0": {
+          "name": "bn_limb_probe",
+          "symbol": "bn_limb_probe",
+          "type": "BN_ULONG (BN_ULONG *)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+            "line": 14,
+            "column": 10
+          },
+          "end_line": 17,
+          "definition": true,
+          "previous": null
+        },
+        "0x58d4f98e2028": {
+          "name": "bn_data_probe",
+          "symbol": "bn_data_probe",
+          "type": "BN_ULONG *(BIGNUM *)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+            "line": 18,
+            "column": 11
+          },
+          "end_line": 21,
+          "definition": true,
+          "previous": null
+        },
+        "0x58d4f98e2230": {
+          "name": "bn_dmax_probe",
+          "symbol": "bn_dmax_probe",
+          "type": "int (BIGNUM *)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+            "line": 23,
+            "column": 5
+          },
+          "end_line": 26,
+          "definition": true,
+          "previous": null
+        },
+        "0x58d4f98e2480": {
+          "name": "bn_neg_probe",
+          "symbol": "bn_neg_probe",
+          "type": "int (BIGNUM *)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+            "line": 28,
+            "column": 5
+          },
+          "end_line": 31,
+          "definition": true,
+          "previous": null
+        },
+        "0x58d4f98e2688": {
+          "name": "bn_flags_probe",
+          "symbol": "bn_flags_probe",
+          "type": "int (BIGNUM *)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+            "line": 33,
+            "column": 5
+          },
+          "end_line": 36,
+          "definition": true,
+          "previous": null
+        }
+      },
+      "calls": []
+    }
+  ],
+  "clang_covered": [],
+  "parses": [
+    {
+      "source": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+      "partial_ast_allowed": false,
+      "ast_available": true
+    }
+  ],
+  "diagnostics": [
+    {
+      "command": [
+        "clang",
+        "-std=c11",
+        "-x",
+        "c",
+        "-Wno-error",
+        "-fsyntax-only",
+        "-Xclang",
+        "-ast-dump=json",
+        "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c"
+      ],
+      "returncode": 0,
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "stage1_sha256": "40ed2fc4f12796aef9c9b75dd21f363d264c4dad8117f38aeb25f2e2ec57ae21",
+    "writing_guide_sha256": "2544f847c32941c6f659fbe8de1951d11adb8f502b8d1c5787dbb7f9f3bbbc1a",
+    "materials_sha256": "8dde20fc98f698811f3930154b0b8283ffde56c1aff651b8a87b024e6c14cc07",
+    "reuse_contracts": {},
+    "prompt_sha256": "b663ed8c9fdf725c31a58f093801b7f6aa83914c5bbb622c51e10547409d008b",
+    "model": {
+      "backend": "codex",
+      "model": "gpt-6.2-sol",
+      "reasoning_effort": "high"
+    },
+    "max_chars": 100000,
+    "max_revisions": 1
+  },
+  "stage1_result": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/stage1.json",
+  "functions": {
+    "fn-85c3fb94fe0d59f1da3de85f": {
+      "status": "approved",
+      "reason": "在交付的 Linux x86_64、C11 配置下，project/target/normalized.c:1–8 确认 d 的类型为 BN_ULONG *，BN_ULONG 是 unsigned long long 的别名。第 18–21 行支持 read_data_field 情景：若 p 指向有效对象且 d 字段已初始化并可合法读取，函数只读取该字段，返回入口指针值（含空指针），且无内存写入。其他字段无需初始化，函数不访问 d 所指存储。注释在入口和返回时使用同一字段存储断言。草案明确排除了非法字段读取和对所指存储的额外保证。交付材料未列出调用情景，也未确认 store 的形式化权限模型或 QCP 验证状态。",
+      "unverified_dependencies": [],
+      "draft": {
+        "function_id": "fn-85c3fb94fe0d59f1da3de85f",
+        "purpose": "读取 BIGNUM 的 d 字段并返回其中保存的 BN_ULONG * 指针值。",
+        "symbols": "p 是传入的 BIGNUM *。BIGNUM 的 d 字段类型为 BN_ULONG *，BN_ULONG 是 unsigned long long 的别名。逻辑量 d 是该字段的入口值。store(&(p->d), d) 表示源码注释中记录该字段及其值的存储断言。",
+        "cases": [
+          {
+            "name": "read_data_field",
+            "with": "入口快照 d，表示 p->d 中保存的指针值。",
+            "require": "p 指向有效的 BIGNUM 对象，p->d 可合法读取且已初始化为 d。调用者提供 store(&(p->d), d)。其他字段无需已初始化，d 指向的存储也无需提供。",
+            "ensure": "返回值等于入口快照 d。若 d 为空，返回空指针。若 d 指向某处，返回值携带同一地址及其已有别名关系。函数只读取 p->d，无内存写入，归还原字段资源 store(&(p->d), d)。调用无独立错误码，返回值的可解引用性及其目标存储的访问权限由调用者另行建立。"
+          }
+        ],
+        "assumptions": [
+          "依据交付的 Linux x86_64 归一化 C 源码及其字段规约。store 的底层权限模型和形式化验证状态未由交付材料确定。"
+        ],
+        "uncovered": [
+          "p 为空、失效，或 p->d 的取值不满足 C 的合法读取条件时，规约不提供保证。",
+          "d 所指区域的长度、内容、生命周期和所有权，以及 d 与 top、dmax 等字段之间的表示不变量，均需由调用者所用的其他规约建立。"
+        ],
+        "evidence": [
+          {
+            "path": "project/target/normalized.c",
+            "start": 1,
+            "end": 8
+          },
+          {
+            "path": "project/target/normalized.c",
+            "start": 18,
+            "end": 21
+          }
+        ],
+        "common_needs": [],
+        "call_requirements": []
+      },
+      "call_checks": {},
+      "task_digest": "e5112171d0205fd42e8c8b1b0cedf596b0d7e4d88e73b62aa435bb95503ef37b"
+    }
+  },
+  "accepted_edges": {},
+  "formal_call_validation": "not_run",
+  "scope": {
+    "mode": "entries",
+    "entry_ids": [
+      "fn-85c3fb94fe0d59f1da3de85f"
+    ],
+    "function_ids": [
+      "fn-85c3fb94fe0d59f1da3de85f"
+    ],
+    "reached_ids": [
+      "fn-85c3fb94fe0d59f1da3de85f"
+    ],
+    "reuse_boundaries": [],
+    "components": [
+      {
+        "id": "scc-0",
+        "functions": [
+          "fn-85c3fb94fe0d59f1da3de85f"
+        ]
+      }
+    ],
+    "component_edges": [],
+    "callback_dependencies": []
+  },
+  "calls": {},
+  "external_materials": {},
+  "analysis_gaps": [],
+  "analysis_translation_failures": [],
+  "status": "completed"
+}

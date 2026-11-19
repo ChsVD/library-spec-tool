@@ -1,1 +1,1 @@
-"""Stage 2: function call graphs and processing-scope selection."""
+"""Natural-language contract generation for the selected proof scope."""

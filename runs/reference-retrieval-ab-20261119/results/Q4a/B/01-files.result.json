@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F693",
+      "reason": "Look for a strategy that consumes nonempty InequList ownership on the left and exposes the coef field, coefficient array, next field, and tail ownership on that same side."
+    },
+    {
+      "id": "F700",
+      "reason": "Check the generated strategy entailment for the exact direction, which side changes, and any required list shape or pointer conditions."
+    },
+    {
+      "id": "F697",
+      "reason": "Look for the list predicate definition or a head-unfolding lemma that identifies the array and tail predicates and makes the nonempty-case assumptions explicit."
+    }
+  ]
+}

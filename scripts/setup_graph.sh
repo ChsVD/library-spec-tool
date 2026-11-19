@@ -25,5 +25,5 @@ export FM_AGENT_CODEGRAPH_DIR="$PWD/.deps/codegraph"
 export CODEGRAPH_TELEMETRY=0
 ROOT="$PWD"
 (cd .deps/FM-Agent && "$ROOT/.venv-graph/bin/python" -c 'from src.languages.codegraph import _codegraph_cmd; print(_codegraph_cmd())')
-python3 -c 'from stage2.fm_graph import environment; print(environment())'
+python3 -c 'from stage1.backend import environment; print(environment())'
 clang --version

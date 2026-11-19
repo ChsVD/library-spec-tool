@@ -1,0 +1,12 @@
+[
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target",
+    "arguments": [
+      "clang",
+      "-std=c11",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-stage1/project/target/normalized.c"
+    ]
+  }
+]

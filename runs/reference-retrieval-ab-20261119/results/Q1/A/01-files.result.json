@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F006",
+      "reason": "Look for a mini-GMP lemma equating the value of the original little-endian limb list with the value of the retained prefix when every discarded high limb is zero. Check that the empty prefix represents zero."
+    },
+    {
+      "id": "F001",
+      "reason": "Look for a normalization contract and loop invariant that preserve value when the used count decreases after a zero test. Check that the result is empty or has a nonzero highest limb."
+    },
+    {
+      "id": "F178",
+      "reason": "Look for a little-endian append identity that expresses the full value as the prefix value plus the suffix value scaled by the radix to the prefix length. A zero suffix then gives the required equality."
+    }
+  ]
+}

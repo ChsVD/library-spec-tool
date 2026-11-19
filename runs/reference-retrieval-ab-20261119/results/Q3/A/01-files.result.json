@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F169",
+      "reason": "Look for the branch lemmas for one unsigned addition. For operands in [0,B), a mathematical sum below B gives low = sum and carry = 0. A sum at least B gives low = sum - B and carry = 1. If the lemmas cover two operands only, apply them to a+b and then to the wrapped result plus the input carry. A first wrap leaves a low word at most B-2, so adding a carry of 0 or 1 cannot wrap again."
+    },
+    {
+      "id": "F020",
+      "reason": "Check the annotated 64-bit add-with-carry contract for low + 2^64*carry_out = a+b+carry_in with a,b in [0,2^64) and carry_in in {0,1}. The postcondition would give the arithmetic correspondence at that width."
+    },
+    {
+      "id": "F322",
+      "reason": "Check how the proof of the 64-bit helper derives the low word and outgoing carry from its implementation. OpenSSL's own carry tests still need to be justified for its BN_ULONG width."
+    }
+  ]
+}

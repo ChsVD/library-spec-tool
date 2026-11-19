@@ -1,0 +1,12 @@
+{
+  "file": "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+  "entry": "F006/D0022",
+  "prefix_needed": 2,
+  "status": "match",
+  "correspondence": "The lemma states that appending zero limbs preserves list_to_Z. The second entry confirms that the list is little-endian: each head limb contributes at weight one, and the tail's value is multiplied by Base. Thus a zero suffix represents the most-significant limbs removed by bn_correct_top.",
+  "direction": "Write the original used list as kept ++ zeros m, where m is the number of removed limbs. The lemma gives value(kept) = value(original). Use symmetry to state preservation from the old used count to the new one. If every used limb is zero, kept is empty and its value is zero by definition. An originally empty used list also has value zero.",
+  "conditions_and_limits": "The lemma requires 0 < Base. For the OpenSSL adaptation, interpret the first top array entries as unsigned digits in the limb radix and show that the discarded suffix has exactly old_top - new_top entries, all zero. The supplied prefix does not define zeros, so its correspondence to that suffix must be established when adapting the result. The loop must separately establish that new_top is zero or the highest retained limb is nonzero.",
+  "additional_evidence": [
+    "F006/D0006"
+  ]
+}

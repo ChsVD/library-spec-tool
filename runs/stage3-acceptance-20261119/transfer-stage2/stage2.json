@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "stage1_sha256": "7c0bad8079507be0921c29836f7ba65a6d53ab20828f0a617bb98e7fbc06277c",
+    "writing_guide_sha256": "2544f847c32941c6f659fbe8de1951d11adb8f502b8d1c5787dbb7f9f3bbbc1a",
+    "materials_sha256": "43ab112550ec7b5504386c3a3c50e98dbaba877c163c864436e91fe2d404c419",
+    "reuse_contracts": {},
+    "prompt_sha256": "b663ed8c9fdf725c31a58f093801b7f6aa83914c5bbb622c51e10547409d008b",
+    "model": {
+      "backend": "codex",
+      "model": "gpt-6.2-sol",
+      "reasoning_effort": "high"
+    },
+    "max_chars": 100000,
+    "max_revisions": 1
+  },
+  "stage1_result": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/stage1.json",
+  "functions": {
+    "fn-a2ff99ca89c05de1e608dc65": {
+      "status": "approved",
+      "reason": "当前 Linux x86_64、C11 构建使用 -DNDEBUG，禁用第 34 行的标准 assert。both_positive 分支在首循环中提取共同的 2 的幂，k 至多为 2^31。次循环保持 b>0、至少一项为奇数以及 G(A,B)=k·G(a,b)，每次迭代使数学整数和 a+b 严格下降。相等的正输入也在覆盖范围内，两个局部值相等且为奇数时，第 51 行将 a 置零。终止时返回 b·k=G(A,B)，其值在 1 至 min(A,B) 之间，因此 uint32_t 乘积精确。zero_first_in_ndebug 分支在首循环中提取 B 的全部因子 2，次循环执行一次后 a 仍为零，返回乘积恢复 B。两分支均按值传参，仅操作局部变量，无调用者内存访问或错误返回码。草案正确排除 B=0 时的返回保证，并说明 C11 循环规则下不可承诺实际挂起。启用断言的构建不适用零首参保证。依据为已交付的 project/target/utils/gcd.c 第 23 至 57 行及编译参数。",
+      "unverified_dependencies": [],
+      "draft": {
+        "function_id": "fn-a2ff99ca89c05de1e608dc65",
+        "purpose": "按值接收两个 32 位无符号整数，在源码声明的正整数域内计算并返回其最大公因数。",
+        "symbols": "A、B 分别是形参 a、b 的不可变入口值，取值范围为 0 至 2^32−1。G(A,B) 表示数学上的最大公因数。k 是从两个入口值中共同提出的 2 的幂。所有数值界及乘积等式均按数学整数解释。",
+        "cases": [
+          {
+            "name": "both_positive",
+            "with": "入口值 A、B。",
+            "require": "1 ≤ A ≤ 2^32−1，1 ≤ B ≤ 2^32−1。参数按值传入，无需提供额外内存资源。允许 A=B。",
+            "ensure": "调用终止，返回唯一的无符号整数 r=G(A,B)，且 1 ≤ r ≤ min(A,B)。最终乘积可由 uint32_t 精确表示。执行中只更新局部变量，无调用者内存读写，无错误返回码。"
+          },
+          {
+            "name": "zero_first_in_ndebug",
+            "with": "入口值 A、B，以及任务给定的 NDEBUG 构建配置。",
+            "require": "A=0，1 ≤ B ≤ 2^32−1，且该构建禁用 assert。参数按值传入，无需提供额外内存资源。",
+            "ensure": "调用终止并返回 B。提取 B 的全部因子 2 后，第二个循环执行一次，a 仍为零，最终乘积恢复 B。执行中只更新局部变量，无调用者内存读写。此保证描述当前配置下源码声明域之外的实现行为。"
+          }
+        ],
+        "assumptions": [
+          "采用任务给定的 Linux x86_64、C11 和 NDEBUG 配置。uint32_t 是精确 32 位无符号整数类型，标准 assert 在该配置下禁用。"
+        ],
+        "uncovered": [
+          "B=0 且 A>0 时，按源码逐步执行会在第二个循环中反复右移零值 b，a 保持为正。A=B=0 时，首个循环中的 x 持续为零。两类输入均无返回值保证，且 C11 的循环终止规则使源码层面的无限迭代不能作为可移植的挂起保证。",
+          "启用断言的构建不适用零首参分支。"
+        ],
+        "evidence": [
+          {
+            "path": "project/target/utils/gcd.c",
+            "start": 23,
+            "end": 34
+          },
+          {
+            "path": "project/target/utils/gcd.c",
+            "start": 35,
+            "end": 57
+          }
+        ],
+        "common_needs": [
+          {
+            "kind": "definition",
+            "use": "精确表述返回值并连接循环结束状态。",
+            "need": "定义非负整数的最大公因数，并给出 b>0 时 G(0,b)=b，以及正输入下 1≤G(A,B)≤min(A,B)。",
+            "evidence": [
+              {
+                "path": "project/target/utils/gcd.c",
+                "start": 44,
+                "end": 57
+              }
+            ]
+          },
+          {
+            "kind": "lemma",
+            "use": "验证共同因子提取及后续逐步化简。",
+            "need": "证明共同除以 2 可将该因子移到最大公因数之外，一奇一偶时仅将偶数除以 2 保持最大公因数，两奇数时用较大者与较小者之差的一半替换较大者也保持最大公因数。连接无符号按位判奇与数学整除。",
+            "evidence": [
+              {
+                "path": "project/target/utils/gcd.c",
+                "start": 35,
+                "end": 54
+              }
+            ]
+          },
+          {
+            "kind": "strategy",
+            "use": "证明正输入下两段循环终止，并证明最终乘积精确。",
+            "need": "首段保持 G(A,B)=k·G(a,b)，用非零 x 的严格递减证明终止，并用 k 为 A、B 的共同因子约束左移结果。次段保持 b>0、至少一项为奇数以及同一最大公因数不变式。每次迭代使数学和 a+b 严格递减，退出时 a=0，由不变式和最大公因数上界得到 b·k 可表示。",
+            "evidence": [
+              {
+                "path": "project/target/utils/gcd.c",
+                "start": 35,
+                "end": 57
+              }
+            ]
+          }
+        ],
+        "call_requirements": []
+      },
+      "call_checks": {},
+      "task_digest": "7f5d5bc253acc29bb91b1fc2cd25452b1c286a8cfbc347d054a099fc8c86983f"
+    }
+  },
+  "accepted_edges": {},
+  "formal_call_validation": "not_run",
+  "scope": {
+    "mode": "entries",
+    "entry_ids": [
+      "fn-a2ff99ca89c05de1e608dc65"
+    ],
+    "function_ids": [
+      "fn-a2ff99ca89c05de1e608dc65"
+    ],
+    "reached_ids": [
+      "fn-a2ff99ca89c05de1e608dc65"
+    ],
+    "reuse_boundaries": [],
+    "components": [
+      {
+        "id": "scc-0",
+        "functions": [
+          "fn-a2ff99ca89c05de1e608dc65"
+        ]
+      }
+    ],
+    "component_edges": [],
+    "callback_dependencies": []
+  },
+  "calls": {},
+  "external_materials": {},
+  "analysis_gaps": [],
+  "analysis_translation_failures": [],
+  "status": "completed"
+}

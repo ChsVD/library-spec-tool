@@ -1,0 +1,37 @@
+{
+  "function": "build",
+  "ordinal": 1,
+  "location": {"path": "project/target/src/solver.c", "line": 102, "column": 13},
+  "trials": [
+    {
+      "direction": "split",
+      "query": {"have": ["array.full", "index.in_bounds"], "need": ["array.element", "array.missing_index"]},
+      "review_rank": 2,
+      "expected_entry": "mpz_coef_array_split",
+      "assessment": {
+        "disposition": "adaptation_required",
+        "mapping": "x ↦ q->coef, i ↦ v+1, n ↦ 输入行长度 n+1, c ↦ 当前节点的数学系数行（待建立表示对应）",
+        "conditions": ["0 <= i < n", "x <> NULL"],
+        "obligation": "建立 Simplex 行与 FME Constraint 的表示对应并核对槽资源。"
+      }
+    },
+    {
+      "direction": "merge",
+      "query": {"have": ["array.element", "array.missing_index", "index.in_bounds"], "need": ["array.full"]},
+      "review_rank": 2,
+      "expected_entry": "mpz_coef_array_merge",
+      "assessment": {
+        "disposition": "adaptation_required",
+        "mapping": "重用拆分映射，v（引理参数）↦ mpz_set 归还的源槽数学值",
+        "conditions": ["0 <= i < n", "x <> NULL", "mpz_set neq 源槽同址同值归还"],
+        "obligation": "重组引理给出替换后的行，证明同值替换还原原行。"
+      }
+    }
+  ],
+  "remaining": [
+    "完整的节点地址、next/coef 快照及逐节点借用和归还的表示定义。",
+    "源槽同值替换还原数学行，保留数据表示可能变化的语义。",
+    "store_Z_dummy 合法共享及资源可清理性。",
+    "历史 Arch32 GMP 契约及资源布局适配到当前 LP64。"
+  ]
+}

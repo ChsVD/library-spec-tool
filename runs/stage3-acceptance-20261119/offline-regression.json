@@ -1,0 +1,1228 @@
+{
+  "schema_version": 1,
+  "mode": "offline_fixed_review_fixture",
+  "need": {
+    "id": "fn-1307838fa0bae641e6f393a3:1:e54cc49140d2bb87",
+    "function_id": "fn-1307838fa0bae641e6f393a3",
+    "ordinal": 1,
+    "original": {
+      "kind": "definition",
+      "use": "绑定输入矩阵与借入资源，表达复制后输入归还。",
+      "need": "定义按链表顺序关联C的输入谓词，包含节点地址、next及coef快照、n+1个整数头和store_Z资源；明确store_Z_dummy的共享规则及可清理性。该谓词应支持逐节点拆分和归还，不把数学值保持误写成内部表示逐字节保持。",
+      "evidence": [
+        {
+          "path": "background/0/TOPLEVEL_SPEC.md",
+          "start": 19,
+          "end": 45
+        },
+        {
+          "path": "project/target/include/sx_solver.h",
+          "start": 5,
+          "end": 15
+        },
+        {
+          "path": "contracts/fn-073106bc1f4167af0bf9d628/mpz_set.c",
+          "start": 39,
+          "end": 51
+        }
+      ]
+    },
+    "status": "conditional",
+    "reason": "草案与已交付源码的构造流程一致：project/target/src/solver.c:83–107支持计数、尺寸、常数及系数复制、分母置1、初始基和反向索引；integers的零初始化意图由solver.c:11–16及mpz_init.c:3–29支持，松弛列随后未被写入。四个命名情景覆盖m、n分别为零和正数；空数组不访问元素，但m=0、n>0仍须分配并初始化row。尺寸、输入分离和分配成功条件有TOPLEVEL_SPEC.md:27–81依据，输出精确到数组形状、索引及整数数学值；分配失败、非法重叠及并发修改已明确排除，没有虚构错误返回或回滚。保留条件：store_Z/store_Z_dummy定义、初始化结果到复用契约的资源桥接、共享dummy及清理能力尚未完整核验；历史Arch32 BigEndian契约对当前LP64配置的适配未验证。因此这是有源码支持的条件化需求，不能视为已完成函数证明或QCP调用测试。",
+    "unverified_dependencies": [
+      "upstream: fn-ebdf13af80bdab389754b35a"
+    ],
+    "calls": [
+      {
+        "call_id": "call-858f7ac3c355d74912b2c0d6",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": "fn-550fd75e1583d0c8bae839f1",
+          "kind": "internal",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 90,
+            "column": 11
+          },
+          "detail": {
+            "source_kind": "direct",
+            "evidence": "clang_declaration"
+          }
+        },
+        "requirement": {
+          "call_id": "call-858f7ac3c355d74912b2c0d6",
+          "condition": "统计链表并计算k后，无条件调用integers(m)建立d，包括m=0。",
+          "available": "m已绑定为节点数，m*sizeof(__mpz_struct)和对象跨度合法；P提供非零分配成功及后端条件，尚无d旧资源。",
+          "needed": "返回拥有m个合法已初始化零整数的数组，与输入分离；m=0时允许NULL或合法零大小分配结果，不访问元素并保留释放能力。integers源码支持此接口意图，形式化证明及平台适配待核验。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-550fd75e1583d0c8bae839f1",
+            "check": {
+              "call_id": "call-858f7ac3c355d74912b2c0d6",
+              "status": "compatible",
+              "reason": "project/target/src/solver.c:90以t.rows=m建立d，包括m=0。上游要求提供合法字节尺寸、对象跨度、非零分配成功及后端条件，且无旧d资源，覆盖草案相应入口。草案返回独立的m个合法零整数及释放责任；零长度不访问元素，允许NULL或合法可释放结果，满足所需保证。此结论是双方显式条件化需求的匹配，沿用尚待核验的平台及后端假设，不表示调用已执行验证。"
+            }
+          }
+        ]
+      },
+      {
+        "call_id": "call-0bb0cdc028ba8a5836751b5a",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": "fn-550fd75e1583d0c8bae839f1",
+          "kind": "internal",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 91,
+            "column": 11
+          },
+          "detail": {
+            "source_kind": "direct",
+            "evidence": "clang_declaration"
+          }
+        },
+        "requirement": {
+          "call_id": "call-0bb0cdc028ba8a5836751b5a",
+          "condition": "建立d后，无条件调用integers(m)建立c。",
+          "available": "m及其合法尺寸，已拥有d并须保留；输入资源保持，P提供新分配与全部存活资源分离。",
+          "needed": "返回新的m元素合法零整数数组，不改变d或输入；零长度遵循零大小分配接口。后续每个元素作为mpz_set的已初始化目标。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-550fd75e1583d0c8bae839f1",
+            "check": {
+              "call_id": "call-0bb0cdc028ba8a5836751b5a",
+              "status": "compatible",
+              "reason": "project/target/src/solver.c:91再次以m建立c。上游提供合法尺寸和新分配分离条件，并将既有d及输入作为框架；草案不要求旧输出初始化，承诺新数组逐项为合法零整数并保持框架，足以让后续mpz_set使用已初始化目标。m=0也有独立入口及释放责任说明。该需求匹配以草案明确的平台和mpz_init适配假设为条件，未声称实际调用测试通过。"
+            }
+          }
+        ]
+      },
+      {
+        "call_id": "call-e7681d1e281e62931efe4bb5",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": "fn-550fd75e1583d0c8bae839f1",
+          "kind": "internal",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 92,
+            "column": 11
+          },
+          "detail": {
+            "source_kind": "direct",
+            "evidence": "clang_declaration"
+          }
+        },
+        "requirement": {
+          "call_id": "call-e7681d1e281e62931efe4bb5",
+          "condition": "建立d、c后，无条件调用integers(m*k)建立a。",
+          "available": "P保证m*k、相应头数组字节数和跨度合法；d、c及输入资源可作为框架保留。",
+          "needed": "返回独立的m*k元素合法零整数数组；正长度逐项初始化，零长度不访问。必须提供每个松弛列元素保持为零的事实，而非仅提供未初始化可写权限。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-550fd75e1583d0c8bae839f1",
+            "check": {
+              "call_id": "call-e7681d1e281e62931efe4bb5",
+              "status": "compatible",
+              "reason": "project/target/src/solver.c:92先计算t.rows*t.cols，再调用integers建立a；上游明确提供m*k及其头数组字节乘积不回绕、跨度合法和分配成功条件，因此同时覆盖实参计算与callee入口。既有d、c和输入可作为草案承诺保持的框架。返回长度m*k的独立合法全零数组满足松弛列所需初始零值，零长度也无需元素资源；后续保持未写元素仍须由调用者负责。此为条件化需求匹配，后端及平台适配缺口仍然保留。"
+            }
+          }
+        ]
+      },
+      {
+        "call_id": "call-beeb465e7bc1d5072b473346",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": "fn-9075fc1c33605934ba4c8a01",
+          "kind": "reuse",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 99,
+            "column": 9
+          },
+          "detail": {
+            "source_kind": "direct",
+            "evidence": "experiment_explicit_native_linkage"
+          }
+        },
+        "requirement": {
+          "call_id": "call-beeb465e7bc1d5072b473346",
+          "condition": "对每个0≤r<m调用mpz_set_ui(t.d+r,1)。m=0时不调用。",
+          "available": "对应d元素初始化为数学零并持有完整合法整数资源，1可由unsigned long表示，其余资源可框架保留。",
+          "needed": "返回同一目标头上的合法整数1及其拥有资源，不破坏其他对象。交付的历史契约提供store_Z(old)到store_Z(1)的接口；应用仍以表示、容量和平台适配成立为条件。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-1307838fa0bae641e6f393a3",
+            "check": {
+              "call_id": "call-beeb465e7bc1d5072b473346",
+              "status": "unknown",
+              "reason": "solver.c:99仅在r<m时将已初始化的d[r]置为1；所需保证为同一目标上的合法整数1，其余资源保持。历史mpz_set_ui.c:74–79在store_Z目标前提下恰好给出该数值保证，实参1也满足非负条件。但integers/mpz_init返回资源与store_Z的当前平台匹配，以及Arch32到LP64的布局和类型适配尚未验证，故不能确认实际调用兼容。"
+            }
+          }
+        ]
+      },
+      {
+        "call_id": "call-b6586b879dabba4765fd2cc0",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": "fn-073106bc1f4167af0bf9d628",
+          "kind": "reuse",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 100,
+            "column": 9
+          },
+          "detail": {
+            "source_kind": "direct",
+            "evidence": "experiment_explicit_native_linkage"
+          }
+        },
+        "requirement": {
+          "call_id": "call-b6586b879dabba4765fd2cc0",
+          "condition": "对每个0≤r<m调用mpz_set(t.c+r,q->coef)，q为入口第r个节点。",
+          "available": "目标为新数组中已初始化零整数；源为入口常数C[r,0]的合法整数资源。源目标头和拥有存储分离，合法dummy共享按表示谓词处理。",
+          "needed": "使用mpz_set的neq接口，将目标设为C[r,0]并归还同一源头上的同值合法资源，其余资源保持。历史neq契约支持该意图，当前表示和平台匹配未验证；不要求eq接口。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-1307838fa0bae641e6f393a3",
+            "check": {
+              "call_id": "call-b6586b879dabba4765fd2cc0",
+              "status": "unknown",
+              "reason": "solver.c:100在每行处理时，把合法输入常数复制到新建且初始化的c[r]。草案提供源、目标分离资源，所需为目标等于C[r,0]并归还同址同值源；mpz_set.c:39–44的neq契约支持这一关系，无需eq分支。但零目标及可能共享dummy的源能否匹配实际store_Z分离断言、历史契约能否用于LP64，仍缺资源定义和适配证据。"
+            }
+          }
+        ]
+      },
+      {
+        "call_id": "call-65add102c5388fb000b2d4ec",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": "fn-073106bc1f4167af0bf9d628",
+          "kind": "reuse",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 102,
+            "column": 13
+          },
+          "detail": {
+            "source_kind": "direct",
+            "evidence": "experiment_explicit_native_linkage"
+          }
+        },
+        "requirement": {
+          "call_id": "call-65add102c5388fb000b2d4ec",
+          "condition": "对0≤r<m、0≤v<n调用mpz_set(t.a+r*k+v,q->coef+v+1)。m=0或n=0时不调用。",
+          "available": "行主序目标下标及源下标合法；目标为已初始化零整数，源表示C[r,v+1]；二者拥有资源分离，未读输入与未写数组元素可保留。",
+          "needed": "使用neq接口精确复制该系数并归还源资源，保留其余元素，特别是a中全部松弛列的零值。历史契约的当前平台应用仍属条件化要求。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-1307838fa0bae641e6f393a3",
+            "check": {
+              "call_id": "call-65add102c5388fb000b2d4ec",
+              "status": "unknown",
+              "reason": "solver.c:101–102仅在r<m且v<n时复制原变量系数；P中的乘积、跨度及输入数组条件支持目标r*k+v和源v+1下标合法。调用需从初始化目标和分离输入源得到精确系数并归还源，框架保留其他元素及松弛列零值；mpz_set.c:39–44的neq契约提供所需数值和资源关系。但初始化资源、dummy共享及Arch32契约到当前LP64的应用尚未核验。"
+            }
+          }
+        ]
+      },
+      {
+        "call_id": "call-9755ea656ca6a28169d832a1",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": null,
+          "kind": "external",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 93,
+            "column": 15
+          },
+          "detail": {
+            "caller": "fn-1307838fa0bae641e6f393a3",
+            "location": {
+              "path": "src/solver.c",
+              "line": 93,
+              "column": 15
+            },
+            "name": "malloc",
+            "type": "void *(unsigned long)",
+            "declaration_library": null,
+            "declaration": {
+              "path": "/usr/include/stdlib.h",
+              "line": 672,
+              "column": 14
+            }
+          }
+        },
+        "requirement": {
+          "call_id": "call-9755ea656ca6a28169d832a1",
+          "condition": "无条件调用malloc(m*sizeof(size_t))建立basic，包括m=0。",
+          "available": "乘积可表示且对象字节跨度合法；现有输入与d、c、a资源存活。",
+          "needed": "正大小时按P返回足够对齐、可写、独占且与存活对象分离的新块，无需旧值初始化；零大小时允许NULL或标准允许的可释放结果。分配器不改变已有资源。失败不在成功保证内，源码没有检查或回滚。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-1307838fa0bae641e6f393a3",
+            "check": {
+              "call_id": "call-9755ea656ca6a28169d832a1",
+              "status": "unknown",
+              "reason": "solver.c:93无条件申请m*sizeof(size_t)字节，随后仅在r<m时写basic[r]。P提供尺寸合法及正大小分配成功假设，调用需要独立、对齐、可写的新块并保留已有资源；m=0时不访问元素，结果按零大小分配规则处理。TOPLEVEL_SPEC.md:71–73明确了这些环境假设，但未交付可核验的分配器契约。兼容性依赖该外部接口；正大小失败没有检查、错误返回或回滚保证。"
+            }
+          }
+        ]
+      },
+      {
+        "call_id": "call-b2482a5b815968efb1e4562b",
+        "site": {
+          "caller": "fn-1307838fa0bae641e6f393a3",
+          "callee": null,
+          "kind": "external",
+          "location": {
+            "path": "project/target/src/solver.c",
+            "line": 94,
+            "column": 13
+          },
+          "detail": {
+            "caller": "fn-1307838fa0bae641e6f393a3",
+            "location": {
+              "path": "src/solver.c",
+              "line": 94,
+              "column": 13
+            },
+            "name": "malloc",
+            "type": "void *(unsigned long)",
+            "declaration_library": null,
+            "declaration": {
+              "path": "/usr/include/stdlib.h",
+              "line": 672,
+              "column": 14
+            }
+          }
+        },
+        "requirement": {
+          "call_id": "call-b2482a5b815968efb1e4562b",
+          "condition": "无条件调用malloc(k*sizeof(size_t))建立row，包括k=0。",
+          "available": "乘积及对象跨度合法；输入、三个整数数组和basic资源存活。",
+          "needed": "正大小时返回独立可写的k元素size_t存储，供随后全部写为SIZE_MAX；零大小时允许NULL或可释放结果且不访问元素。保证保留其他存活资源。失败没有已实现的错误返回或清理保证。"
+        },
+        "checks": [
+          {
+            "saved_by": "fn-1307838fa0bae641e6f393a3",
+            "check": {
+              "call_id": "call-b2482a5b815968efb1e4562b",
+              "status": "unknown",
+              "reason": "solver.c:94无条件申请k*sizeof(size_t)字节，95–96随后初始化全部k个元素。P提供尺寸及正大小成功条件，所需为与全部存活资源分离的可写块；k=0时不访问元素，零大小结果保留释放责任。TOPLEVEL_SPEC.md:71–73支持环境假设，但没有交付分配器契约以完成核验。若k>0分配失败，源码不能提供合法row或失败清理保证。"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "stage2": {
+    "functions": 19,
+    "common_needs": 60,
+    "statuses": {
+      "conditional": 19
+    },
+    "formal_call_validation": "not_run",
+    "stage1_result": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/link-evidence-stage1.json"
+  },
+  "identity": {
+    "stage2_sha256": "3a44876c437abeabc59804e39099d58bd1c1e5c60bc4a63ca604f8c8d4f615dd",
+    "reference_sha256": "05dc337e09b663985360c242a11112349a55276d13d4464462dd3d8fdaf498e8"
+  },
+  "index": {
+    "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+    "declarations": 50,
+    "parsed_entailments": 12
+  },
+  "searches": {
+    "split": {
+      "query": {
+        "have": [
+          "array.full",
+          "index.in_bounds"
+        ],
+        "need": [
+          "array.element",
+          "array.missing_index"
+        ]
+      },
+      "top_five": [
+        {
+          "id": "f1d4bbb1a0f724c017fc9c85",
+          "name": "MpzArray.full_split_to_missing_i",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 80,
+          "end": 82,
+          "left": "full x m l",
+          "right": "mpz_store x n (Znth n l a) ** missing_i x n 0 m l",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 12,
+          "have_match": [
+            "array.full",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.element",
+            "array.missing_index"
+          ]
+        },
+        {
+          "id": "26c6484d7750d0f4fc13c782",
+          "name": "mpz_coef_array_split",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 236,
+          "end": 242,
+          "left": "mpz_coef_array x n c",
+          "right": "mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c",
+          "premises": [
+            "0 <= i < n",
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 11,
+          "have_match": [
+            "array.full",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.element",
+            "array.missing_index"
+          ]
+        },
+        {
+          "id": "c5c235bb2fecfd0c351cafbd",
+          "name": "MpzArray.full_length",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 54,
+          "end": 55,
+          "left": "full x n l",
+          "right": "“ Z.of_nat (length l) = n ”",
+          "premises": [],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 2,
+          "have_match": [
+            "array.full"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "e9182eca060c1d0f2c425436",
+          "name": "MpzArray.full_Zlength",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 62,
+          "end": 63,
+          "left": "full x n l",
+          "right": "“ Zlength l = n ”",
+          "premises": [],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 2,
+          "have_match": [
+            "array.full"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "67520350c265336879b1bf18",
+          "name": "MpzArray.missing_i_merge_to_full",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 70,
+          "end": 72,
+          "left": "mpz_store x n a ** missing_i x n 0 m l",
+          "right": "full x m (replace_Znth n a l)",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "right_roles": [
+            "array.full"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 2,
+          "have_match": [
+            "index.in_bounds"
+          ],
+          "need_match": []
+        }
+      ],
+      "ranking": [
+        {
+          "id": "f1d4bbb1a0f724c017fc9c85",
+          "name": "MpzArray.full_split_to_missing_i",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 80,
+          "end": 82,
+          "left": "full x m l",
+          "right": "mpz_store x n (Znth n l a) ** missing_i x n 0 m l",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 12,
+          "have_match": [
+            "array.full",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.element",
+            "array.missing_index"
+          ]
+        },
+        {
+          "id": "26c6484d7750d0f4fc13c782",
+          "name": "mpz_coef_array_split",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 236,
+          "end": 242,
+          "left": "mpz_coef_array x n c",
+          "right": "mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c",
+          "premises": [
+            "0 <= i < n",
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 11,
+          "have_match": [
+            "array.full",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.element",
+            "array.missing_index"
+          ]
+        },
+        {
+          "id": "c5c235bb2fecfd0c351cafbd",
+          "name": "MpzArray.full_length",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 54,
+          "end": 55,
+          "left": "full x n l",
+          "right": "“ Z.of_nat (length l) = n ”",
+          "premises": [],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 2,
+          "have_match": [
+            "array.full"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "e9182eca060c1d0f2c425436",
+          "name": "MpzArray.full_Zlength",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 62,
+          "end": 63,
+          "left": "full x n l",
+          "right": "“ Zlength l = n ”",
+          "premises": [],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 2,
+          "have_match": [
+            "array.full"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "67520350c265336879b1bf18",
+          "name": "MpzArray.missing_i_merge_to_full",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 70,
+          "end": 72,
+          "left": "mpz_store x n a ** missing_i x n 0 m l",
+          "right": "full x m (replace_Znth n a l)",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "right_roles": [
+            "array.full"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 2,
+          "have_match": [
+            "index.in_bounds"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "3d0411c7aad768a1fc58e8fe",
+          "name": "mpz_coef_array_length",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 220,
+          "end": 222,
+          "left": "mpz_coef_array x n c",
+          "right": "“ coef_Zlength c = n ”",
+          "premises": [
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 1,
+          "have_match": [
+            "array.full"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "41b952cdfd15562cc0ee1949",
+          "name": "mpz_coef_array_merge",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 281,
+          "end": 287,
+          "left": "mpz_store x i v **\n    mpz_coef_array_missing_i_rec x i 0 n c",
+          "right": "mpz_coef_array x n (coef_replace_Znth i v c)",
+          "premises": [
+            "0 <= i < n",
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "right_roles": [
+            "array.full"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 1,
+          "have_match": [
+            "index.in_bounds"
+          ],
+          "need_match": []
+        }
+      ]
+    },
+    "merge": {
+      "query": {
+        "have": [
+          "array.element",
+          "array.missing_index",
+          "index.in_bounds"
+        ],
+        "need": [
+          "array.full"
+        ]
+      },
+      "top_five": [
+        {
+          "id": "67520350c265336879b1bf18",
+          "name": "MpzArray.missing_i_merge_to_full",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 70,
+          "end": 72,
+          "left": "mpz_store x n a ** missing_i x n 0 m l",
+          "right": "full x m (replace_Znth n a l)",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "right_roles": [
+            "array.full"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 10,
+          "have_match": [
+            "array.element",
+            "array.missing_index",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.full"
+          ]
+        },
+        {
+          "id": "41b952cdfd15562cc0ee1949",
+          "name": "mpz_coef_array_merge",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 281,
+          "end": 287,
+          "left": "mpz_store x i v **\n    mpz_coef_array_missing_i_rec x i 0 n c",
+          "right": "mpz_coef_array x n (coef_replace_Znth i v c)",
+          "premises": [
+            "0 <= i < n",
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "right_roles": [
+            "array.full"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 9,
+          "have_match": [
+            "array.element",
+            "array.missing_index",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.full"
+          ]
+        },
+        {
+          "id": "f1d4bbb1a0f724c017fc9c85",
+          "name": "MpzArray.full_split_to_missing_i",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 80,
+          "end": 82,
+          "left": "full x m l",
+          "right": "mpz_store x n (Znth n l a) ** missing_i x n 0 m l",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 2,
+          "have_match": [
+            "index.in_bounds"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "26c6484d7750d0f4fc13c782",
+          "name": "mpz_coef_array_split",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 236,
+          "end": 242,
+          "left": "mpz_coef_array x n c",
+          "right": "mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c",
+          "premises": [
+            "0 <= i < n",
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 1,
+          "have_match": [
+            "index.in_bounds"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "c5c235bb2fecfd0c351cafbd",
+          "name": "MpzArray.full_length",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 54,
+          "end": 55,
+          "left": "full x n l",
+          "right": "“ Z.of_nat (length l) = n ”",
+          "premises": [],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 0,
+          "have_match": [],
+          "need_match": []
+        }
+      ],
+      "ranking": [
+        {
+          "id": "67520350c265336879b1bf18",
+          "name": "MpzArray.missing_i_merge_to_full",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 70,
+          "end": 72,
+          "left": "mpz_store x n a ** missing_i x n 0 m l",
+          "right": "full x m (replace_Znth n a l)",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "right_roles": [
+            "array.full"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 10,
+          "have_match": [
+            "array.element",
+            "array.missing_index",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.full"
+          ]
+        },
+        {
+          "id": "41b952cdfd15562cc0ee1949",
+          "name": "mpz_coef_array_merge",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 281,
+          "end": 287,
+          "left": "mpz_store x i v **\n    mpz_coef_array_missing_i_rec x i 0 n c",
+          "right": "mpz_coef_array x n (coef_replace_Znth i v c)",
+          "premises": [
+            "0 <= i < n",
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "right_roles": [
+            "array.full"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 9,
+          "have_match": [
+            "array.element",
+            "array.missing_index",
+            "index.in_bounds"
+          ],
+          "need_match": [
+            "array.full"
+          ]
+        },
+        {
+          "id": "f1d4bbb1a0f724c017fc9c85",
+          "name": "MpzArray.full_split_to_missing_i",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 80,
+          "end": 82,
+          "left": "full x m l",
+          "right": "mpz_store x n (Znth n l a) ** missing_i x n 0 m l",
+          "premises": [
+            "0 <= n < m"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 2,
+          "have_match": [
+            "index.in_bounds"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "26c6484d7750d0f4fc13c782",
+          "name": "mpz_coef_array_split",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 236,
+          "end": 242,
+          "left": "mpz_coef_array x n c",
+          "right": "mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c",
+          "premises": [
+            "0 <= i < n",
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [
+            "array.element",
+            "array.missing_index"
+          ],
+          "condition_roles": [
+            "index.in_bounds"
+          ],
+          "score": 1,
+          "have_match": [
+            "index.in_bounds"
+          ],
+          "need_match": []
+        },
+        {
+          "id": "c5c235bb2fecfd0c351cafbd",
+          "name": "MpzArray.full_length",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 54,
+          "end": 55,
+          "left": "full x n l",
+          "right": "“ Z.of_nat (length l) = n ”",
+          "premises": [],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 0,
+          "have_match": [],
+          "need_match": []
+        },
+        {
+          "id": "e9182eca060c1d0f2c425436",
+          "name": "MpzArray.full_Zlength",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 62,
+          "end": 63,
+          "left": "full x n l",
+          "right": "“ Zlength l = n ”",
+          "premises": [],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": 0,
+          "have_match": [],
+          "need_match": []
+        },
+        {
+          "id": "3d0411c7aad768a1fc58e8fe",
+          "name": "mpz_coef_array_length",
+          "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+          "start": 220,
+          "end": 222,
+          "left": "mpz_coef_array x n c",
+          "right": "“ coef_Zlength c = n ”",
+          "premises": [
+            "x <> NULL"
+          ],
+          "structure_status": "partial",
+          "left_roles": [
+            "array.full"
+          ],
+          "right_roles": [],
+          "condition_roles": [],
+          "score": -1,
+          "have_match": [],
+          "need_match": []
+        }
+      ]
+    }
+  },
+  "delivered": [
+    {
+      "id": "26c6484d7750d0f4fc13c782",
+      "name": "mpz_coef_array_split",
+      "kind": "Lemma",
+      "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+      "digest": "05dc337e09b663985360c242a11112349a55276d13d4464462dd3d8fdaf498e8",
+      "start": 236,
+      "end": 242,
+      "source": "Lemma mpz_coef_array_split:\n  forall x i n c,\n    0 <= i < n ->\n    x <> NULL ->\n    mpz_coef_array x n c\n    |-- mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c.",
+      "structure": {
+        "left": "mpz_coef_array x n c",
+        "right": "mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c",
+        "premises": [
+          "0 <= i < n",
+          "x <> NULL"
+        ],
+        "structure_status": "partial",
+        "left_roles": [
+          "array.full"
+        ],
+        "right_roles": [
+          "array.element",
+          "array.missing_index"
+        ],
+        "condition_roles": [
+          "index.in_bounds"
+        ]
+      }
+    },
+    {
+      "id": "41b952cdfd15562cc0ee1949",
+      "name": "mpz_coef_array_merge",
+      "kind": "Lemma",
+      "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+      "digest": "05dc337e09b663985360c242a11112349a55276d13d4464462dd3d8fdaf498e8",
+      "start": 281,
+      "end": 287,
+      "source": "Lemma mpz_coef_array_merge:\n  forall x i n v c,\n    0 <= i < n ->\n    x <> NULL ->\n    mpz_store x i v **\n    mpz_coef_array_missing_i_rec x i 0 n c\n    |-- mpz_coef_array x n (coef_replace_Znth i v c).",
+      "structure": {
+        "left": "mpz_store x i v **\n    mpz_coef_array_missing_i_rec x i 0 n c",
+        "right": "mpz_coef_array x n (coef_replace_Znth i v c)",
+        "premises": [
+          "0 <= i < n",
+          "x <> NULL"
+        ],
+        "structure_status": "partial",
+        "left_roles": [
+          "array.element",
+          "array.missing_index"
+        ],
+        "right_roles": [
+          "array.full"
+        ],
+        "condition_roles": [
+          "index.in_bounds"
+        ]
+      }
+    }
+  ],
+  "review": {
+    "need_id": "fn-1307838fa0bae641e6f393a3:1:e54cc49140d2bb87",
+    "assessments": [
+      {
+        "entry_id": "26c6484d7750d0f4fc13c782",
+        "call_id": "call-65add102c5388fb000b2d4ec",
+        "direction": "split",
+        "disposition": "adaptation_required",
+        "mapping": "x ↦ q->coef, i ↦ v+1, n ↦ 输入行长度 n+1, c ↦ 当前节点的数学系数行（待建立表示对应）",
+        "conditions": [
+          "0 <= i < n",
+          "x <> NULL"
+        ],
+        "obligation": "建立 Simplex 行与 FME Constraint 的表示对应并核对槽资源。"
+      },
+      {
+        "entry_id": "41b952cdfd15562cc0ee1949",
+        "call_id": "call-65add102c5388fb000b2d4ec",
+        "direction": "merge",
+        "disposition": "adaptation_required",
+        "mapping": "重用拆分映射，v（引理参数）↦ mpz_set 归还的源槽数学值",
+        "conditions": [
+          "0 <= i < n",
+          "x <> NULL",
+          "mpz_set neq 源槽同址同值归还"
+        ],
+        "obligation": "重组引理给出替换后的行，证明同值替换还原原行。"
+      }
+    ],
+    "remaining": [
+      "完整的节点地址、next/coef 快照及逐节点借用和归还的表示定义。",
+      "源槽同值替换还原数学行，保留数据表示可能变化的语义。",
+      "store_Z_dummy 合法共享及资源可清理性。",
+      "历史 Arch32 GMP 契约及资源布局适配到当前 LP64。"
+    ]
+  },
+  "coverage": "partial",
+  "remaining": [
+    "完整的节点地址、next/coef 快照及逐节点借用和归还的表示定义。",
+    "源槽同值替换还原数学行，保留数据表示可能变化的语义。",
+    "store_Z_dummy 合法共享及资源可清理性。",
+    "历史 Arch32 GMP 契约及资源布局适配到当前 LP64。"
+  ],
+  "uses": [
+    {
+      "entry_id": "26c6484d7750d0f4fc13c782",
+      "call_id": "call-65add102c5388fb000b2d4ec",
+      "direction": "split",
+      "disposition": "adaptation_required",
+      "mapping": "x ↦ q->coef, i ↦ v+1, n ↦ 输入行长度 n+1, c ↦ 当前节点的数学系数行（待建立表示对应）",
+      "conditions": [
+        "0 <= i < n",
+        "x <> NULL"
+      ],
+      "obligation": "建立 Simplex 行与 FME Constraint 的表示对应并核对槽资源。",
+      "need_id": "fn-1307838fa0bae641e6f393a3:1:e54cc49140d2bb87",
+      "target_validation": "not_run",
+      "citation": {
+        "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+        "start": 236,
+        "end": 242,
+        "digest": "05dc337e09b663985360c242a11112349a55276d13d4464462dd3d8fdaf498e8"
+      }
+    },
+    {
+      "entry_id": "41b952cdfd15562cc0ee1949",
+      "call_id": "call-65add102c5388fb000b2d4ec",
+      "direction": "merge",
+      "disposition": "adaptation_required",
+      "mapping": "重用拆分映射，v（引理参数）↦ mpz_set 归还的源槽数学值",
+      "conditions": [
+        "0 <= i < n",
+        "x <> NULL",
+        "mpz_set neq 源槽同址同值归还"
+      ],
+      "obligation": "重组引理给出替换后的行，证明同值替换还原原行。",
+      "need_id": "fn-1307838fa0bae641e6f393a3:1:e54cc49140d2bb87",
+      "target_validation": "not_run",
+      "citation": {
+        "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+        "start": 281,
+        "end": 287,
+        "digest": "05dc337e09b663985360c242a11112349a55276d13d4464462dd3d8fdaf498e8"
+      }
+    }
+  ],
+  "items": {
+    "26c6484d7750d0f4fc13c782": {
+      "id": "26c6484d7750d0f4fc13c782",
+      "name": "mpz_coef_array_split",
+      "kind": "Lemma",
+      "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+      "digest": "05dc337e09b663985360c242a11112349a55276d13d4464462dd3d8fdaf498e8",
+      "start": 236,
+      "end": 242,
+      "source": "Lemma mpz_coef_array_split:\n  forall x i n c,\n    0 <= i < n ->\n    x <> NULL ->\n    mpz_coef_array x n c\n    |-- mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c.",
+      "structure": {
+        "left": "mpz_coef_array x n c",
+        "right": "mpz_store x i (coef_Znth i c 0) **\n        mpz_coef_array_missing_i_rec x i 0 n c",
+        "premises": [
+          "0 <= i < n",
+          "x <> NULL"
+        ],
+        "structure_status": "partial",
+        "left_roles": [
+          "array.full"
+        ],
+        "right_roles": [
+          "array.element",
+          "array.missing_index"
+        ],
+        "condition_roles": [
+          "index.in_bounds"
+        ]
+      }
+    },
+    "41b952cdfd15562cc0ee1949": {
+      "id": "41b952cdfd15562cc0ee1949",
+      "name": "mpz_coef_array_merge",
+      "kind": "Lemma",
+      "path": "example/minimal-simplex/references/fme/Rocq/fme_gmp_lib.v",
+      "digest": "05dc337e09b663985360c242a11112349a55276d13d4464462dd3d8fdaf498e8",
+      "start": 281,
+      "end": 287,
+      "source": "Lemma mpz_coef_array_merge:\n  forall x i n v c,\n    0 <= i < n ->\n    x <> NULL ->\n    mpz_store x i v **\n    mpz_coef_array_missing_i_rec x i 0 n c\n    |-- mpz_coef_array x n (coef_replace_Znth i v c).",
+      "structure": {
+        "left": "mpz_store x i v **\n    mpz_coef_array_missing_i_rec x i 0 n c",
+        "right": "mpz_coef_array x n (coef_replace_Znth i v c)",
+        "premises": [
+          "0 <= i < n",
+          "x <> NULL"
+        ],
+        "structure_status": "partial",
+        "left_roles": [
+          "array.element",
+          "array.missing_index"
+        ],
+        "right_roles": [
+          "array.full"
+        ],
+        "condition_roles": [
+          "index.in_bounds"
+        ]
+      }
+    }
+  }
+}

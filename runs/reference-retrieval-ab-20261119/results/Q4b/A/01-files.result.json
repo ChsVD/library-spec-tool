@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F693",
+      "reason": "Look for the InequList strategy that combines ownership of the coef and next field cells, the coefficient array, and the tail into ownership of a cons node. Check which entailment side the strategy rewrites."
+    },
+    {
+      "id": "F700",
+      "reason": "Check the generated Rocq entailment for the matching strategy to verify the direction, the required cons shape, and any non-null or array conditions."
+    },
+    {
+      "id": "F697",
+      "reason": "Look for a direct folding lemma that derives ownership of a nonempty InequList node from the four owned resources, and check its premises before adapting it."
+    }
+  ]
+}

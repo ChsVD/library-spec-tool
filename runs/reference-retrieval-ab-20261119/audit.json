@@ -1,0 +1,445 @@
+{
+  "main": [
+    {
+      "case": "Q1",
+      "mode": "A",
+      "shortlist": [
+        "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+        "mini-gmp/QCP_examples/Applications_human/minigmp/gmp.c",
+        "sm2/rocq/lib/limb_arithmetic.v"
+      ],
+      "declarations": [
+        "list_to_Z_Leading_zeros_equiv",
+        "list_to_Z",
+        "list_to_Z_app",
+        "list_to_Z_zero",
+        "is_compact_Z",
+        "mpn_normalized_size"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 2,
+      "confirmation_prefix_source_chars": 227,
+      "budget": {
+        "files": 3,
+        "declarations": 6,
+        "source_chars": 645,
+        "source_lines": 21,
+        "fulltext_candidates": 30,
+        "directory_chars": 0
+      },
+      "model_usage": {
+        "input_tokens": 50346,
+        "cached_input_tokens": 21248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1409,
+        "reasoning_output_tokens": 871
+      }
+    },
+    {
+      "case": "Q1",
+      "mode": "B",
+      "shortlist": [
+        "mini-gmp/QCP_examples/Applications_human/minigmp/gmp.c",
+        "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+        "mini-gmp/Rocq/examples/Applications_human/minigmp/gmp_goal.v"
+      ],
+      "declarations": [
+        "list_to_Z_Leading_zeros_equiv",
+        "list_to_Z",
+        "list_to_Z_app",
+        "list_to_Z_zero",
+        "mpn_normalized_size",
+        "if"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 2,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 2,
+      "confirmation_prefix_source_chars": 227,
+      "budget": {
+        "files": 3,
+        "declarations": 6,
+        "source_chars": 500,
+        "source_lines": 16,
+        "fulltext_candidates": 30,
+        "directory_chars": 5055
+      },
+      "model_usage": {
+        "input_tokens": 51578,
+        "cached_input_tokens": 31872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1547,
+        "reasoning_output_tokens": 1022
+      }
+    },
+    {
+      "case": "Q2",
+      "mode": "A",
+      "shortlist": [
+        "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+        "mini-gmp/QCP_examples/Applications_human/minigmp/mini-gmp.h",
+        "mini-gmp/QCP_examples/Applications_human/minigmp/gmp.c"
+      ],
+      "declarations": [
+        "store_Z",
+        "bigint_ent",
+        "mpd_store_Z_compact",
+        "list_to_Z",
+        "mpd_store_list",
+        "mpd_store_Z_compact_undef_tail_to_undef_split"
+      ],
+      "model_status": "partial",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 5,
+      "confirmation_prefix_source_chars": 926,
+      "budget": {
+        "files": 3,
+        "declarations": 6,
+        "source_chars": 1280,
+        "source_lines": 32,
+        "fulltext_candidates": 30,
+        "directory_chars": 0
+      },
+      "model_usage": {
+        "input_tokens": 50277,
+        "cached_input_tokens": 21248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1905,
+        "reasoning_output_tokens": 1262
+      }
+    },
+    {
+      "case": "Q2",
+      "mode": "B",
+      "shortlist": [
+        "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+        "mini-gmp/QCP_examples/Applications_human/minigmp/mini-gmp.h",
+        "mini-gmp/QCP_examples/Applications_human/minigmp/gmp.strategies"
+      ],
+      "declarations": [
+        "store_Z",
+        "bigint_ent",
+        "mpd_store_Z",
+        "list_to_Z",
+        "mpd_store_Z_compact",
+        "mpd_store_Z_compact_undef_tail_to_undef_split"
+      ],
+      "model_status": "partial",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 5,
+      "confirmation_prefix_source_chars": 1003,
+      "budget": {
+        "files": 3,
+        "declarations": 6,
+        "source_chars": 1357,
+        "source_lines": 33,
+        "fulltext_candidates": 30,
+        "directory_chars": 5055
+      },
+      "model_usage": {
+        "input_tokens": 51216,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1607,
+        "reasoning_output_tokens": 966
+      }
+    },
+    {
+      "case": "Q3",
+      "mode": "A",
+      "shortlist": [
+        "sm2/rocq/lib/basicOp_lib.v",
+        "sm2/annotated_C/basicOp/portable_addcarryx_u64.c",
+        "sm2/rocq/vc/basicOp/portable_addcarryx_u64_proof_manual.v"
+      ],
+      "declarations": [
+        "addcarry64_mod_branches",
+        "u64_add_low_no_wrap",
+        "u64_add_low_wrap",
+        "radix_add2_conservation",
+        "portable_addcarryx_u64"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 1,
+      "confirmation_prefix_source_chars": 564,
+      "budget": {
+        "files": 3,
+        "declarations": 5,
+        "source_chars": 1610,
+        "source_lines": 47,
+        "fulltext_candidates": 30,
+        "directory_chars": 0
+      },
+      "model_usage": {
+        "input_tokens": 50132,
+        "cached_input_tokens": 31872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1636,
+        "reasoning_output_tokens": 1010
+      }
+    },
+    {
+      "case": "Q3",
+      "mode": "B",
+      "shortlist": [
+        "sm2/rocq/lib/basicOp_lib.v",
+        "sm2/rocq/vc/basicOp/portable_addcarryx_u64_goal.v",
+        "sm2/rocq/vc/basicOp/portable_addcarryx_u64_proof_manual.v"
+      ],
+      "declarations": [
+        "addcarry64_mod_branches",
+        "u64_add_low_no_wrap",
+        "u64_add_low_wrap",
+        "portable_addcarryx_u64_return_wit_1",
+        "portable_addcarryx_u64_return_wit_2",
+        "portable_addcarryx_u64_return_wit_3"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 1,
+      "confirmation_prefix_source_chars": 564,
+      "budget": {
+        "files": 3,
+        "declarations": 6,
+        "source_chars": 5771,
+        "source_lines": 92,
+        "fulltext_candidates": 30,
+        "directory_chars": 5055
+      },
+      "model_usage": {
+        "input_tokens": 53762,
+        "cached_input_tokens": 5248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1374,
+        "reasoning_output_tokens": 795
+      }
+    },
+    {
+      "case": "Q4a",
+      "mode": "A",
+      "shortlist": [
+        "fme/QCP_examples/fme_gmp.strategies",
+        "fme/Rocq/fme_gmp_strategy_goal.v",
+        "fme/Rocq/fme_gmp_lib.v"
+      ],
+      "declarations": [
+        "11",
+        "12",
+        "9",
+        "fme_gmp_strategy11",
+        "fme_gmp_strategy12",
+        "InequList"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 1,
+      "confirmation_prefix_source_chars": 412,
+      "budget": {
+        "files": 3,
+        "declarations": 6,
+        "source_chars": 2812,
+        "source_lines": 90,
+        "fulltext_candidates": 15,
+        "directory_chars": 0
+      },
+      "model_usage": {
+        "input_tokens": 42144,
+        "cached_input_tokens": 21248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1270,
+        "reasoning_output_tokens": 608
+      }
+    },
+    {
+      "case": "Q4a",
+      "mode": "B",
+      "shortlist": [
+        "fme/QCP_examples/fme_gmp.strategies",
+        "fme/Rocq/fme_gmp_strategy_goal.v",
+        "fme/Rocq/fme_gmp_lib.v"
+      ],
+      "declarations": [
+        "11",
+        "12",
+        "fme_gmp_strategy11",
+        "fme_gmp_strategy12",
+        "InequList"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 1,
+      "model_reported_confirmation_prefix": 1,
+      "confirmation_prefix_source_chars": 412,
+      "budget": {
+        "files": 3,
+        "declarations": 5,
+        "source_chars": 2366,
+        "source_lines": 79,
+        "fulltext_candidates": 15,
+        "directory_chars": 517
+      },
+      "model_usage": {
+        "input_tokens": 41425,
+        "cached_input_tokens": 21248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1152,
+        "reasoning_output_tokens": 683
+      }
+    },
+    {
+      "case": "Q4b",
+      "mode": "A",
+      "shortlist": [
+        "fme/QCP_examples/fme_gmp.strategies",
+        "fme/Rocq/fme_gmp_strategy_goal.v",
+        "fme/Rocq/fme_gmp_lib.v"
+      ],
+      "declarations": [
+        "11",
+        "12",
+        "fme_gmp_strategy11",
+        "fme_gmp_strategy12",
+        "InequList"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 2,
+      "model_reported_confirmation_prefix": 2,
+      "confirmation_prefix_source_chars": 870,
+      "budget": {
+        "files": 3,
+        "declarations": 5,
+        "source_chars": 2366,
+        "source_lines": 79,
+        "fulltext_candidates": 15,
+        "directory_chars": 0
+      },
+      "model_usage": {
+        "input_tokens": 41923,
+        "cached_input_tokens": 21248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1439,
+        "reasoning_output_tokens": 886
+      }
+    },
+    {
+      "case": "Q4b",
+      "mode": "B",
+      "shortlist": [
+        "fme/QCP_examples/fme_gmp.strategies",
+        "fme/Rocq/fme_gmp_strategy_goal.v",
+        "fme/Rocq/fme_gmp_lib.v"
+      ],
+      "declarations": [
+        "11",
+        "12",
+        "fme_gmp_strategy11",
+        "fme_gmp_strategy12",
+        "InequList"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 1,
+      "first_cited_declaration_rank": 2,
+      "model_reported_confirmation_prefix": 2,
+      "confirmation_prefix_source_chars": 870,
+      "budget": {
+        "files": 3,
+        "declarations": 5,
+        "source_chars": 2366,
+        "source_lines": 79,
+        "fulltext_candidates": 15,
+        "directory_chars": 517
+      },
+      "model_usage": {
+        "input_tokens": 42025,
+        "cached_input_tokens": 21248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1562,
+        "reasoning_output_tokens": 1067
+      }
+    }
+  ],
+  "q1_replay": [
+    {
+      "case": "Q1",
+      "mode": "A",
+      "shortlist": [
+        "mini-gmp/QCP_examples/Applications_human/minigmp/gmp.c",
+        "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+        "sm2/rocq/lib/limb_arithmetic.v"
+      ],
+      "declarations": [
+        "mpn_normalized_size",
+        "list_to_Z_Leading_zeros_equiv",
+        "list_to_Z",
+        "list_to_Z_app",
+        "list_to_Z_zero",
+        "list_within_bound"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 2,
+      "first_cited_declaration_rank": 2,
+      "model_reported_confirmation_prefix": 3,
+      "confirmation_prefix_source_chars": 510,
+      "budget": {
+        "files": 3,
+        "declarations": 6,
+        "source_chars": 872,
+        "source_lines": 30,
+        "fulltext_candidates": 30,
+        "directory_chars": 0
+      },
+      "model_usage": {
+        "input_tokens": 51671,
+        "cached_input_tokens": 10624,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1751,
+        "reasoning_output_tokens": 1112
+      }
+    },
+    {
+      "case": "Q1",
+      "mode": "B",
+      "shortlist": [
+        "mini-gmp/QCP_examples/Applications_human/minigmp/gmp.c",
+        "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+        "sm2/rocq/lib/limb_arithmetic.v"
+      ],
+      "declarations": [
+        "mpn_normalized_size",
+        "list_to_Z_Leading_zeros_equiv",
+        "list_to_Z",
+        "list_to_Z_app",
+        "list_to_Z_zero"
+      ],
+      "model_status": "match",
+      "first_cited_file_rank": 2,
+      "first_cited_declaration_rank": 2,
+      "model_reported_confirmation_prefix": 3,
+      "confirmation_prefix_source_chars": 510,
+      "budget": {
+        "files": 3,
+        "declarations": 5,
+        "source_chars": 724,
+        "source_lines": 25,
+        "fulltext_candidates": 30,
+        "directory_chars": 5055
+      },
+      "model_usage": {
+        "input_tokens": 51976,
+        "cached_input_tokens": 21248,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1981,
+        "reasoning_output_tokens": 1378
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "file": "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+  "entry": "F006/D0022",
+  "prefix_needed": 3,
+  "status": "match",
+  "correspondence": "The lemma list_to_Z_Leading_zeros_equiv states that appending zeros m to a limb list preserves its value. The third entry defines list_to_Z by multiplying the tail value by Base and adding the head, so the head is the least significant limb and the appended zeros are at the most significant end.",
+  "direction": "The lemma states list_to_Z(retained) = list_to_Z(retained ++ zeros m). Use symmetry to obtain value before trimming = value after trimming. When every used limb is zero, the retained list is empty and list_to_Z([]) = 0. An initially empty list already has value zero.",
+  "conditions_and_limits": "The lemma requires Base > 0 and has no limb-bound hypothesis. To apply it, relate the used OpenSSL array prefix to list_to_Z at the unsigned limb radix and show that the discarded suffix is zeros m, where m is the drop in top. The payload does not define zeros. The loop still needs to establish that the final top is zero or that the highest retained limb is nonzero.",
+  "additional_evidence": [
+    "F001/D0007 is an earlier C contract. It requires n >= 0 and preserves the same abstract val while returning a count in [0, n] with compact storage and an undefined suffix. The supplied declaration does not define the storage predicates or expose a trimming step.",
+    "F006/D0006 is the third entry. Its list_to_Z definition verifies the little-endian direction and the empty-list value."
+  ]
+}

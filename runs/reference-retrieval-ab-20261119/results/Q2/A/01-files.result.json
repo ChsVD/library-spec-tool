@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F006",
+      "reason": "Start with the Rocq representation predicate for the link from struct and limb-array ownership to the integer. Look for how it interprets the least-significant-first prefix of length abs(_mp_size), applies the sign of _mp_size, and accounts for spare capacity."
+    },
+    {
+      "id": "F003",
+      "reason": "Check the C layout for the mapping from mini-GMP to OpenSSL. _mp_d maps to d, _mp_alloc to dmax, and _mp_size splits into top = abs(_mp_size) and neg = (_mp_size < 0). Check the limb type before reusing the radix."
+    },
+    {
+      "id": "F001",
+      "reason": "Check initialization, reallocation, and clearing contracts for which storage the proof owns, how it treats the unused tail, and what it permits at zero capacity. OpenSSL flags and their ownership rules require a separate check."
+    }
+  ]
+}

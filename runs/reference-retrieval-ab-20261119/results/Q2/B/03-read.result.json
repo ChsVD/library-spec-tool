@@ -1,0 +1,13 @@
+{
+  "file": "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+  "entry": "F006/D0057",
+  "prefix_needed": 5,
+  "status": "partial",
+  "correspondence": "store_Z owns the _mp_d, _mp_size, and _mp_alloc field cells, the initialized limb prefix at _mp_d, and the undefined tail up to capacity. Map _mp_d to d, abs(_mp_size) to top, and _mp_alloc to dmax. The compact prefix has exactly top limbs and represents abs(n). The list_to_Z recurrence makes the head the least-significant limb. GMP encodes sign in _mp_size, while BIGNUM stores it separately in neg.",
+  "direction": "Unfold store_Z from the owned representation to obtain the field values, the used-prefix and tail assertions, the limb-list equation for abs(n), and same_sign n _mp_size. To build the representation in reverse, supply those spatial assertions and pure conditions. The integer alone does not establish ownership.",
+  "conditions_and_limits": "The first entry gives the field and ownership correspondence. The fifth entry supplies the exact compact-prefix definition needed to verify it together with the earlier radix recurrence. The source requires top = abs(_mp_size) <= dmax, bounded limbs, and a nonzero most-significant limb for a nonempty compact prefix. The target must account for its separate neg field, including the zero case, and establish the correspondence for its limb radix, field layout, and array storage. The supplied entries do not define same_sign or mpd_store_list, or establish allocation provenance or ownership through BIGNUM flags.",
+  "additional_evidence": [
+    "F006/D0006",
+    "F006/D0009"
+  ]
+}

@@ -1,0 +1,1000 @@
+[
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend_alloc.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-MMD",
+      "-MP",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/backend_alloc.c",
+      "-o",
+      "build/backend_alloc.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/solver.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-MMD",
+      "-MP",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/src/solver.c",
+      "-o",
+      "build/solver.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_base.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_base.c",
+      "-o",
+      "build/vendor/gmp_base.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_clz.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_clz.c",
+      "-o",
+      "build/vendor/gmp_clz.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_udiv_qr_3by2.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_udiv_qr_3by2.c",
+      "-o",
+      "build/vendor/gmp_udiv_qr_3by2.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_udiv_qrnnd_preinv.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/gmp_udiv_qrnnd_preinv.c",
+      "-o",
+      "build/vendor/gmp_udiv_qrnnd_preinv.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_add.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_add.c",
+      "-o",
+      "build/vendor/mpn_add.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_add_1.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_add_1.c",
+      "-o",
+      "build/vendor/mpn_add_1.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_add_n.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_add_n.c",
+      "-o",
+      "build/vendor/mpn_add_n.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_addmul_1.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_addmul_1.c",
+      "-o",
+      "build/vendor/mpn_addmul_1.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_copyi.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_copyi.c",
+      "-o",
+      "build/vendor/mpn_copyi.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr.c",
+      "-o",
+      "build/vendor/mpn_div_qr.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_1_invert.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_1_invert.c",
+      "-o",
+      "build/vendor/mpn_div_qr_1_invert.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_1_preinv.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_1_preinv.c",
+      "-o",
+      "build/vendor/mpn_div_qr_1_preinv.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_2_invert.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_2_invert.c",
+      "-o",
+      "build/vendor/mpn_div_qr_2_invert.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_2_preinv.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_2_preinv.c",
+      "-o",
+      "build/vendor/mpn_div_qr_2_preinv.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_invert.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_invert.c",
+      "-o",
+      "build/vendor/mpn_div_qr_invert.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_pi1.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_pi1.c",
+      "-o",
+      "build/vendor/mpn_div_qr_pi1.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_preinv.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_div_qr_preinv.c",
+      "-o",
+      "build/vendor/mpn_div_qr_preinv.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_gcd_11.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_gcd_11.c",
+      "-o",
+      "build/vendor/mpn_gcd_11.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_invert_3by2.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_invert_3by2.c",
+      "-o",
+      "build/vendor/mpn_invert_3by2.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_lshift.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_lshift.c",
+      "-o",
+      "build/vendor/mpn_lshift.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_mul.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_mul.c",
+      "-o",
+      "build/vendor/mpn_mul.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_normalized_size.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_normalized_size.c",
+      "-o",
+      "build/vendor/mpn_normalized_size.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_rshift.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_rshift.c",
+      "-o",
+      "build/vendor/mpn_rshift.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_sub.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_sub.c",
+      "-o",
+      "build/vendor/mpn_sub.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_sub_1.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_sub_1.c",
+      "-o",
+      "build/vendor/mpn_sub_1.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_sub_n.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_sub_n.c",
+      "-o",
+      "build/vendor/mpn_sub_n.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_submul_1.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpn_submul_1.c",
+      "-o",
+      "build/vendor/mpn_submul_1.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_abs.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_abs.c",
+      "-o",
+      "build/vendor/mpz_abs.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_abs_add.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_abs_add.c",
+      "-o",
+      "build/vendor/mpz_abs_add.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_abs_sub.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_abs_sub.c",
+      "-o",
+      "build/vendor/mpz_abs_sub.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_add.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_add.c",
+      "-o",
+      "build/vendor/mpz_add.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_add_ui.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_add_ui.c",
+      "-o",
+      "build/vendor/mpz_add_ui.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_addmul.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_addmul.c",
+      "-o",
+      "build/vendor/mpz_addmul.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_cmp.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_cmp.c",
+      "-o",
+      "build/vendor/mpz_cmp.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_div_qr.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_div_qr.c",
+      "-o",
+      "build/vendor/mpz_div_qr.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_divexact.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_divexact.c",
+      "-o",
+      "build/vendor/mpz_divexact.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_gcd.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_gcd.c",
+      "-o",
+      "build/vendor/mpz_gcd.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init.c",
+      "-o",
+      "build/vendor/mpz_init.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init2.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init2.c",
+      "-o",
+      "build/vendor/mpz_init2.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init_set.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init_set.c",
+      "-o",
+      "build/vendor/mpz_init_set.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init_set_ui.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_init_set_ui.c",
+      "-o",
+      "build/vendor/mpz_init_set_ui.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_make_odd.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_make_odd.c",
+      "-o",
+      "build/vendor/mpz_make_odd.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_mul.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_mul.c",
+      "-o",
+      "build/vendor/mpz_mul.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_mul_2exp.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_mul_2exp.c",
+      "-o",
+      "build/vendor/mpz_mul_2exp.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_neg.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_neg.c",
+      "-o",
+      "build/vendor/mpz_neg.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_realloc.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_realloc.c",
+      "-o",
+      "build/vendor/mpz_realloc.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_set.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_set.c",
+      "-o",
+      "build/vendor/mpz_set.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_set_si.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_set_si.c",
+      "-o",
+      "build/vendor/mpz_set_si.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_set_ui.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_set_ui.c",
+      "-o",
+      "build/vendor/mpz_set_ui.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_sub.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_sub.c",
+      "-o",
+      "build/vendor/mpz_sub.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_sub_ui.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_sub_ui.c",
+      "-o",
+      "build/vendor/mpz_sub_ui.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_swap.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_swap.c",
+      "-o",
+      "build/vendor/mpz_swap.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_tdiv_q_2exp.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_tdiv_q_2exp.c",
+      "-o",
+      "build/vendor/mpz_tdiv_q_2exp.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_tdiv_r.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_tdiv_r.c",
+      "-o",
+      "build/vendor/mpz_tdiv_r.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_ui_sub.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mpz_ui_sub.c",
+      "-o",
+      "build/vendor/mpz_ui_sub.o"
+    ]
+  },
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mrz_realloc_if.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target",
+    "arguments": [
+      "cc",
+      "-Iinclude",
+      "-Isrc",
+      "-Ivendor",
+      "-std=c11",
+      "-O2",
+      "-g",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/project/target/vendor/gmp/minigmp/mrz_realloc_if.c",
+      "-o",
+      "build/vendor/mrz_realloc_if.o"
+    ]
+  }
+]

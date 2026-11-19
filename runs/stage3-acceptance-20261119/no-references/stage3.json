@@ -1,0 +1,399 @@
+{
+  "schema_version": 2,
+  "mode": "production",
+  "identity": {
+    "pipeline_version": 1,
+    "evidence": {
+      "stage1_sha256": "7c0bad8079507be0921c29836f7ba65a6d53ab20828f0a617bb98e7fbc06277c",
+      "stage2_sha256": "780f98174935154297b0426d8ef2a48cf19bd1a90712f652b81972fd6dafc142",
+      "stage2_materials_sha256": "43ab112550ec7b5504386c3a3c50e98dbaba877c163c864436e91fe2d404c419",
+      "evidence_sha256": "d9bac6a087b9be9cee829e199c86c3420ba19d889770243236243ec8389df583"
+    },
+    "references": {
+      "index_version": 1,
+      "libraries": [],
+      "digest": "index_1788f993b4772e3516f54099"
+    },
+    "prompt_sha256": "6a839030000f0e9601b8a6663245f8fcbdab1bd0f010f96bdfa42c0d7ad5afb3",
+    "model": {
+      "backend": "codex",
+      "model": "gpt-6.2-sol",
+      "reasoning_effort": "high",
+      "session": "ephemeral",
+      "isolation": "bubblewrap"
+    },
+    "processing_settings": {
+      "context_chars": 100000,
+      "max_requests": 24,
+      "max_read_chars": 60000,
+      "max_reads": 24,
+      "max_files": 12,
+      "max_revisions": 1
+    }
+  },
+  "needs": {
+    "fn-a2ff99ca89c05de1e608dc65:1:8db792367825ffd8": {
+      "id": "fn-a2ff99ca89c05de1e608dc65:1:8db792367825ffd8",
+      "function_id": "fn-a2ff99ca89c05de1e608dc65",
+      "ordinal": 1,
+      "original": {
+        "kind": "definition",
+        "use": "精确表述返回值并连接循环结束状态。",
+        "need": "定义非负整数的最大公因数，并给出 b>0 时 G(0,b)=b，以及正输入下 1≤G(A,B)≤min(A,B)。",
+        "evidence": [
+          {
+            "path": "project/target/utils/gcd.c",
+            "start": 44,
+            "end": 57
+          }
+        ]
+      },
+      "status": "approved",
+      "reason": "当前 Linux x86_64、C11 构建使用 -DNDEBUG，禁用第 34 行的标准 assert。both_positive 分支在首循环中提取共同的 2 的幂，k 至多为 2^31。次循环保持 b>0、至少一项为奇数以及 G(A,B)=k·G(a,b)，每次迭代使数学整数和 a+b 严格下降。相等的正输入也在覆盖范围内，两个局部值相等且为奇数时，第 51 行将 a 置零。终止时返回 b·k=G(A,B)，其值在 1 至 min(A,B) 之间，因此 uint32_t 乘积精确。zero_first_in_ndebug 分支在首循环中提取 B 的全部因子 2，次循环执行一次后 a 仍为零，返回乘积恢复 B。两分支均按值传参，仅操作局部变量，无调用者内存访问或错误返回码。草案正确排除 B=0 时的返回保证，并说明 C11 循环规则下不可承诺实际挂起。启用断言的构建不适用零首参保证。依据为已交付的 project/target/utils/gcd.c 第 23 至 57 行及编译参数。",
+      "unverified_dependencies": [],
+      "calls": [],
+      "conflicting_call_ids": [],
+      "formal_call_validation": "not_run"
+    },
+    "fn-a2ff99ca89c05de1e608dc65:2:6e84a8fa330d4551": {
+      "id": "fn-a2ff99ca89c05de1e608dc65:2:6e84a8fa330d4551",
+      "function_id": "fn-a2ff99ca89c05de1e608dc65",
+      "ordinal": 2,
+      "original": {
+        "kind": "lemma",
+        "use": "验证共同因子提取及后续逐步化简。",
+        "need": "证明共同除以 2 可将该因子移到最大公因数之外，一奇一偶时仅将偶数除以 2 保持最大公因数，两奇数时用较大者与较小者之差的一半替换较大者也保持最大公因数。连接无符号按位判奇与数学整除。",
+        "evidence": [
+          {
+            "path": "project/target/utils/gcd.c",
+            "start": 35,
+            "end": 54
+          }
+        ]
+      },
+      "status": "approved",
+      "reason": "当前 Linux x86_64、C11 构建使用 -DNDEBUG，禁用第 34 行的标准 assert。both_positive 分支在首循环中提取共同的 2 的幂，k 至多为 2^31。次循环保持 b>0、至少一项为奇数以及 G(A,B)=k·G(a,b)，每次迭代使数学整数和 a+b 严格下降。相等的正输入也在覆盖范围内，两个局部值相等且为奇数时，第 51 行将 a 置零。终止时返回 b·k=G(A,B)，其值在 1 至 min(A,B) 之间，因此 uint32_t 乘积精确。zero_first_in_ndebug 分支在首循环中提取 B 的全部因子 2，次循环执行一次后 a 仍为零，返回乘积恢复 B。两分支均按值传参，仅操作局部变量，无调用者内存访问或错误返回码。草案正确排除 B=0 时的返回保证，并说明 C11 循环规则下不可承诺实际挂起。启用断言的构建不适用零首参保证。依据为已交付的 project/target/utils/gcd.c 第 23 至 57 行及编译参数。",
+      "unverified_dependencies": [],
+      "calls": [],
+      "conflicting_call_ids": [],
+      "formal_call_validation": "not_run"
+    },
+    "fn-a2ff99ca89c05de1e608dc65:3:fc7eb0e8fcc94a9a": {
+      "id": "fn-a2ff99ca89c05de1e608dc65:3:fc7eb0e8fcc94a9a",
+      "function_id": "fn-a2ff99ca89c05de1e608dc65",
+      "ordinal": 3,
+      "original": {
+        "kind": "strategy",
+        "use": "证明正输入下两段循环终止，并证明最终乘积精确。",
+        "need": "首段保持 G(A,B)=k·G(a,b)，用非零 x 的严格递减证明终止，并用 k 为 A、B 的共同因子约束左移结果。次段保持 b>0、至少一项为奇数以及同一最大公因数不变式。每次迭代使数学和 a+b 严格递减，退出时 a=0，由不变式和最大公因数上界得到 b·k 可表示。",
+        "evidence": [
+          {
+            "path": "project/target/utils/gcd.c",
+            "start": 35,
+            "end": 57
+          }
+        ]
+      },
+      "status": "approved",
+      "reason": "当前 Linux x86_64、C11 构建使用 -DNDEBUG，禁用第 34 行的标准 assert。both_positive 分支在首循环中提取共同的 2 的幂，k 至多为 2^31。次循环保持 b>0、至少一项为奇数以及 G(A,B)=k·G(a,b)，每次迭代使数学整数和 a+b 严格下降。相等的正输入也在覆盖范围内，两个局部值相等且为奇数时，第 51 行将 a 置零。终止时返回 b·k=G(A,B)，其值在 1 至 min(A,B) 之间，因此 uint32_t 乘积精确。zero_first_in_ndebug 分支在首循环中提取 B 的全部因子 2，次循环执行一次后 a 仍为零，返回乘积恢复 B。两分支均按值传参，仅操作局部变量，无调用者内存访问或错误返回码。草案正确排除 B=0 时的返回保证，并说明 C11 循环规则下不可承诺实际挂起。启用断言的构建不适用零首参保证。依据为已交付的 project/target/utils/gcd.c 第 23 至 57 行及编译参数。",
+      "unverified_dependencies": [],
+      "calls": [],
+      "conflicting_call_ids": [],
+      "formal_call_validation": "not_run"
+    }
+  },
+  "blocked_functions": [],
+  "items": {
+    "item:12385b450ed1d1247c4d09b265b62455bea8cc973bfa0b1e9b7aefb9adeb2671": {
+      "id": "item:12385b450ed1d1247c4d09b265b62455bea8cc973bfa0b1e9b7aefb9adeb2671",
+      "kind": "definition",
+      "title": "非负整数的最大公因数",
+      "body": "设 u、v 为非负整数且至少一项为正。若存在非负整数 q 使 n=dq，则正整数 d 整除非负整数 n。定义 G(u,v) 为同时整除 u 和 v 的正整数中的最大者。这个集合包含 1，且每个成员都不大于 u、v 中任一正项，因此最大者存在且唯一。",
+      "depends_on": [],
+      "source_ids": []
+    },
+    "item:527e672be343b560d2273d9d5684dd20091e00e614f1f70e8da56bf5b954562c": {
+      "id": "item:527e672be343b560d2273d9d5684dd20091e00e614f1f70e8da56bf5b954562c",
+      "kind": "lemma",
+      "title": "零首项的最大公因数与正输入的界",
+      "body": "若 b>0，则 G(0,b)=b。任意正整数 d 都可通过 0=d·0 整除 0，因此 0 与 b 的正公因数恰是 b 的所有正因数。b 本身是其中一项，且其余各项都不大于 b。若 A>0 且 B>0，则 1≤G(A,B)≤min(A,B)。下界来自公因数 1，上界来自 G(A,B) 同时整除 A、B，故 A 和 B 都是 G(A,B) 的正整数倍。",
+      "depends_on": [
+        "item:12385b450ed1d1247c4d09b265b62455bea8cc973bfa0b1e9b7aefb9adeb2671"
+      ],
+      "source_ids": []
+    }
+  },
+  "uses": {
+    "fn-a2ff99ca89c05de1e608dc65:1:8db792367825ffd8": {
+      "need_id": "fn-a2ff99ca89c05de1e608dc65:1:8db792367825ffd8",
+      "function_id": "fn-a2ff99ca89c05de1e608dc65",
+      "status": "accepted",
+      "target_validation": "not_run",
+      "applicability": "requires_target_validation",
+      "item_ids": [
+        "item:12385b450ed1d1247c4d09b265b62455bea8cc973bfa0b1e9b7aefb9adeb2671",
+        "item:527e672be343b560d2273d9d5684dd20091e00e614f1f70e8da56bf5b954562c"
+      ],
+      "review": {
+        "need_id": "fn-a2ff99ca89c05de1e608dc65:1:8db792367825ffd8",
+        "decision": "accept",
+        "coverage": "complete",
+        "checks": {
+          "direction": "pass",
+          "target_conditions": "pass",
+          "dependencies": "pass",
+          "content": "pass"
+        },
+        "findings": [],
+        "reason": "候选内容正确定义了至少一项为正的非负整数的最大公因数，并推出 G(0,b)=b 和正输入下的界。源码中，正输入的首循环提取公共的 2 的幂，次循环保持 b>0、至少一项为奇数及 G(A,B)=k·G(a,b)，且每次迭代都使数学整数和 a+b 严格减小。两项相等且为奇数时，第 51 行将 a 置零。退出时 a=0，因此第 57 行的乘积等于 G(A,B)，并可由 uint32_t 精确表示。给定的 -DNDEBUG 构建禁用了断言，A=0、B>0 时首循环提取 B 的全部因子 2，次循环执行一次后返回 B。候选内容将该结论限定在给定构建，并将 B=0 留在返回保证范围之外。",
+        "upstream_questions": []
+      },
+      "usage": {
+        "model_requests": 2,
+        "reference_read_chars": 0,
+        "reference_read_deliveries": 0,
+        "reference_files_read": 0,
+        "forwarded_reference_chars": 0,
+        "read_errors": [],
+        "exchanges": [
+          {
+            "role": "write",
+            "model_requests": 1,
+            "actions": [],
+            "delivered": [
+              {
+                "id": "source-14bacbce82fc68628fa5e236",
+                "kind": "function_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 30,
+                "end_line": 58,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              },
+              {
+                "id": "source-add7cef731906c9873d7c3a8",
+                "kind": "project_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 44,
+                "end_line": 57,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              },
+              {
+                "id": "source-6455f073f44738710d4091a6",
+                "kind": "project_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 23,
+                "end_line": 34,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              },
+              {
+                "id": "source-baaeda6e46cd0f42d32aab0d",
+                "kind": "project_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 35,
+                "end_line": 57,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              }
+            ],
+            "target_read_chars": 1152,
+            "reference_read_chars": 0,
+            "protocol_errors": [],
+            "prior_search_scope": []
+          },
+          {
+            "role": "review",
+            "model_requests": 1,
+            "actions": [],
+            "delivered": [
+              {
+                "id": "source-14bacbce82fc68628fa5e236",
+                "kind": "function_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 30,
+                "end_line": 58,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              },
+              {
+                "id": "source-add7cef731906c9873d7c3a8",
+                "kind": "project_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 44,
+                "end_line": 57,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              },
+              {
+                "id": "source-6455f073f44738710d4091a6",
+                "kind": "project_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 23,
+                "end_line": 34,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              },
+              {
+                "id": "source-baaeda6e46cd0f42d32aab0d",
+                "kind": "project_source",
+                "path": "project/target/utils/gcd.c",
+                "start_line": 35,
+                "end_line": 57,
+                "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+                "file_id": "file-77a6490c932afc8e09ead2bb"
+              }
+            ],
+            "target_read_chars": 1152,
+            "reference_read_chars": 0,
+            "protocol_errors": []
+          }
+        ]
+      },
+      "attempts": [
+        {
+          "attempt": 1,
+          "draft": {
+            "need_id": "fn-a2ff99ca89c05de1e608dc65:1:8db792367825ffd8",
+            "items": [
+              {
+                "id": "gcd-definition",
+                "kind": "definition",
+                "title": "非负整数的最大公因数",
+                "body": "设 u、v 为非负整数且至少一项为正。若存在非负整数 q 使 n=dq，则正整数 d 整除非负整数 n。定义 G(u,v) 为同时整除 u 和 v 的正整数中的最大者。这个集合包含 1，且每个成员都不大于 u、v 中任一正项，因此最大者存在且唯一。",
+                "source_ids": [],
+                "depends_on": []
+              },
+              {
+                "id": "gcd-zero-and-positive-bounds",
+                "kind": "lemma",
+                "title": "零首项的最大公因数与正输入的界",
+                "body": "若 b>0，则 G(0,b)=b。任意正整数 d 都可通过 0=d·0 整除 0，因此 0 与 b 的正公因数恰是 b 的所有正因数。b 本身是其中一项，且其余各项都不大于 b。若 A>0 且 B>0，则 1≤G(A,B)≤min(A,B)。下界来自公因数 1，上界来自 G(A,B) 同时整除 A、B，故 A 和 B 都是 G(A,B) 的正整数倍。",
+                "source_ids": [],
+                "depends_on": [
+                  "gcd-definition"
+                ]
+              }
+            ],
+            "item_ids": [
+              "gcd-definition",
+              "gcd-zero-and-positive-bounds"
+            ],
+            "disposition": "new_content",
+            "coverage": "complete",
+            "scope": "在 gcd32 第 44 至 57 行，次循环退出给出 a=0。进入次循环时 b>0，循环内对 b 的更新只会折半正偶数，或折半两个奇数的正差，因此退出时仍有 b>0。对正入口值，首循环每次同时折半 a、b 并将 k 加倍，保留 G(A,B)=k·G(a,b)。次循环在另一项为奇数时折半偶数项，两项均为奇数时先以差替换较大项，再利用另一项为奇数将差折半。这些操作保留正公因数，因而维持该等式。退出时由 G(0,b)=b 得到第 57 行的数学乘积 b·k=G(A,B)，正输入的界保证该乘积可由 uint32_t 精确表示。当前 NDEBUG 构建中，若 A=0 且 B>0，首循环从 B 中提出全部因子 2，使 B=b·k 且 b 为正奇数。次循环执行一次，a 仍为零，故返回 B=G(0,B)。",
+            "call_ids": [],
+            "object_mapping": [
+              "A、B 对应 gcd32 形参 a、b 的入口值。",
+              "G(0,b) 中的 b 对应次循环退出时的局部变量 b，k 对应第 57 行使用的局部乘数。"
+            ],
+            "conditions": [
+              "正输入分支要求 1≤A,B≤2^32−1，允许 A=B。",
+              "零首参的返回结论限于给定的 Linux x86_64、C11、-DNDEBUG 构建，其中第 34 行的标准 assert 已禁用，并要求 A=0、1≤B≤2^32−1。启用断言时，零首参不满足该断言。",
+              "B=0 的输入不在上述返回值保证范围内。"
+            ],
+            "remaining": [],
+            "evidence_ids": [
+              "source-14bacbce82fc68628fa5e236",
+              "source-6455f073f44738710d4091a6"
+            ],
+            "references": [],
+            "search": {
+              "status": "unnecessary",
+              "reason": "给定的源码、合同和构建配置已提供返回位置及适用条件，两条数学性质均可由定义直接推出。"
+            }
+          },
+          "review": {
+            "need_id": "fn-a2ff99ca89c05de1e608dc65:1:8db792367825ffd8",
+            "decision": "accept",
+            "coverage": "complete",
+            "checks": {
+              "direction": "pass",
+              "target_conditions": "pass",
+              "dependencies": "pass",
+              "content": "pass"
+            },
+            "findings": [],
+            "reason": "候选内容正确定义了至少一项为正的非负整数的最大公因数，并推出 G(0,b)=b 和正输入下的界。源码中，正输入的首循环提取公共的 2 的幂，次循环保持 b>0、至少一项为奇数及 G(A,B)=k·G(a,b)，且每次迭代都使数学整数和 a+b 严格减小。两项相等且为奇数时，第 51 行将 a 置零。退出时 a=0，因此第 57 行的乘积等于 G(A,B)，并可由 uint32_t 精确表示。给定的 -DNDEBUG 构建禁用了断言，A=0、B>0 时首循环提取 B 的全部因子 2，次循环执行一次后返回 B。候选内容将该结论限定在给定构建，并将 B=0 留在返回保证范围之外。",
+            "upstream_questions": []
+          },
+          "search_scope": []
+        }
+      ],
+      "coverage": "complete",
+      "disposition": "new_content",
+      "scope": "在 gcd32 第 44 至 57 行，次循环退出给出 a=0。进入次循环时 b>0，循环内对 b 的更新只会折半正偶数，或折半两个奇数的正差，因此退出时仍有 b>0。对正入口值，首循环每次同时折半 a、b 并将 k 加倍，保留 G(A,B)=k·G(a,b)。次循环在另一项为奇数时折半偶数项，两项均为奇数时先以差替换较大项，再利用另一项为奇数将差折半。这些操作保留正公因数，因而维持该等式。退出时由 G(0,b)=b 得到第 57 行的数学乘积 b·k=G(A,B)，正输入的界保证该乘积可由 uint32_t 精确表示。当前 NDEBUG 构建中，若 A=0 且 B>0，首循环从 B 中提出全部因子 2，使 B=b·k 且 b 为正奇数。次循环执行一次，a 仍为零，故返回 B=G(0,B)。",
+      "call_ids": [],
+      "object_mapping": [
+        "A、B 对应 gcd32 形参 a、b 的入口值。",
+        "G(0,b) 中的 b 对应次循环退出时的局部变量 b，k 对应第 57 行使用的局部乘数。"
+      ],
+      "conditions": [
+        "正输入分支要求 1≤A,B≤2^32−1，允许 A=B。",
+        "零首参的返回结论限于给定的 Linux x86_64、C11、-DNDEBUG 构建，其中第 34 行的标准 assert 已禁用，并要求 A=0、1≤B≤2^32−1。启用断言时，零首参不满足该断言。",
+        "B=0 的输入不在上述返回值保证范围内。"
+      ],
+      "remaining": [],
+      "references": [],
+      "evidence": [
+        {
+          "id": "source-14bacbce82fc68628fa5e236",
+          "path": "project/target/utils/gcd.c",
+          "start_line": 30,
+          "end_line": 58,
+          "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652"
+        },
+        {
+          "id": "source-6455f073f44738710d4091a6",
+          "path": "project/target/utils/gcd.c",
+          "start_line": 23,
+          "end_line": 34,
+          "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652"
+        }
+      ],
+      "search": {
+        "status": "unnecessary",
+        "reason": "给定的源码、合同和构建配置已提供返回位置及适用条件，两条数学性质均可由定义直接推出。",
+        "scope": []
+      }
+    }
+  },
+  "sources": {
+    "source-14bacbce82fc68628fa5e236": {
+      "id": "source-14bacbce82fc68628fa5e236",
+      "path": "project/target/utils/gcd.c",
+      "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+      "kind": "function_source",
+      "file_id": "file-77a6490c932afc8e09ead2bb",
+      "start_line": 30,
+      "end_line": 58,
+      "text": "uint32_t gcd32(uint32_t a, uint32_t b) {\n  uint32_t x;\n  uint32_t k;\n\n  assert(a>0 && b>0);\n\n  k = 1;\n  x = a | b;\n  while ((x & 1) == 0) {\n    k <<= 1;\n    x >>= 1;\n    a >>= 1;\n    b >>= 1;\n  }\n\n  do {\n    if ((a & 1) == 0) {\n      a >>= 1;\n    } else if ((b & 1) == 0) {\n      b >>= 1;\n    } else if (a >= b) {\n      a = (a - b) >> 1;\n    } else {\n      b = (b - a) >> 1;\n    }\n  } while (a > 0);\n\n  return b * k;\n}"
+    },
+    "source-6455f073f44738710d4091a6": {
+      "id": "source-6455f073f44738710d4091a6",
+      "path": "project/target/utils/gcd.c",
+      "file_sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652",
+      "kind": "project_source",
+      "file_id": "file-77a6490c932afc8e09ead2bb",
+      "start_line": 23,
+      "end_line": 34,
+      "text": "#include <assert.h>\n#include \"utils/gcd.h\"\n\n\n/*\n * gcd of two 32bit unsigned positive numbers.\n */\nuint32_t gcd32(uint32_t a, uint32_t b) {\n  uint32_t x;\n  uint32_t k;\n\n  assert(a>0 && b>0);"
+    }
+  },
+  "status": "in_progress",
+  "summary": {
+    "total_needs": 3,
+    "pending": 2,
+    "blocked_functions": 0,
+    "by_status": {
+      "accepted": 1
+    },
+    "accepted_coverage": {
+      "complete": 1
+    },
+    "shared_items": 2,
+    "model_requests": 2,
+    "reference_read_chars": 0
+  }
+}

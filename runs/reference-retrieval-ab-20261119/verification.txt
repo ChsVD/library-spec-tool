@@ -1,0 +1,7 @@
+705 frozen files verified
+main: 10 outcomes with 30 tool-free completed sessions
+A entries 28 source_chars 8713 input_tokens 234822
+B entries 28 source_chars 12360 input_tokens 240006
+q1_replay: 2 outcomes with 6 tool-free completed sessions
+A entries 6 source_chars 872 input_tokens 51671
+B entries 5 source_chars 724 input_tokens 51976

@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F001",
+      "reason": "Read the mini-GMP normalization contract and loop invariant first. Look for equality between the values of the original used prefix and the returned shorter prefix, with every discarded high limb zero and the result either empty or ending in a nonzero limb."
+    },
+    {
+      "id": "F006",
+      "reason": "Look for a lemma that appends a zero at the most significant end of a little-endian limb list. Read the equality in reverse to justify each decrement of top, with the empty list representing zero."
+    },
+    {
+      "id": "F178",
+      "reason": "Look for a little-endian radix-value append or split identity. Splitting at the new count expresses the old value as the retained value plus the discarded suffix value scaled by the radix to that count. An all-zero suffix makes the added term zero, including when the retained prefix is empty."
+    }
+  ]
+}

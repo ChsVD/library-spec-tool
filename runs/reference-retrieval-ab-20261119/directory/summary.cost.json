@@ -1,0 +1,12 @@
+{
+  "prompt_chars": 47777,
+  "seconds": null,
+  "usage": {
+    "input_tokens": 27961,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 1445,
+    "reasoning_output_tokens": 250
+  },
+  "warning": "Accepted only the CLI's known skip_host_skill_discovery startup warning. Tool events absent."
+}

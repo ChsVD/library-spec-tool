@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F006",
+      "reason": "Look for the Rocq representation predicate that connects ownership of the backing limb array to a mathematical integer. The transferable interpretation is to decode the used prefix least-significant limb first, then apply the sign."
+    },
+    {
+      "id": "F003",
+      "reason": "Check the Mini-GMP layout. Map _mp_d to d, _mp_alloc to dmax, and abs(_mp_size) to top. Mini-GMP encodes negativity in _mp_size, so the OpenSSL predicate must read neg separately and use the BN_ULONG limb radix."
+    },
+    {
+      "id": "F002",
+      "reason": "Look for storage rules that expose the struct fields and distinguish ownership of the used prefix from storage for the spare capacity. OpenSSL flag-dependent ownership requires a separate justification."
+    }
+  ]
+}

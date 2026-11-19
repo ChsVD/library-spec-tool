@@ -1,1 +1,1 @@
-"""Stage 1 bounded library reading and report generation."""
+"""Stage one of library-spec-tool v2."""

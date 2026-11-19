@@ -1,0 +1,10 @@
+[
+  {
+    "id": "minigmp",
+    "root": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/target/vendor/gmp/minigmp",
+    "version": "2026-11-11 frozen MiniGMP source; legacy QCP contracts scoped to Arch32 BigEndian",
+    "materials": [
+      "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/references/minigmp"
+    ]
+  }
+]

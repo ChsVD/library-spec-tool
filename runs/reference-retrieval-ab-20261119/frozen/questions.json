@@ -1,0 +1,27 @@
+[
+  {
+    "id": "Q1",
+    "libraries": ["mini-gmp", "sm2"],
+    "need": "For OpenSSL bn_correct_top: inspect a little-endian array of unsigned limbs representing a multiword integer. Find a reference statement connecting the mathematical value before and after removing leading zero limbs at the most significant end, or a normalization contract with a supporting value-preservation step. The original used count top decreases until the highest remaining limb is nonzero, or the count is zero. Explain the mathematical direction, zero/empty case and any conditions."
+  },
+  {
+    "id": "Q2",
+    "libraries": ["mini-gmp", "sm2"],
+    "need": "For OpenSSL struct BIGNUM (bignum_st): find reference definitions describing a dynamic signed multiple-precision number, its backing limb array and which prefix is used. Need a connection between memory fields d (least-significant limb first), top (used length), dmax (allocated capacity), neg (sign), and the mathematical integer. Identify which fields, ownership and value interpretation the precedent actually supports and any layout adaptations."
+  },
+  {
+    "id": "Q3",
+    "libraries": ["mini-gmp", "sm2"],
+    "need": "For a single BN_ULONG iteration in OpenSSL bn_add_words, find a reference statement for unsigned word addition with input carry 0 or 1. Need to explain both no-overflow and overflow branches: low word plus base times carry out equals the mathematical sum of the two words and input carry. Report the range conditions and which arithmetic step the reference actually covers."
+  },
+  {
+    "id": "Q4a",
+    "libraries": ["fme"],
+    "need": "A Simplex caller traverses struct InequList and accesses its coef and next pointer fields. With ownership of the list node as part of a nonempty list, find a reference rule or lemma exposing the coefficient pointer, coefficient array, next pointer and ownership of the tail. Verify the direction, the required nonempty shape or conditions and which side the rule changes."
+  },
+  {
+    "id": "Q4b",
+    "libraries": ["fme"],
+    "need": "A Simplex caller traverses struct InequList. Given ownership of one node's coef and next pointer fields, the coefficient array and the tail list, find a reference rule or lemma to restore ownership of the nonempty list node. Verify the direction, the required nonempty shape or conditions and which side the rule changes."
+  }
+]

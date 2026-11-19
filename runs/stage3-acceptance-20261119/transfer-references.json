@@ -1,0 +1,9 @@
+{
+  "libraries": [
+    {
+      "id": "arithmetic",
+      "role": "reference",
+      "root": "/home/maxu/.opam/4.14.1/lib/coq/theories/Numbers/Natural/Abstract"
+    }
+  ]
+}

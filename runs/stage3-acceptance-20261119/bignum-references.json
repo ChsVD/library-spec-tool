@@ -1,0 +1,14 @@
+{
+  "libraries": [
+    {
+      "id": "numeric-a",
+      "role": "reference",
+      "root": "/home/maxu/Projects/library-reading-trial-20261008/mini-gmp"
+    },
+    {
+      "id": "numeric-b",
+      "role": "reference",
+      "root": "/home/maxu/Projects/library-reading-trial-20261008/sm2"
+    }
+  ]
+}

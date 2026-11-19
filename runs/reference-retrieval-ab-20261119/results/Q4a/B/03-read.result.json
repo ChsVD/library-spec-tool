@@ -1,0 +1,10 @@
+{
+  "file": "fme/QCP_examples/fme_gmp.strategies",
+  "entry": "F693/D0007",
+  "prefix_needed": 1,
+  "status": "match",
+  "correspondence": "Strategy rule 11 exposes an owned head node by introducing existential pointers h and y. It provides h != 0, ownership of the coef field storing h, ownership of mpz_coef_array(h, n, x), ownership of the next field storing y, and ownership of the tail InequList(y, n, l).",
+  "direction": "Unfolding on the left side of the entailment. The rule removes the matched InequList hypothesis and adds the two existential witnesses, the pure fact, and the exposed ownership assertions on that same side.",
+  "conditions_and_limits": "The left side must contain InequList(p, n, cons(x, l)), with the nonempty shape visible to the matcher. The rule requires no separate p != NULL premise and explicitly adds only h != 0 as a pure fact. This is a reference strategy declaration. Applying it in Simplex requires matching the caller's list predicate, field stores, and coefficient-array representation, and establishing the cons shape if it is still abstract.",
+  "additional_evidence": []
+}

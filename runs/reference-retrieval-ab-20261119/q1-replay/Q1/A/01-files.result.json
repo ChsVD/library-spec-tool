@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F001",
+      "reason": "Look for the annotated mpn_normalized_size loop and its contract. The direct correspondence is a smaller used count for the same little-endian value, with either a nonzero highest retained limb or an empty prefix of value zero."
+    },
+    {
+      "id": "F006",
+      "reason": "Check the mini-gmp number model for the supporting equality: if a nonempty prefix ends in zero, its value equals the value of the prefix one limb shorter. The empty prefix supplies the zero case."
+    },
+    {
+      "id": "F178",
+      "reason": "Look for a little-endian limb concatenation or zero-extension lemma. A lemma stated in the append direction can be used in reverse to remove an all-zero high suffix, provided the retained limbs keep their positions and radix."
+    }
+  ]
+}

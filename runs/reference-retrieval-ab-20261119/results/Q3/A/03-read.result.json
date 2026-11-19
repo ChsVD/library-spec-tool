@@ -1,0 +1,10 @@
+{
+  "file": "sm2/rocq/lib/basicOp_lib.v",
+  "entry": "F169/D0001",
+  "prefix_needed": 1,
+  "status": "match",
+  "correspondence": "The declaration of addcarry64_mod_branches covers one addition of two words and an input carry. With m = U64_MOD, s = (a + b) mod m, and r = (s + (cin mod m)) mod m, it gives carry out 0 when s >= a and r >= s, and carry out 1 in the other three cases. Every branch gives r + m * carry_out = a + b + cin.",
+  "direction": "The lemma takes the comparison outcomes as hypotheses and derives the carry and sum equation. Its stated equation places the mathematical sum on the left. Use equality symmetry and commute the carry product to obtain the requested form.",
+  "conditions_and_limits": "The inputs satisfy 0 <= cin <= 1, 0 <= a < m, and 0 <= b < m. Each branch establishes 0 <= r < m and 0 <= carry_out <= 1. The reference adds the two words first, then adds the input carry to the reduced intermediate sum. Applying it to bn_add_words requires identifying the BN_ULONG base with U64_MOD and showing how the implementation's low-word and carry computations correspond to those two stages. Other word widths require a width-general version of the lemma.",
+  "additional_evidence": []
+}

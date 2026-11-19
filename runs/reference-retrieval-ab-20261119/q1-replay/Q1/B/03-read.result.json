@@ -1,0 +1,13 @@
+{
+  "file": "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+  "entry": "F006/D0022",
+  "prefix_needed": 3,
+  "status": "match",
+  "correspondence": "The lemma list_to_Z_Leading_zeros_equiv states that a limb list and the same list with a zero suffix have equal mathematical values. The list_to_Z definition in the third entry verifies that the head is the least significant limb and the appended suffix is at the most significant end.",
+  "direction": "The declaration gives value(retained) = value(retained ++ zeros m). Use symmetry for bn_correct_top: value(before) = value(after), where before is the retained prefix followed by the discarded zero limbs. For one decrement, the discarded suffix is a single zero.",
+  "conditions_and_limits": "The lemma requires Base > 0 and imposes no limb-bound premise. To apply it, use the unsigned-limb radix for Base and show that the old used slice is the retained slice followed by exactly old_top - new_top zero limbs. The empty list has value zero, so an all-zero used slice can shrink to top = 0, and an initially empty slice already has value zero. The loop guard and exit proof must separately establish that each discarded limb is zero and that the final top is zero or indexes a nonzero highest limb. F001/D0007 gives a contract with the same abstract value before and after normalization, but its excerpt alone does not expose the zero-suffix relation.",
+  "additional_evidence": [
+    "F006/D0006",
+    "F001/D0007"
+  ]
+}

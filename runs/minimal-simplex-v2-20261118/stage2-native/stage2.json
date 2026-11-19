@@ -1,0 +1,2088 @@
+{
+  "schema_version": 1,
+  "identity": {
+    "stage1_sha256": "f994375c9a47584bac6deb4591c03ffdb3608eb052f4e7ab5e9e18a010ee8560",
+    "writing_guide_sha256": "2544f847c32941c6f659fbe8de1951d11adb8f502b8d1c5787dbb7f9f3bbbc1a",
+    "materials_sha256": "b9b1c568d796ab14d293b7cf49fab8a0b5b3e76a8258d55e933cc9aab919ec45",
+    "reuse_contracts": {},
+    "prompt_sha256": "b663ed8c9fdf725c31a58f093801b7f6aa83914c5bbb622c51e10547409d008b",
+    "model": {
+      "backend": "codex",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "high",
+      "experiment_driver_sha256": "84dc498b7287e69b6a62a451c9c36596e58e1bbbd3da16129b43a86f2836bb0f"
+    },
+    "max_chars": 140000,
+    "max_revisions": 1
+  },
+  "stage1_result": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/stage1/stage1.json",
+  "functions": {
+    "fn-ebdf13af80bdab389754b35a": {
+      "status": "conditional",
+      "reason": "草案准确对应background/0/TOPLEVEL_SPEC.md:11–83的正常返回目标、输入资源归还、尺寸及轨迹容量条件，并分别覆盖空约束、零变量常数约束和一般有理约束。project/target/src/solver.c:83–155支持建表、两种退出判断及统一销毁路径；:24–80的换基在精确整数运算语义下保持有理方程，未发现草案与源码的直接冲突。空约束仍可能分配row，零变量仍读取常数头；草案对此及分配失败、非法输入和不保证终止均有明确说明。条件性保留：TableInv的资源实现、MiniGMP初始化／复制／清理接口衔接，以及全部内部和后端临时存储释放尚缺检查依据；已交付mpz_set和store_Z片段不能单独证明完整生命周期。当前编译为Linux x86-64 LP64，历史契约为QCP Arch32 BigEndian，布局、尺寸和后端契约迁移尚未验证。须在各自模型中落实这些接口及BackendCapacityOK(trace)，才能批准相应实现保证；本结论不表示形式化证明或QCP调用测试通过。",
+      "unverified_dependencies": [],
+      "draft": {
+        "function_id": "fn-ebdf13af80bdab389754b35a",
+        "purpose": "判断有限整数线性非严格不等式系统在有理数域上的可行性。正常返回时，0准确表示存在有理解，1准确表示不存在有理解；交还借入的输入资源并释放求解器内部存储。本规约不保证终止。",
+        "symbols": "n为入口variables，m为入口链表节点数，k=n+m，所有数学索引区间采用左闭右开。P记录入口节点地址、顺序、next和coef指针，H[i,j]为第i行第j个整数头的入口地址，C为这些头表示的不可变入口整数矩阵，维度m×(n+1)。SatQ(C,x)表示x∈Q^n且每行C[i,0]+Σ(j=0..n-1)C[i,j+1]x[j]≤0。InputRep(P,H,C)表示有限、无环、NULL终止、无空尾哨兵的合法链表；每行coef指向至少n+1个连续合法MiniGMP整数头；节点字段、读取的整数头及拥有的limb资源彼此分离，合法静态dummy允许共享。整数使用项目__mpz_struct布局；B=2^32为数学基数，值为sign(_mp_size)Σ limb[l]B^l；_mp_alloc为非负int，_mp_size不为INT_MIN，L=abs(_mp_size)≤_mp_alloc，非零时L≥1且最高有效limb非零，零对象允许正常mpz_init产生的dummy表示。资源须满足实际mpz_set源参数的store_Z条件，不能只凭字段范围推定合法。SizeOK表示：m、n、k均小于所选实现的SIZE_MAX，n+m及n+1可表示；m*k、m*sizeof(__mpz_struct)、m*k*sizeof(__mpz_struct)、m*sizeof(size_t)、k*sizeof(size_t)、(n+1)*sizeof(__mpz_struct)均可表示，各实际数组字节跨度≤PTRDIFF_MAX，输入跨度对应真实对象。EnvOK表示调用期间输入和内部对象不被并发或信号破坏；每次实际非零分配成功得到对齐、足够大小、与存活对象分离的新块；释放符合分配器契约；零大小分配允许NULL或可释放的唯一指针。BackendCapacityOK(trace)表示实际执行轨迹中的全部后端调用及内部子调用满足正式前置条件，所有长度、容量、位数、分配字节和指针偏移运算均可表示。E表示SizeOK、EnvOK和BackendCapacityOK(trace)共同成立。ReturnedInput(P,H,C)表示归还原节点、原顺序、原next/coef指针及同一H地址上的同值合法整数资源，资源仍彼此分离并可按正常MiniGMP生命周期清理；不绑定返回时_mp_d、_mp_alloc、_mp_size及有效limb列表为入口具体表示。以下Ensure均只约束正常返回。",
+        "cases": [
+          {
+            "name": "empty_constraints",
+            "with": "入口维数n、空节点快照P、空头地址矩阵H和0×(n+1)矩阵C。",
+            "require": "head=NULL，m=0，E成立。无需提供任何输入节点或系数资源；n仍须满足公开尺寸条件及内部索引数组分配条件。",
+            "ensure": "返回0，空约束系统在Q^n上可行。归还空输入资源，释放全部内部拥有存储。实现仍执行build和destroy；n>0时会建立长度n的row数组，不能把本情景理解为无分配的直接返回。零大小数组不被解引用，其分配结果按分配器契约释放。"
+          },
+          {
+            "name": "constant_constraints",
+            "with": "n=0，m>0，入口快照P、H及m×1整数矩阵C。",
+            "require": "InputRep(P,H,C)和E成立。每个节点仍须提供一个合法、已初始化的常数整数头；不能因没有变量而省略coef资源。",
+            "ensure": "正常返回值由入口常数确定：若所有C[i,0]≤0，返回0；若存在C[i,0]>0，返回1。这分别等价于存在、不存在Q^0中的解。交还ReturnedInput(P,H,C)，释放全部内部拥有存储，不公开见证或错误对象。"
+          },
+          {
+            "name": "rational_linear_constraints",
+            "with": "n>0，m>0，入口节点及头地址快照P、H，入口整数矩阵C。",
+            "require": "InputRep(P,H,C)和E成立。每行表示C[i,0]+Σ C[i,j+1]x[j]≤0，原变量自由且取有理数。允许任意符号及任意合法长度的整数系数、常数行、重复行、全零行、无用变量和非互素系数。",
+            "ensure": "返回值只能为0或1；返回0当且仅当存在x使SatQ(C,x)，返回1当且仅当不存在这样的x。返回0不推出整数可满足，返回1推出整数不可满足。交还ReturnedInput(P,H,C)，全部表数组、索引数组、内部大整数及后端临时拥有存储均已释放。没有公开解向量、证明对象或错误状态；正常返回保证不蕴含终止保证。"
+          }
+        ],
+        "assumptions": [
+          "采用background/0/TOPLEVEL_SPEC.md所载2026-11-13修订作为规范性需求，规约组织遵循题面所载2026-11-02书写规范。本报告给出需求和待验证调用接口，不把源码阅读或既有注释视为本函数证明完成。",
+          "输入资源在调用期间由求解器借用，调用者不得释放、移动、重分配或并发修改。仅指针不同不足以满足分离条件；不支持不同行共享系数头或拥有的limb块。合法静态dummy共享不要求独占其静态limb。",
+          "BackendCapacityOK(trace)是明确的轨迹条件，不是已经推导出的仅依赖m、n及输入位数的静态上界。初始整数合法或最终结果较小均不足以替代中间容量条件。",
+          "历史形式化目标采用QCP naive_C_Rules的Arch32 BigEndian，size_t按32位unsigned int、SIZE_MAX=2^32−1、对象跨度上界2^31−1解释。当前调用图来自Linux x86-64 LP64；其size_t、指针和结构体布局不能直接按历史模型解释。公开尺寸公式须按各自模型实例化，历史契约到本机实现的兼容性和模型迁移尚未验证。",
+          "整数数学基数2^32来自项目unsigned int limb及顶层环境要求，与本机size_t是否64位无关。MiniGMP参考定义及源码内契约仅在其原表示、架构和前置条件下提供证据；没有提供可直接复用的本函数已验证契约。"
+        ],
+        "uncovered": [
+          "不保证循环终止，不声称已经证明选入、选出规则的防循环性质或复杂度界。",
+          "分配失败、后端容量条件不成立、异常及非法输入没有0/1后置保证；实现没有将这些情况编码为错误返回值，不能解释为返回0或返回1。",
+          "不覆盖有环链表、空尾哨兵、无效或未初始化整数、伪造重叠对象、跨行共享拥有资源以及输入存储并发失效。",
+          "不覆盖严格不等式、析取、非线性项、整数同余、不等关系及整数可满足性判定。等式须由上层拆为两行。",
+          "未给出结果见证、整数头内部表示逐字段保持、输入limb字节逐字保持或额外规范化要求。",
+          "本轮未执行形式化证明、分支调用匹配测试、MiniGMP生命周期资源检查或Arch32到LP64兼容性验证；普通GMP-FME参考不能替代这些检查。"
+        ],
+        "evidence": [
+          {
+            "path": "background/0/TOPLEVEL_SPEC.md",
+            "start": 11,
+            "end": 21
+          },
+          {
+            "path": "background/0/TOPLEVEL_SPEC.md",
+            "start": 25,
+            "end": 51
+          },
+          {
+            "path": "background/0/TOPLEVEL_SPEC.md",
+            "start": 53,
+            "end": 83
+          },
+          {
+            "path": "project/target/include/sx_solver.h",
+            "start": 5,
+            "end": 18
+          },
+          {
+            "path": "project/target/src/solver.c",
+            "start": 11,
+            "end": 155
+          },
+          {
+            "path": "project/target/vendor/gmp/minigmp/gmp_def.h",
+            "start": 55,
+            "end": 65
+          },
+          {
+            "path": "project/target/vendor/gmp/minigmp/mpz_set.c",
+            "start": 39,
+            "end": 50
+          },
+          {
+            "path": "reference/minigmp/0/Rocq/GmpNumber.v",
+            "start": 1120,
+            "end": 1131
+          }
+        ],
+        "common_needs": [
+          {
+            "kind": "definition",
+            "use": "精确连接输入整数、地址快照及正常返回资源。",
+            "need": "定义InputRep和ReturnedInput的递归链表及逐行整数资源谓词，将P、H、C绑定到入口。节点与整数头位置固定，整数内部表示允许在合法同值范围内变化；明确store_Z及store_Z_dummy的组合和正常清理所需所有权。不能用未初始化权限代表可读系数，也不能要求dummy静态limb独占。",
+            "evidence": [
+              {
+                "path": "background/0/TOPLEVEL_SPEC.md",
+                "start": 19,
+                "end": 45
+              },
+              {
+                "path": "reference/minigmp/0/Rocq/GmpNumber.v",
+                "start": 1120,
+                "end": 1131
+              },
+              {
+                "path": "project/target/vendor/gmp/minigmp/mpz_set.c",
+                "start": 39,
+                "end": 50
+              }
+            ]
+          },
+          {
+            "kind": "definition",
+            "use": "建立build、循环和pivot之间的统一数学与资源接口。",
+            "need": "定义待验证的TableInv(C,n,t)：rows=m、cols=k；D、K、A为t.d、t.c、t.a所表示的整数，避免与入口矩阵C混名；每行D[i]>0；basic为互异有效变量号，row为其逆映射，非基变量标记SIZE_MAX，所有基变量对应的A列为零。表方程为D[i]z[basic[i]]=K[i]+Σ(v=0..k-1)A[i,v]z[v]。变量z[0:n]自由，z[n:k]≤0；其解集投影到原变量后恰等于SatQ(C,·)。附带表结构字段、三个合法整数数组和两个索引数组的完整分离资源及安全尺寸。",
+            "evidence": [
+              {
+                "path": "project/target/src/solver.c",
+                "start": 5,
+                "end": 9
+              },
+              {
+                "path": "project/target/src/solver.c",
+                "start": 27,
+                "end": 75
+              },
+              {
+                "path": "project/target/src/solver.c",
+                "start": 83,
+                "end": 105
+              },
+              {
+                "path": "background/0/TOPLEVEL_SPEC.md",
+                "start": 13,
+                "end": 18
+              }
+            ]
+          },
+          {
+            "kind": "lemma",
+            "use": "证明返回0分支的有理可行性。",
+            "need": "由TableInv及violated未找到违反行，令所有非基变量为0、每个基变量为K[i]/D[i]，证明所有松弛变量≤0，并由表与入口系统的等价性得到有理解。证明_mp_size的正负准确对应合法整数值的正负，不能仅凭裸字段作数学解释。",
+            "evidence": [
+              {
+                "path": "project/target/src/solver.c",
+                "start": 118,
+                "end": 124
+              },
+              {
+                "path": "project/target/src/solver.c",
+                "start": 141,
+                "end": 144
+              },
+              {
+                "path": "background/0/TOPLEVEL_SPEC.md",
+                "start": 38,
+                "end": 43
+              }
+            ]
+          },
+          {
+            "kind": "lemma",
+            "use": "证明返回1分支的有理不可行性。",
+            "need": "由violated选中基松弛变量行r，得到K[r]>0、D[r]>0。由entering未找到变量，得到所有非基原变量系数为0、所有非基松弛变量系数≤0；结合松弛变量≤0和基列为零，该行方程右侧严格为正而左侧非正，导出矛盾，再传回原系统无有理解。",
+            "evidence": [
+              {
+                "path": "project/target/src/solver.c",
+                "start": 118,
+                "end": 133
+              },
+              {
+                "path": "project/target/src/solver.c",
+                "start": 146,
+                "end": 149
+              }
+            ]
+          },
+          {
+            "kind": "lemma",
+            "use": "保证每次换基保持原系统的精确语义。",
+            "need": "证明选入系数h非零，p=abs(h)>0；换基行和其他行消元保持有理方程解集，所有D保持正，basic/row逆映射及基列零性质恢复。对实际gcd和divexact调用证明g>0、精确整除及m=p/g>0；分别处理h的正负和其他行选入系数为零的情况。算术输出scratch与输入分离，所有临时对象最后清理。该引理不附带终止结论。",
+            "evidence": [
+              {
+                "path": "project/target/src/solver.c",
+                "start": 24,
+                "end": 80
+              },
+              {
+                "path": "project/target/src/solver.c",
+                "start": 126,
+                "end": 133
+              }
+            ]
+          },
+          {
+            "kind": "strategy",
+            "use": "组合输入保留、内部资源创建及销毁。",
+            "need": "提供逐行mpz_set复制的资源展开和重组策略，证明输入资源作为框架跨循环保留。连接mpz_init的dummy零对象与实际算术callee所需store_Z，连接合法零表示与mpz_clear清理条件；证明destroy覆盖全部拥有数组及后端临时资源。明确空数组资源和malloc(0)/free行为，不能要求零大小分配非空。",
+            "evidence": [
+              {
+                "path": "project/target/src/solver.c",
+                "start": 11,
+                "end": 21
+              },
+              {
+                "path": "project/target/src/solver.c",
+                "start": 83,
+                "end": 115
+              },
+              {
+                "path": "project/target/vendor/gmp/minigmp/mpz_init.c",
+                "start": 3,
+                "end": 28
+              },
+              {
+                "path": "background/0/TOPLEVEL_SPEC.md",
+                "start": 71,
+                "end": 81
+              }
+            ]
+          },
+          {
+            "kind": "definition",
+            "use": "公开准确的尺寸与后端容量条件。",
+            "need": "将SizeOK和BackendCapacityOK(trace)落实为可引用接口，分别处理size_t加乘、数组字节跨度、有效索引及后端有符号长度。为每次实际后端调用传递其容量条件；不得把输入位数界或最终结果界当作尚未证明的中间增长界。",
+            "evidence": [
+              {
+                "path": "background/0/TOPLEVEL_SPEC.md",
+                "start": 55,
+                "end": 65
+              },
+              {
+                "path": "background/0/TOPLEVEL_SPEC.md",
+                "start": 75,
+                "end": 83
+              },
+              {
+                "path": "project/target/src/solver.c",
+                "start": 83,
+                "end": 104
+              }
+            ]
+          },
+          {
+            "kind": "strategy",
+            "use": "控制历史证明材料的复用范围。",
+            "need": "分别检查Arch32 BigEndian模型和Linux x86-64 LP64实例中的类型、结构体布局、sizeof、地址运算及分配服务契约。核对MiniGMP声明与实际定义及资源谓词的一致性；在完成迁移检查前，只将历史材料作为原条件下的参考，不能声称本机consumer或本函数已验证。",
+            "evidence": [
+              {
+                "path": "background/0/TOPLEVEL_SPEC.md",
+                "start": 69,
+                "end": 81
+              },
+              {
+                "path": "project/target/vendor/gmp/minigmp/gmp_def.h",
+                "start": 55,
+                "end": 63
+              },
+              {
+                "path": "project/target/src/backend_alloc.c",
+                "start": 5,
+                "end": 26
+              }
+            ]
+          }
+        ],
+        "call_requirements": [
+          {
+            "call_id": "call-58f03a40992da17db446ac6e",
+            "condition": "入口无条件执行build(head, variables)。",
+            "available": "入口快照P、H、C，InputRep、SizeOK、EnvOK和轨迹容量条件；实参head、variables直接对应入口链表与n。局部t尚未初始化，不需要其旧值。",
+            "needed": "build须按值返回完整合法表及TableInv(C,n,t)，交还同一节点和整数头地址上的同值输入资源。初始rows=m、cols=k、D[i]=1、K[i]=C[i,0]、A[i,j]=C[i,j+1]（j<n），其余A为0，basic[i]=n+i，row[n+i]=i，原变量row为SIZE_MAX；内部资源与输入分离。必须覆盖m=0和n=0，正确处理零大小分配，不以分配失败产生合法空表。源码支持上述构造意图，但未提供已验证build契约或调用匹配结果。"
+          },
+          {
+            "call_id": "call-927c06bfc6cd5e49219653c4",
+            "condition": "每次循环顶部执行violated(&t, variables)。",
+            "available": "首次由build、后续由pivot应提供的TableInv，n等于原变量数，输入资源被框架保留；&t指向有效局部表。",
+            "needed": "只读借用并完整归还表资源。按变量号递增扫描[n,k)，返回第一个满足row[v]≠SIZE_MAX且K[row[v]]>0的行号；未找到恰返回SIZE_MAX。成功返回须保证0≤r<m、basic[r]为松弛变量且K[r]>0；未找到须保证当前基解所有基松弛变量非正，足以构造有理解。需要row索引有效性和_mp_size符号桥。相关语义来自源码，TableInv传递和数学充分性尚待证明。"
+          },
+          {
+            "call_id": "call-6dea841c96dc93eb1c089ba7",
+            "condition": "violated返回r≠SIZE_MAX后执行entering(&t, variables, r)。",
+            "available": "TableInv及0≤r<m，basic[r]为违反的基松弛变量，K[r]>0；表和输入在violated后保持。",
+            "needed": "只读借用并完整归还表资源。按v递增扫描[0,k)，返回第一个非基且满足选入条件的变量：原变量v<n须A[r,v]≠0，松弛变量v≥n须A[r,v]>0。未找到恰返回SIZE_MAX；有效返回须给出0≤e<k、row[e]=SIZE_MAX及非零换基系数。未找到须给出非基原变量系数全零、非基松弛变量系数全非正，以支持矛盾行证明。确切扫描行为可见源码，所需形式化契约及调用验证未提供。"
+          },
+          {
+            "call_id": "call-f2254371a43d5acc2ab427f8",
+            "condition": "r≠SIZE_MAX且entering返回e≠SIZE_MAX后执行pivot(&t, r, e)。",
+            "available": "TableInv，0≤r<m、0≤e<k，e非基；h=A[r,e]非零，选入松弛变量时h>0；b=basic[r]为有效基松弛变量。求解器拥有表的可写分离资源，输入保留在独立框架中。",
+            "needed": "pivot须在BackendCapacityOK及成功分配条件下完成精确整数换基，保持表方程与入口系统的有理解投影等价，恢复TableInv，将basic[r]设为e、row[e]设为r、row[b]设为SIZE_MAX。须保持D为正、恢复基列零性质及所有整数合法可清理资源，并清理p、g、m、n、tmp及后端临时对象。证明gcd非零和divexact的整除前提，覆盖正负h及跳过零系数行的路径。不得从该调用额外推出循环终止；源码实现和代数注释尚不构成已验证callee契约。"
+          },
+          {
+            "call_id": "call-8cbc916ab8119648d5f7a22d",
+            "condition": "两个break分支汇合后执行destroy(&t)，随后返回result。",
+            "available": "任一退出分支均须保留TableInv中的全部内部资源，result已设为0或1，并已建立对应可行性结论；入口资源独立保留。",
+            "needed": "destroy须对d、c各rows个整数及a的rows*cols个整数逐个合法清理，释放这三个头数组及basic、row索引块，包括零大小分配的合法结果；消耗全部内部拥有资源并保留输入资源及纯数学结论。不要求清零局部t字段，销毁后不再解引用其中指针。完整释放后端拥有存储还依赖mpz_clear等后端生命周期契约，当前未给出本调用的已验证资源匹配结果。"
+          }
+        ]
+      },
+      "call_checks": {},
+      "task_digest": "f468b65cf4b0b651fb2850867a705c7754999835a701970a40b583d529a8625c"
+    }
+  },
+  "accepted_edges": {},
+  "formal_call_validation": "not_run",
+  "scope": {
+    "mode": "entries",
+    "entry_ids": [
+      "fn-ebdf13af80bdab389754b35a"
+    ],
+    "function_ids": [
+      "fn-02088b570862505f84e44fd6",
+      "fn-1307838fa0bae641e6f393a3",
+      "fn-4349128d295cd3be78b7683f",
+      "fn-550fd75e1583d0c8bae839f1",
+      "fn-95051d6dc801554c9b6d2de1",
+      "fn-ae6173af429c6b30a054481e",
+      "fn-af3c5c0db3899321d433281f",
+      "fn-ebdf13af80bdab389754b35a"
+    ],
+    "reached_ids": [
+      "fn-02088b570862505f84e44fd6",
+      "fn-1307838fa0bae641e6f393a3",
+      "fn-4349128d295cd3be78b7683f",
+      "fn-550fd75e1583d0c8bae839f1",
+      "fn-95051d6dc801554c9b6d2de1",
+      "fn-ae6173af429c6b30a054481e",
+      "fn-af3c5c0db3899321d433281f",
+      "fn-ebdf13af80bdab389754b35a"
+    ],
+    "reuse_boundaries": [],
+    "components": [
+      {
+        "id": "scc-0",
+        "functions": [
+          "fn-ebdf13af80bdab389754b35a"
+        ]
+      },
+      {
+        "id": "scc-1",
+        "functions": [
+          "fn-af3c5c0db3899321d433281f"
+        ]
+      },
+      {
+        "id": "scc-2",
+        "functions": [
+          "fn-ae6173af429c6b30a054481e"
+        ]
+      },
+      {
+        "id": "scc-3",
+        "functions": [
+          "fn-95051d6dc801554c9b6d2de1"
+        ]
+      },
+      {
+        "id": "scc-4",
+        "functions": [
+          "fn-4349128d295cd3be78b7683f"
+        ]
+      },
+      {
+        "id": "scc-5",
+        "functions": [
+          "fn-1307838fa0bae641e6f393a3"
+        ]
+      },
+      {
+        "id": "scc-6",
+        "functions": [
+          "fn-550fd75e1583d0c8bae839f1"
+        ]
+      },
+      {
+        "id": "scc-7",
+        "functions": [
+          "fn-02088b570862505f84e44fd6"
+        ]
+      }
+    ],
+    "component_edges": [
+      [
+        "scc-0",
+        "scc-1"
+      ],
+      [
+        "scc-0",
+        "scc-2"
+      ],
+      [
+        "scc-0",
+        "scc-3"
+      ],
+      [
+        "scc-0",
+        "scc-4"
+      ],
+      [
+        "scc-0",
+        "scc-5"
+      ],
+      [
+        "scc-4",
+        "scc-7"
+      ],
+      [
+        "scc-5",
+        "scc-6"
+      ]
+    ],
+    "callback_dependencies": []
+  },
+  "calls": {
+    "call-858f7ac3c355d74912b2c0d6": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": "fn-550fd75e1583d0c8bae839f1",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 90,
+        "column": 11
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-0bb0cdc028ba8a5836751b5a": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": "fn-550fd75e1583d0c8bae839f1",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 91,
+        "column": 11
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-e7681d1e281e62931efe4bb5": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": "fn-550fd75e1583d0c8bae839f1",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 92,
+        "column": 11
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-a77eda2b74611a3394053e5a": {
+      "caller": "fn-4349128d295cd3be78b7683f",
+      "callee": "fn-02088b570862505f84e44fd6",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 111,
+        "column": 5
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-17e78c80a1137b8eb1ade089": {
+      "caller": "fn-4349128d295cd3be78b7683f",
+      "callee": "fn-02088b570862505f84e44fd6",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 112,
+        "column": 5
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-8976555624f111dbab1a2278": {
+      "caller": "fn-4349128d295cd3be78b7683f",
+      "callee": "fn-02088b570862505f84e44fd6",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 113,
+        "column": 5
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-58f03a40992da17db446ac6e": {
+      "caller": "fn-ebdf13af80bdab389754b35a",
+      "callee": "fn-1307838fa0bae641e6f393a3",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 138,
+        "column": 22
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-927c06bfc6cd5e49219653c4": {
+      "caller": "fn-ebdf13af80bdab389754b35a",
+      "callee": "fn-95051d6dc801554c9b6d2de1",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 141,
+        "column": 20
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-6dea841c96dc93eb1c089ba7": {
+      "caller": "fn-ebdf13af80bdab389754b35a",
+      "callee": "fn-af3c5c0db3899321d433281f",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 146,
+        "column": 20
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-f2254371a43d5acc2ab427f8": {
+      "caller": "fn-ebdf13af80bdab389754b35a",
+      "callee": "fn-ae6173af429c6b30a054481e",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 151,
+        "column": 9
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-8cbc916ab8119648d5f7a22d": {
+      "caller": "fn-ebdf13af80bdab389754b35a",
+      "callee": "fn-4349128d295cd3be78b7683f",
+      "kind": "internal",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 153,
+        "column": 5
+      },
+      "detail": {
+        "source_kind": "direct",
+        "evidence": "clang_declaration"
+      }
+    },
+    "call-817cb5d6cb2f551597f7110f": {
+      "caller": "fn-550fd75e1583d0c8bae839f1",
+      "callee": null,
+      "kind": "external",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 13,
+        "column": 17
+      },
+      "detail": {
+        "caller": "fn-550fd75e1583d0c8bae839f1",
+        "location": {
+          "path": "src/solver.c",
+          "line": 13,
+          "column": 17
+        },
+        "name": "malloc",
+        "type": "void *(unsigned long)",
+        "declaration_library": null,
+        "declaration": {
+          "path": "/usr/include/stdlib.h",
+          "line": 672,
+          "column": 14
+        }
+      }
+    },
+    "call-71187c1294b88a72aedbabe6": {
+      "caller": "fn-02088b570862505f84e44fd6",
+      "callee": null,
+      "kind": "external",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 21,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-02088b570862505f84e44fd6",
+        "location": {
+          "path": "src/solver.c",
+          "line": 21,
+          "column": 5
+        },
+        "name": "free",
+        "type": "void (void *)",
+        "declaration_library": null,
+        "declaration": {
+          "path": "/usr/include/stdlib.h",
+          "line": 687,
+          "column": 13
+        }
+      }
+    },
+    "call-9755ea656ca6a28169d832a1": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": null,
+      "kind": "external",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 93,
+        "column": 15
+      },
+      "detail": {
+        "caller": "fn-1307838fa0bae641e6f393a3",
+        "location": {
+          "path": "src/solver.c",
+          "line": 93,
+          "column": 15
+        },
+        "name": "malloc",
+        "type": "void *(unsigned long)",
+        "declaration_library": null,
+        "declaration": {
+          "path": "/usr/include/stdlib.h",
+          "line": 672,
+          "column": 14
+        }
+      }
+    },
+    "call-b2482a5b815968efb1e4562b": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": null,
+      "kind": "external",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 94,
+        "column": 13
+      },
+      "detail": {
+        "caller": "fn-1307838fa0bae641e6f393a3",
+        "location": {
+          "path": "src/solver.c",
+          "line": 94,
+          "column": 13
+        },
+        "name": "malloc",
+        "type": "void *(unsigned long)",
+        "declaration_library": null,
+        "declaration": {
+          "path": "/usr/include/stdlib.h",
+          "line": 672,
+          "column": 14
+        }
+      }
+    },
+    "call-d8a7e6d8e3ccfb539d7f9541": {
+      "caller": "fn-4349128d295cd3be78b7683f",
+      "callee": null,
+      "kind": "external",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 114,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-4349128d295cd3be78b7683f",
+        "location": {
+          "path": "src/solver.c",
+          "line": 114,
+          "column": 5
+        },
+        "name": "free",
+        "type": "void (void *)",
+        "declaration_library": null,
+        "declaration": {
+          "path": "/usr/include/stdlib.h",
+          "line": 687,
+          "column": 13
+        }
+      }
+    },
+    "call-ef7fdcd5ddbbb611ff64ca0e": {
+      "caller": "fn-4349128d295cd3be78b7683f",
+      "callee": null,
+      "kind": "external",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 115,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-4349128d295cd3be78b7683f",
+        "location": {
+          "path": "src/solver.c",
+          "line": 115,
+          "column": 5
+        },
+        "name": "free",
+        "type": "void (void *)",
+        "declaration_library": null,
+        "declaration": {
+          "path": "/usr/include/stdlib.h",
+          "line": 687,
+          "column": 13
+        }
+      }
+    },
+    "call-719f911a437ad06e1af597f3": {
+      "caller": "fn-550fd75e1583d0c8bae839f1",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 14,
+        "column": 36
+      },
+      "detail": {
+        "caller": "fn-550fd75e1583d0c8bae839f1",
+        "location": {
+          "path": "src/solver.c",
+          "line": 14,
+          "column": 36
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_init",
+        "candidate_ids": [
+          "fn-90f7c40727a58b202ac4fd69"
+        ]
+      }
+    },
+    "call-cec9feafae289cb3bf45a6d8": {
+      "caller": "fn-02088b570862505f84e44fd6",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 20,
+        "column": 36
+      },
+      "detail": {
+        "caller": "fn-02088b570862505f84e44fd6",
+        "location": {
+          "path": "src/solver.c",
+          "line": 20,
+          "column": 36
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_clear",
+        "candidate_ids": [
+          "fn-0292efe34640ae9f7774b2e5"
+        ]
+      }
+    },
+    "call-95d3dd1efd436dba667a12ea": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 31,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 31,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_init",
+        "candidate_ids": [
+          "fn-90f7c40727a58b202ac4fd69"
+        ]
+      }
+    },
+    "call-8e3f9231145336a68a5080de": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 32,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 32,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_init",
+        "candidate_ids": [
+          "fn-90f7c40727a58b202ac4fd69"
+        ]
+      }
+    },
+    "call-36594809893eac8b45ecf73b": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 33,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 33,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_init",
+        "candidate_ids": [
+          "fn-90f7c40727a58b202ac4fd69"
+        ]
+      }
+    },
+    "call-3d7308b41f9c18fb45a8f7ff": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 34,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 34,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_init",
+        "candidate_ids": [
+          "fn-90f7c40727a58b202ac4fd69"
+        ]
+      }
+    },
+    "call-0820c8c727baa40032504817": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 35,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 35,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_init",
+        "candidate_ids": [
+          "fn-90f7c40727a58b202ac4fd69"
+        ]
+      }
+    },
+    "call-b0bf8cf05ad81c101cd9c821": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 36,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 36,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_abs",
+        "candidate_ids": [
+          "fn-119005b54f1a48fe047ce951"
+        ]
+      }
+    },
+    "call-436c08edc570af69e943c6ed": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 40,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 40,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_neg",
+        "candidate_ids": [
+          "fn-74ff9d469e23f01aab7e7795"
+        ]
+      }
+    },
+    "call-4b9a757999f14c98c3cb12d6": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 41,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 41,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-f0389d4f57f6ec035589800d": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 43,
+        "column": 13
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 43,
+          "column": 13
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_neg",
+        "candidate_ids": [
+          "fn-74ff9d469e23f01aab7e7795"
+        ]
+      }
+    },
+    "call-3867ec33890ef2226d327aea": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 44,
+        "column": 13
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 44,
+          "column": 13
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-6b629f88c6ec7a6c8fbcf6e2": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 46,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 46,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-29c5c0040d45e4c6debdc4e8": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 48,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 48,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_neg",
+        "candidate_ids": [
+          "fn-74ff9d469e23f01aab7e7795"
+        ]
+      }
+    },
+    "call-2ea85ad92a22eea399bb8f8a": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 49,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 49,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-f599948e79c57786c811e8e5": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 51,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 51,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set_ui",
+        "candidate_ids": [
+          "fn-9075fc1c33605934ba4c8a01"
+        ]
+      }
+    },
+    "call-c0b9446e19aa2caeb9199087": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 52,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 52,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-31387085b7316423a3742803": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 57,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 57,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_gcd",
+        "candidate_ids": [
+          "fn-c3ca4215c17db648442b248a"
+        ]
+      }
+    },
+    "call-bc236972895e67923b752915": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 58,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 58,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_divexact",
+        "candidate_ids": [
+          "fn-151b10442b70a3688d3ead8e"
+        ]
+      }
+    },
+    "call-eed33a5bed69a307529a0367": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 59,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 59,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_divexact",
+        "candidate_ids": [
+          "fn-151b10442b70a3688d3ead8e"
+        ]
+      }
+    },
+    "call-9e1f6c438cc28b16cdc021ec": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 60,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 60,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_mul",
+        "candidate_ids": [
+          "fn-7bcca8f82897d783636905d9"
+        ]
+      }
+    },
+    "call-36a2cdbf84d79c2c18726972": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 61,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 61,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-70df03b226917ddf40f10229": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 62,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 62,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_mul",
+        "candidate_ids": [
+          "fn-7bcca8f82897d783636905d9"
+        ]
+      }
+    },
+    "call-3ffbf6d30736d20f32ef52e6": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 63,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 63,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_addmul",
+        "candidate_ids": [
+          "fn-5f740ec3d540484cb98d3960"
+        ]
+      }
+    },
+    "call-840ad23cbd74c27464f6cf4d": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 64,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 64,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-adc18f3cd26420c997f558f0": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 67,
+        "column": 13
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 67,
+          "column": 13
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_mul",
+        "candidate_ids": [
+          "fn-7bcca8f82897d783636905d9"
+        ]
+      }
+    },
+    "call-660918ee4f28c0068e03e217": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 68,
+        "column": 13
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 68,
+          "column": 13
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_addmul",
+        "candidate_ids": [
+          "fn-5f740ec3d540484cb98d3960"
+        ]
+      }
+    },
+    "call-22c960c05460266b412e2c58": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 69,
+        "column": 13
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 69,
+          "column": 13
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-fe19952ddda7b31115abb2cd": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 71,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 71,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set_ui",
+        "candidate_ids": [
+          "fn-9075fc1c33605934ba4c8a01"
+        ]
+      }
+    },
+    "call-1db726a6f4aa0fb6fe78ce58": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 76,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 76,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_clear",
+        "candidate_ids": [
+          "fn-0292efe34640ae9f7774b2e5"
+        ]
+      }
+    },
+    "call-d89b46e47705b17afdc592d1": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 77,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 77,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_clear",
+        "candidate_ids": [
+          "fn-0292efe34640ae9f7774b2e5"
+        ]
+      }
+    },
+    "call-71a74a358748889d55aa49d9": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 78,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 78,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_clear",
+        "candidate_ids": [
+          "fn-0292efe34640ae9f7774b2e5"
+        ]
+      }
+    },
+    "call-590ad3741babe9c566b81e4e": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 79,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 79,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_clear",
+        "candidate_ids": [
+          "fn-0292efe34640ae9f7774b2e5"
+        ]
+      }
+    },
+    "call-af67c08b2eee4fdae0ae0888": {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 80,
+        "column": 5
+      },
+      "detail": {
+        "caller": "fn-ae6173af429c6b30a054481e",
+        "location": {
+          "path": "src/solver.c",
+          "line": 80,
+          "column": 5
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_clear",
+        "candidate_ids": [
+          "fn-0292efe34640ae9f7774b2e5"
+        ]
+      }
+    },
+    "call-3b85bf63362e713123da0514": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 99,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-1307838fa0bae641e6f393a3",
+        "location": {
+          "path": "src/solver.c",
+          "line": 99,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set_ui",
+        "candidate_ids": [
+          "fn-9075fc1c33605934ba4c8a01"
+        ]
+      }
+    },
+    "call-7f7d801c8caf88674fa688d0": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 100,
+        "column": 9
+      },
+      "detail": {
+        "caller": "fn-1307838fa0bae641e6f393a3",
+        "location": {
+          "path": "src/solver.c",
+          "line": 100,
+          "column": 9
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    },
+    "call-59e0f08b419ed1a67732eed6": {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "callee": null,
+      "kind": "unresolved",
+      "location": {
+        "path": "project/target/src/solver.c",
+        "line": 102,
+        "column": 13
+      },
+      "detail": {
+        "caller": "fn-1307838fa0bae641e6f393a3",
+        "location": {
+          "path": "src/solver.c",
+          "line": 102,
+          "column": 13
+        },
+        "reason": "unconfirmed_call_target",
+        "name": "mpz_set",
+        "candidate_ids": [
+          "fn-073106bc1f4167af0bf9d628"
+        ]
+      }
+    }
+  },
+  "external_materials": {
+    "background/0/TOPLEVEL_SPEC.md": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/runs/minimal-simplex-v2-20261118/inputs/TOPLEVEL_SPEC.md",
+      "sha256": "9f162c2fda225d686778a5e72b3a25bf67e2493b66e5b13099a38abeabae5d98"
+    },
+    "reference/minigmp/0/Rocq/GmpNumber.v": {
+      "path": "/home/maxu/Projects/library-spec-tool-v2/example/minimal-simplex/references/minigmp/Rocq/GmpNumber.v",
+      "sha256": "b9f93a73257c3f0f7c815b7c268c47f1181f65aebaa55c04b4dc03947aa92c1a"
+    }
+  },
+  "analysis_gaps": [
+    {
+      "caller": "fn-550fd75e1583d0c8bae839f1",
+      "location": {
+        "path": "src/solver.c",
+        "line": 14,
+        "column": 36
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_init",
+      "candidate_ids": [
+        "fn-90f7c40727a58b202ac4fd69"
+      ]
+    },
+    {
+      "caller": "fn-02088b570862505f84e44fd6",
+      "location": {
+        "path": "src/solver.c",
+        "line": 20,
+        "column": 36
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_clear",
+      "candidate_ids": [
+        "fn-0292efe34640ae9f7774b2e5"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 31,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_init",
+      "candidate_ids": [
+        "fn-90f7c40727a58b202ac4fd69"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 32,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_init",
+      "candidate_ids": [
+        "fn-90f7c40727a58b202ac4fd69"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 33,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_init",
+      "candidate_ids": [
+        "fn-90f7c40727a58b202ac4fd69"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 34,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_init",
+      "candidate_ids": [
+        "fn-90f7c40727a58b202ac4fd69"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 35,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_init",
+      "candidate_ids": [
+        "fn-90f7c40727a58b202ac4fd69"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 36,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_abs",
+      "candidate_ids": [
+        "fn-119005b54f1a48fe047ce951"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 40,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_neg",
+      "candidate_ids": [
+        "fn-74ff9d469e23f01aab7e7795"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 41,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 43,
+        "column": 13
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_neg",
+      "candidate_ids": [
+        "fn-74ff9d469e23f01aab7e7795"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 44,
+        "column": 13
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 46,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 48,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_neg",
+      "candidate_ids": [
+        "fn-74ff9d469e23f01aab7e7795"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 49,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 51,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set_ui",
+      "candidate_ids": [
+        "fn-9075fc1c33605934ba4c8a01"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 52,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 57,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_gcd",
+      "candidate_ids": [
+        "fn-c3ca4215c17db648442b248a"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 58,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_divexact",
+      "candidate_ids": [
+        "fn-151b10442b70a3688d3ead8e"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 59,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_divexact",
+      "candidate_ids": [
+        "fn-151b10442b70a3688d3ead8e"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 60,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_mul",
+      "candidate_ids": [
+        "fn-7bcca8f82897d783636905d9"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 61,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 62,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_mul",
+      "candidate_ids": [
+        "fn-7bcca8f82897d783636905d9"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 63,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_addmul",
+      "candidate_ids": [
+        "fn-5f740ec3d540484cb98d3960"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 64,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 67,
+        "column": 13
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_mul",
+      "candidate_ids": [
+        "fn-7bcca8f82897d783636905d9"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 68,
+        "column": 13
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_addmul",
+      "candidate_ids": [
+        "fn-5f740ec3d540484cb98d3960"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 69,
+        "column": 13
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 71,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set_ui",
+      "candidate_ids": [
+        "fn-9075fc1c33605934ba4c8a01"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 76,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_clear",
+      "candidate_ids": [
+        "fn-0292efe34640ae9f7774b2e5"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 77,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_clear",
+      "candidate_ids": [
+        "fn-0292efe34640ae9f7774b2e5"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 78,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_clear",
+      "candidate_ids": [
+        "fn-0292efe34640ae9f7774b2e5"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 79,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_clear",
+      "candidate_ids": [
+        "fn-0292efe34640ae9f7774b2e5"
+      ]
+    },
+    {
+      "caller": "fn-ae6173af429c6b30a054481e",
+      "location": {
+        "path": "src/solver.c",
+        "line": 80,
+        "column": 5
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_clear",
+      "candidate_ids": [
+        "fn-0292efe34640ae9f7774b2e5"
+      ]
+    },
+    {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "location": {
+        "path": "src/solver.c",
+        "line": 99,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set_ui",
+      "candidate_ids": [
+        "fn-9075fc1c33605934ba4c8a01"
+      ]
+    },
+    {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "location": {
+        "path": "src/solver.c",
+        "line": 100,
+        "column": 9
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    },
+    {
+      "caller": "fn-1307838fa0bae641e6f393a3",
+      "location": {
+        "path": "src/solver.c",
+        "line": 102,
+        "column": 13
+      },
+      "reason": "unconfirmed_call_target",
+      "name": "mpz_set",
+      "candidate_ids": [
+        "fn-073106bc1f4167af0bf9d628"
+      ]
+    }
+  ],
+  "analysis_translation_failures": [],
+  "status": "in_progress"
+}

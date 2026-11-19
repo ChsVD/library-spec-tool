@@ -1,0 +1,15 @@
+{
+  "file": "fme/QCP_examples/fme_gmp.strategies",
+  "entry": "F693/D0007",
+  "prefix_needed": 1,
+  "status": "match",
+  "correspondence": "Rule 11 replaces ownership of a nonempty InequList node with fresh existential pointers h and y, the fact h != 0, the coef field storing h, ownership of mpz_coef_array(h, n, x), the next field storing y, and ownership of the tail InequList(y, n, l).",
+  "direction": "Unfolding on the left. The rule erases InequList(p, n, cons(x, l)) from the hypotheses and adds the exposed facts and ownership to the hypotheses. The right-hand goal is untouched.",
+  "conditions_and_limits": "The owned predicate must match the explicit cons(x, l) shape. The rule has no separate p != NULL premise and yields no y != NULL fact. To adapt it, map the field stores and GMP array predicate to the target assertions and establish the cons shape if the caller has only an abstract list parameter. This is a local proof step.",
+  "additional_evidence": [
+    "F693/D0008 declares rule 12. It retains a left-side p != NULL fact and replaces a right-side cons-shaped list goal with goals for the exposed components. In entailment direction, those components fold into the list predicate under the nonnull premise.",
+    "F693/D0005 declares rule 9. With a left-side p != NULL fact and a matching right-side coef or next field goal, it rewrites the left-side list predicate to cons form and records equality with the original list parameter.",
+    "F700/D0013 declares the Rocq proposition for strategy 11, with entailment from nonempty list ownership to the existential components.",
+    "F697/D0016 defines InequList. Its cons branch includes p != NULL in addition to the exposed components, while its nil branch requires a null pointer and empty ownership."
+  ]
+}

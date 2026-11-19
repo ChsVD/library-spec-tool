@@ -1,0 +1,11 @@
+{
+  "prompt_chars": 6847,
+  "seconds": 19.44,
+  "usage": {
+    "input_tokens": 14692,
+    "cached_input_tokens": 0,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 304,
+    "reasoning_output_tokens": 258
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F693",
+      "reason": "Look for an InequList folding strategy that uses ownership of the coef and next fields, the coefficient array, and the tail to establish a nonempty node. Check which side the strategy rewrites."
+    },
+    {
+      "id": "F700",
+      "reason": "Check the generated strategy entailment for the direction of the fold, the placement of the node predicate, and any cons-shape or non-null premises."
+    },
+    {
+      "id": "F697",
+      "reason": "Look for the list predicate definition and a constructor lemma that establishes the cons case from the two fields, the coefficient array, and the tail."
+    }
+  ]
+}

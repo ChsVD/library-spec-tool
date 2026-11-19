@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "status": "analysis_completed",
+  "configuration": "Linux x86_64, historical normalized BIGNUM probe",
+  "libraries": {
+    "target": {
+      "source_root": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-input/target",
+      "snapshot_root": "project/target",
+      "version": null,
+      "materials": []
+    }
+  },
+  "graph": {
+    "nodes": {
+      "fn-a1e7026394982c8b8ed24615": {
+        "id": "fn-a1e7026394982c8b8ed24615",
+        "library": "target",
+        "name": "bn_top_probe",
+        "symbol": "bn_top_probe",
+        "type": "int (BIGNUM *)",
+        "linkage": "external",
+        "source": {
+          "path": "normalized.c",
+          "line": 9,
+          "column": 5,
+          "end_line": 12
+        },
+        "status": "definition",
+        "selected": false,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "normalized.c"
+          }
+        ]
+      },
+      "fn-52923947aedffef239a17cca": {
+        "id": "fn-52923947aedffef239a17cca",
+        "library": "target",
+        "name": "bn_limb_probe",
+        "symbol": "bn_limb_probe",
+        "type": "BN_ULONG (BN_ULONG *)",
+        "linkage": "external",
+        "source": {
+          "path": "normalized.c",
+          "line": 14,
+          "column": 10,
+          "end_line": 17
+        },
+        "status": "definition",
+        "selected": false,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "normalized.c"
+          }
+        ]
+      },
+      "fn-85c3fb94fe0d59f1da3de85f": {
+        "id": "fn-85c3fb94fe0d59f1da3de85f",
+        "library": "target",
+        "name": "bn_data_probe",
+        "symbol": "bn_data_probe",
+        "type": "BN_ULONG *(BIGNUM *)",
+        "linkage": "external",
+        "source": {
+          "path": "normalized.c",
+          "line": 18,
+          "column": 11,
+          "end_line": 21
+        },
+        "status": "definition",
+        "selected": true,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "normalized.c"
+          }
+        ]
+      },
+      "fn-40495047f8d07bdd400d78e3": {
+        "id": "fn-40495047f8d07bdd400d78e3",
+        "library": "target",
+        "name": "bn_dmax_probe",
+        "symbol": "bn_dmax_probe",
+        "type": "int (BIGNUM *)",
+        "linkage": "external",
+        "source": {
+          "path": "normalized.c",
+          "line": 23,
+          "column": 5,
+          "end_line": 26
+        },
+        "status": "definition",
+        "selected": false,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "normalized.c"
+          }
+        ]
+      },
+      "fn-7259a13ed0fccc80a7bd823d": {
+        "id": "fn-7259a13ed0fccc80a7bd823d",
+        "library": "target",
+        "name": "bn_neg_probe",
+        "symbol": "bn_neg_probe",
+        "type": "int (BIGNUM *)",
+        "linkage": "external",
+        "source": {
+          "path": "normalized.c",
+          "line": 28,
+          "column": 5,
+          "end_line": 31
+        },
+        "status": "definition",
+        "selected": false,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "normalized.c"
+          }
+        ]
+      },
+      "fn-1fa26ce8b49d28daac0966c8": {
+        "id": "fn-1fa26ce8b49d28daac0966c8",
+        "library": "target",
+        "name": "bn_flags_probe",
+        "symbol": "bn_flags_probe",
+        "type": "int (BIGNUM *)",
+        "linkage": "external",
+        "source": {
+          "path": "normalized.c",
+          "line": 33,
+          "column": 5,
+          "end_line": 36
+        },
+        "status": "definition",
+        "selected": false,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "normalized.c"
+          }
+        ]
+      }
+    },
+    "edges": {},
+    "reuse_index": [],
+    "external_calls": [],
+    "analysis_gaps": []
+  },
+  "scope": {
+    "mode": "entries",
+    "entry_ids": [
+      "fn-85c3fb94fe0d59f1da3de85f"
+    ],
+    "function_ids": [
+      "fn-85c3fb94fe0d59f1da3de85f"
+    ],
+    "reached_ids": [
+      "fn-85c3fb94fe0d59f1da3de85f"
+    ],
+    "reuse_boundaries": [],
+    "components": [
+      {
+        "id": "scc-0",
+        "functions": [
+          "fn-85c3fb94fe0d59f1da3de85f"
+        ]
+      }
+    ],
+    "component_edges": [],
+    "callback_dependencies": []
+  },
+  "coverage": {
+    "translation_units": [
+      {
+        "library": "target",
+        "path": "normalized.c",
+        "status": "parsed"
+      }
+    ],
+    "out_of_configuration_sources": [],
+    "scoped_analysis_gaps": [],
+    "scoped_external_calls": []
+  },
+  "provenance": {
+    "fm_agent_commit": "c552cd5ef25bd096178c7b06d3645dc3fd1e376e",
+    "codegraph_version": "1.6.2-fmagent.1",
+    "clang_version": "Ubuntu clang version 18.1.3 (1ubuntu1)",
+    "databases": [
+      {
+        "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-input/compile_commands.json",
+        "sha256": "9155418586a9f836326b99da5e5b5c7803814ec16a62c9d2b894d9d99a066238"
+      }
+    ],
+    "snapshot_files": [
+      {
+        "path": "compile_commands.json",
+        "sha256": "26d26aff4003bc38b5089f9ee5a3cc89d3d30e2a048672ddf53631b0f9b45405"
+      },
+      {
+        "path": "target/normalized.c",
+        "sha256": "40831f6fa5bff18331d271a30201718fc46250016985c7dd8f5522cf326ad524"
+      }
+    ],
+    "raw_graph": "raw-graph.json",
+    "adapter_files": {
+      "__init__.py": "fbe01349d47d1ce8ea2bf397831b946429d535b21d318674405e309adbf43671",
+      "__main__.py": "d98e6cbcda63e53900eadf41811f470ea8abc6a8f5b0847cf9e6db08785bbdc9",
+      "ast_records.py": "79a9692853600f96b980aad36ef3c7c75d17baf4ebcab8e7f4cd06ba83c48bee",
+      "backend.py": "2c000087a6e0bc524de00d9ff6f3f31b5a3d4e5586b46a0640b8bc19f11aa12e",
+      "fm_graph_worker.py": "50ce2f6272e91291437ae4dc43ed7d35f69b556afdd1dc065df7c619c1320d10",
+      "graph.py": "07b4847241143c2682eeadbca016130e777365031c5a5d290c30dd4cb30ab775",
+      "inputs.py": "b703bb5f94b5df5f7853fa11b83dc8e74d1f79734cd02ed598030f802c052b42",
+      "pipeline.py": "29b9d3ba22df4a4173168236957e82444978c5e1ee422af9ed1bbcca8e474b86"
+    }
+  }
+}

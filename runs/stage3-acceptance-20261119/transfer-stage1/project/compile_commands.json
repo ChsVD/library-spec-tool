@@ -1,0 +1,13 @@
+[
+  {
+    "file": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.c",
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target",
+    "arguments": [
+      "clang",
+      "-I.",
+      "-DNDEBUG",
+      "-c",
+      "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.c"
+    ]
+  }
+]

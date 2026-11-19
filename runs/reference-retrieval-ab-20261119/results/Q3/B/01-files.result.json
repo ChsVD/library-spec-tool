@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F169",
+      "reason": "Look for a word-addition lemma that turns a wrapped result into an integer equality: low = sum below the base, and low + base = sum on overflow. Check whether sum includes the input carry or covers a single binary addition."
+    },
+    {
+      "id": "F319",
+      "reason": "Look for the 64-bit add-with-carry obligations with 0 <= a,b < 2^64 and carry_in in {0,1}. Both branches should reconstruct a + b + carry_in from the low word and output carry. Applying the statement requires matching the BN_ULONG width."
+    },
+    {
+      "id": "F322",
+      "reason": "Look for the branch proof that connects wraparound comparisons to the integer equality. If the implementation splits the sum into two additions, check how it combines their overflow flags into one carry."
+    }
+  ]
+}

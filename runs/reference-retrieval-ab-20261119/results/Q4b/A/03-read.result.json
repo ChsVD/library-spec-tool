@@ -1,0 +1,13 @@
+{
+  "file": "fme/QCP_examples/fme_gmp.strategies",
+  "entry": "F693/D0008",
+  "prefix_needed": 2,
+  "status": "match",
+  "correspondence": "Rule 12 is the first usable folding strategy. It replaces the right-hand goal InequList(p, n, cons(x, l)) with obligations for the coef and next pointer fields, the coefficient array for x, and ownership of the tail l. Rule 11 in the first entry opens a nonempty node on the left.",
+  "direction": "The strategy rewrites only the right-hand goal and leaves the left-hand non-null fact in place. Discharging the resulting obligations with witnesses h for coef and y for next establishes ownership of the folded node.",
+  "conditions_and_limits": "The goal must have cons(x, l) shape, and the left side must contain p != NULL or NULL != p. The generated goal requires h != 0, the two pointer stores, mpz_coef_array(h, n, x), and InequList(y, n, l). The rule imposes no separate non-null condition on y. The Simplex caller still needs to map its field, array, and list predicates to this shape and establish the two non-null facts.",
+  "additional_evidence": [
+    "F700/D0014 declares the corresponding Rocq strategy goal, whose separating implication runs from the node components to the folded list. This entry is a goal definition.",
+    "F697/D0016 confirms that the reference cons case contains both non-null facts and the four spatial components."
+  ]
+}

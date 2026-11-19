@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F001",
+      "reason": "Look for the Mini-GMP normalization contract that shortens the used count from the high-index end and returns either zero or a count whose highest retained limb is nonzero."
+    },
+    {
+      "id": "F006",
+      "reason": "Look for the little-endian value lemma. Appending a zero at the most significant end adds 0 times the radix raised to the prefix length. Read the equality in reverse to justify removing that limb. The empty list has value zero."
+    },
+    {
+      "id": "F007",
+      "reason": "Look for the normalization loop obligation that preserves the original value when the current count k is positive and limb k-1 is zero, with a separate exit at count zero that requires no limb access."
+    }
+  ]
+}

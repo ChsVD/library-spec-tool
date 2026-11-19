@@ -1,0 +1,12 @@
+{
+  "file": "mini-gmp/Rocq/examples/Applications_human/minigmp/GmpNumber.v",
+  "entry": "F006/D0022",
+  "prefix_needed": 2,
+  "status": "match",
+  "correspondence": "The lemma states that list_to_Z l = list_to_Z (l ++ zeros m) for positive Base. The definition in F006/D0006 confirms that the head is the least significant limb, so the appended zeros are at the most significant end.",
+  "direction": "Let l be the limbs retained at the new top and m be old_top minus new_top. The left side is the value after trimming and the right side is the value before trimming. Use symmetry to state the equality in before-to-after order.",
+  "conditions_and_limits": "Instantiate Base with the positive radix of the unsigned limbs. In the target proof, show that the original used array is the retained prefix followed by exactly m zero limbs, and that the loop stops at an empty prefix or a nonzero highest retained limb. If all used limbs are zero, the retained list is empty and list_to_Z [] = 0. This also covers an originally empty array with m = 0. The lemma supplies the value equality, while the loop must establish the suffix and stopping conditions.",
+  "additional_evidence": [
+    "F006/D0006"
+  ]
+}

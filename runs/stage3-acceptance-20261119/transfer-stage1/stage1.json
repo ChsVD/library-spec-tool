@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "status": "analysis_completed",
+  "configuration": "Linux x86_64, C11, NDEBUG",
+  "libraries": {
+    "target": {
+      "source_root": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-input/target",
+      "snapshot_root": "project/target",
+      "version": null,
+      "materials": []
+    }
+  },
+  "graph": {
+    "nodes": {
+      "fn-a2ff99ca89c05de1e608dc65": {
+        "id": "fn-a2ff99ca89c05de1e608dc65",
+        "library": "target",
+        "name": "gcd32",
+        "symbol": "gcd32",
+        "type": "uint32_t (uint32_t, uint32_t)",
+        "linkage": "external",
+        "source": {
+          "path": "utils/gcd.c",
+          "line": 30,
+          "column": 10,
+          "end_line": 58
+        },
+        "status": "definition",
+        "selected": true,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "utils/gcd.c"
+          }
+        ]
+      },
+      "fn-366b74cafa9ddab7e8d3246d": {
+        "id": "fn-366b74cafa9ddab7e8d3246d",
+        "library": "target",
+        "name": "gcd64",
+        "symbol": "gcd64",
+        "type": "uint64_t (uint64_t, uint64_t)",
+        "linkage": "external",
+        "source": {
+          "path": "utils/gcd.c",
+          "line": 63,
+          "column": 10,
+          "end_line": 91
+        },
+        "status": "definition",
+        "selected": false,
+        "translation_units": [
+          {
+            "library": "target",
+            "path": "utils/gcd.c"
+          }
+        ]
+      }
+    },
+    "edges": {},
+    "reuse_index": [],
+    "external_calls": [],
+    "analysis_gaps": []
+  },
+  "scope": {
+    "mode": "entries",
+    "entry_ids": [
+      "fn-a2ff99ca89c05de1e608dc65"
+    ],
+    "function_ids": [
+      "fn-a2ff99ca89c05de1e608dc65"
+    ],
+    "reached_ids": [
+      "fn-a2ff99ca89c05de1e608dc65"
+    ],
+    "reuse_boundaries": [],
+    "components": [
+      {
+        "id": "scc-0",
+        "functions": [
+          "fn-a2ff99ca89c05de1e608dc65"
+        ]
+      }
+    ],
+    "component_edges": [],
+    "callback_dependencies": []
+  },
+  "coverage": {
+    "translation_units": [
+      {
+        "library": "target",
+        "path": "utils/gcd.c",
+        "status": "parsed"
+      }
+    ],
+    "out_of_configuration_sources": [],
+    "scoped_analysis_gaps": [],
+    "scoped_external_calls": []
+  },
+  "provenance": {
+    "fm_agent_commit": "c552cd5ef25bd096178c7b06d3645dc3fd1e376e",
+    "codegraph_version": "1.6.2-fmagent.1",
+    "clang_version": "Ubuntu clang version 18.1.3 (1ubuntu1)",
+    "databases": [
+      {
+        "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-input/compile_commands.json",
+        "sha256": "13093b519d001277425ddb2502741e90630d3cf3031e23d9ce384b42a3160f30"
+      }
+    ],
+    "snapshot_files": [
+      {
+        "path": "compile_commands.json",
+        "sha256": "3e391d84cc37f539d8917639a6db32910e5c6d8972ab2022da2eda28b7c7067c"
+      },
+      {
+        "path": "target/utils/gcd.c",
+        "sha256": "1271bd4110687adb64c99a2ada73fe66ee46e7e9c3543e03cb7b8c355a6d0652"
+      },
+      {
+        "path": "target/utils/gcd.h",
+        "sha256": "8adbc2387e81f2b3c3bba4d9b0a498f08e3161ac8a61e412ddee3ecd82acd558"
+      }
+    ],
+    "raw_graph": "raw-graph.json",
+    "adapter_files": {
+      "__init__.py": "fbe01349d47d1ce8ea2bf397831b946429d535b21d318674405e309adbf43671",
+      "__main__.py": "d98e6cbcda63e53900eadf41811f470ea8abc6a8f5b0847cf9e6db08785bbdc9",
+      "ast_records.py": "79a9692853600f96b980aad36ef3c7c75d17baf4ebcab8e7f4cd06ba83c48bee",
+      "backend.py": "2c000087a6e0bc524de00d9ff6f3f31b5a3d4e5586b46a0640b8bc19f11aa12e",
+      "fm_graph_worker.py": "50ce2f6272e91291437ae4dc43ed7d35f69b556afdd1dc065df7c619c1320d10",
+      "graph.py": "07b4847241143c2682eeadbca016130e777365031c5a5d290c30dd4cb30ab775",
+      "inputs.py": "b703bb5f94b5df5f7853fa11b83dc8e74d1f79734cd02ed598030f802c052b42",
+      "pipeline.py": "29b9d3ba22df4a4173168236957e82444978c5e1ee422af9ed1bbcca8e474b86"
+    }
+  }
+}

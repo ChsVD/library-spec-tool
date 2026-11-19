@@ -1,0 +1,96 @@
+{
+  "functions": [],
+  "edges": [],
+  "indirect_sites": [],
+  "indirect_diagnostics": {},
+  "units": [
+    {
+      "source": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.c",
+      "declarations": {
+        "0x64ca730b2ef0": {
+          "name": "gcd32",
+          "symbol": "gcd32",
+          "type": "uint32_t (uint32_t, uint32_t)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.h",
+            "line": 32,
+            "column": 17
+          },
+          "end_line": 32,
+          "definition": false,
+          "previous": null
+        },
+        "0x64ca730b31f0": {
+          "name": "gcd64",
+          "symbol": "gcd64",
+          "type": "uint64_t (uint64_t, uint64_t)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.h",
+            "line": 33,
+            "column": 17
+          },
+          "end_line": 33,
+          "definition": false,
+          "previous": null
+        },
+        "0x64ca730b33c8": {
+          "name": "gcd32",
+          "symbol": "gcd32",
+          "type": "uint32_t (uint32_t, uint32_t)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.c",
+            "line": 30,
+            "column": 10
+          },
+          "end_line": 58,
+          "definition": true,
+          "previous": "0x64ca730b2ef0"
+        },
+        "0x64ca730ba6d8": {
+          "name": "gcd64",
+          "symbol": "gcd64",
+          "type": "uint64_t (uint64_t, uint64_t)",
+          "linkage": "external",
+          "location": {
+            "path": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.c",
+            "line": 63,
+            "column": 10
+          },
+          "end_line": 91,
+          "definition": true,
+          "previous": "0x64ca730b31f0"
+        }
+      },
+      "calls": []
+    }
+  ],
+  "clang_covered": [],
+  "parses": [
+    {
+      "source": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.c",
+      "partial_ast_allowed": false,
+      "ast_available": true
+    }
+  ],
+  "diagnostics": [
+    {
+      "command": [
+        "clang",
+        "-I.",
+        "-DNDEBUG",
+        "-x",
+        "c",
+        "-Wno-error",
+        "-fsyntax-only",
+        "-Xclang",
+        "-ast-dump=json",
+        "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/transfer-stage1/project/target/utils/gcd.c"
+      ],
+      "returncode": 0,
+      "stderr": ""
+    }
+  ]
+}

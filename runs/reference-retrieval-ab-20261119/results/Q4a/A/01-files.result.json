@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "id": "F693",
+      "reason": "Look for a traversal strategy that matches an owned nonempty InequList on the left and replaces it there with the coef field, coefficient array, next field, and tail ownership. Check the match conditions and which side the actions modify."
+    },
+    {
+      "id": "F700",
+      "reason": "Check the generated Rocq entailment for the strategy to confirm its direction, its nonempty or non-null premises, and how the exposed resources appear in the transformed proof obligation."
+    },
+    {
+      "id": "F697",
+      "reason": "Look for the list predicate definition or a direct unfolding lemma that shows how the nonempty case links the coef pointer to the array and the next pointer to the owned tail."
+    }
+  ]
+}

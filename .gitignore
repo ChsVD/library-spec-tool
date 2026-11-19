@@ -1,7 +1,4 @@
-__pycache__/
-*.pyc
-.env
-runs/
 .deps/
 .venv-graph/
-.cache/
+__pycache__/
+runs/

@@ -1,0 +1,12 @@
+[
+  {
+    "directory": "/home/maxu/Projects/library-spec-tool-v2/runs/stage3-acceptance-20261119/bignum-input/target",
+    "file": "normalized.c",
+    "arguments": [
+      "clang",
+      "-std=c11",
+      "-c",
+      "normalized.c"
+    ]
+  }
+]
