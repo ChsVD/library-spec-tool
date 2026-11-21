@@ -1,0 +1,27 @@
+{
+  "heads": {
+    "extensions/clang/builtin_expect": {
+      "60f2641b3ce9505997bfd3fe5e3fbcdf8bb4f0d4949e00a2bace33a8ffd08cbf": {
+        "version": 1,
+        "digest": "ba7660507628948bb69b3505737db6cd6bf8a857b1f7fa6ba2c14657f90a4115"
+      }
+    },
+    "stdlib/stdarg/va_list_lifecycle": {
+      "60f2641b3ce9505997bfd3fe5e3fbcdf8bb4f0d4949e00a2bace33a8ffd08cbf": {
+        "version": 1,
+        "digest": "3ec18b9a1efc5801b42b772ed561b3c72da3419a209b0344875c3c80388a1855"
+      }
+    }
+  },
+  "bindings": {
+    "__builtin_expect": {
+      "60f2641b3ce9505997bfd3fe5e3fbcdf8bb4f0d4949e00a2bace33a8ffd08cbf": "extensions/clang/builtin_expect"
+    },
+    "__builtin_va_start": {
+      "60f2641b3ce9505997bfd3fe5e3fbcdf8bb4f0d4949e00a2bace33a8ffd08cbf": "stdlib/stdarg/va_list_lifecycle"
+    },
+    "__builtin_va_end": {
+      "60f2641b3ce9505997bfd3fe5e3fbcdf8bb4f0d4949e00a2bace33a8ffd08cbf": "stdlib/stdarg/va_list_lifecycle"
+    }
+  }
+}

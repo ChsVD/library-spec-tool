@@ -13,6 +13,9 @@ class MaterialReadError(ValueError):
 class Materials:
     def __init__(self, stage1_path, stage1, background, contracts, output):
         self.root = stage1_path.parent
+        self.definitions = {}
+        self.compiler_info = stage1["provenance"]
+        self.contract_log = None
         self.paths = {}
         self.digests = {}
         self.reference_paths = {}
@@ -66,6 +69,14 @@ class Materials:
                 self.reader().excerpt(**self.contracts[ident])
         self.sources = {library: Path(record["snapshot_root"]).relative_to("project").as_posix()
                         for library, record in stage1["libraries"].items()}
+        for ident, node in stage1["graph"]["nodes"].items():
+            if node["library"] == "target" and node["status"] == "definition":
+                loc = node["source"]
+                alias = self.alias("target", loc["path"])
+                self.definitions.setdefault(alias, []).append({
+                    "function_id": ident, "name": node["name"], "type": node["type"],
+                    "line": loc["line"], "column": loc["column"],
+                })
         self.compile_args = {}
         database = self.paths.get("project/compile_commands.json")
         if database:
@@ -126,7 +137,16 @@ class SourceReader(Reader):
             offset = self.integer(action, "offset", 0, 0, 1_000_000)
             files = list(self.files(action.get("path", ".")))
             return {"files": files[offset:offset + 100], "total": len(files), "next_offset": offset + 100}
-        return super().execute(action)
+        result = super().execute(action)
+        if action.get("tool") == "read" and "start" in result:
+            self.attach_definitions(result)
+        return result
+
+    def attach_definitions(self, result):
+        definitions = [row for row in self.materials.definitions.get(result["path"], ())
+                       if result["start"] <= row["line"] <= result["end"]]
+        if definitions:
+            result["definitions"] = definitions
 
     def excerpt(self, path, start, end):
         try:
@@ -137,7 +157,9 @@ class SourceReader(Reader):
             raise MaterialReadError(f"invalid source interval: {path}:{start}-{end}")
         text = "\n".join(lines[start - 1:end])
         self.reads.setdefault(path, []).append((start, end, digest))
-        return {"path": path, "start": start, "end": end, "text": text}
+        result = {"path": path, "start": start, "end": end, "text": text}
+        self.attach_definitions(result)
+        return result
 
     def check_citation(self, citation):
         if not isinstance(citation, dict) or set(citation) != {"path", "start", "end"}:

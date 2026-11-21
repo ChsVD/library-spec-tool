@@ -85,6 +85,8 @@ def build_graph(raw, project, copies, failed_units):
 
     for unit in raw["units"]:
         for ast_id, decl in unit["declarations"].items():
+            if decl.get("compiler_builtin"):
+                continue
             library, source = relative(decl["location"])
             if library and library != "target":
                 ident = function_id(library, source, decl["symbol"], decl["type"])
@@ -151,6 +153,11 @@ def build_graph(raw, project, copies, failed_units):
                 continue
             loc = call["location"]
             decl = decls.get(call["callee"])
+            if decl and decl.get("compiler_builtin"):
+                external.append({"caller": caller, "location": relative(loc)[1], "name": decl["name"],
+                                 "type": decl["type"], "kind": "compiler_builtin",
+                                 "declaration_library": None, "declaration": None})
+                continue
             if not decl:
                 for candidate, how in pending[caller, loc["path"], loc["line"]]:
                     add_edge(caller, candidate, loc, how, "indirect_candidate")

@@ -90,7 +90,9 @@ def prepare_snapshot(project, roots, units):
         if parent:
             copies[name] = copies[parent] / root.relative_to(roots[parent])
             continue
-        dest = project / name
+        # CodeGraph skips directories named "target", "build", etc. Keep logical
+        # library IDs separate from their on-disk names (including reuse IDs).
+        dest = project / ("lib-" + name)
         for path in root.rglob("*"):
             if path.is_symlink() and not path.resolve().is_relative_to(root):
                 raise ValueError(f"source symlink escapes project root: {path}")

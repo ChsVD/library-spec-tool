@@ -1,4 +1,5 @@
 """Pinned backend discovery and logged subprocess execution."""
+import os
 import shutil
 import signal
 import subprocess

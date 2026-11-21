@@ -123,7 +123,8 @@ def main():
     result = {"functions": functions, "edges": edges or [],
               "indirect_sites": [dataclasses.asdict(s) for s in sites], "indirect_diagnostics": indirect_diagnostics,
               "units": units, "clang_covered": sorted(coverage), "parses": parses, "diagnostics": diagnostics}
-    Path(request["result"]).write_text(json.dumps(result, ensure_ascii=False, indent=2))
+    with Path(request["result"]).open("w", encoding="utf-8") as stream:
+        json.dump(result, stream, ensure_ascii=False, separators=(",", ":"))
 
 
 if __name__ == "__main__":

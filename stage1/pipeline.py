@@ -27,6 +27,14 @@ def analyze(*, target, compile_commands, output, configuration, entries=(), reus
     units = compilation_units(databases, roots)
     fm, python, codegraph = environment(Path(deps_root).resolve())
     clang_version = subprocess.check_output(["clang", "--version"], text=True).splitlines()[0]
+    target_triple = subprocess.check_output(["clang", "-dumpmachine"], text=True).strip()
+    macros = subprocess.check_output(["clang", "-dM", "-E", "-x", "c", "-"], input="", text=True)
+    std_version = next((line.split()[-1] for line in macros.splitlines()
+                        if line.startswith("#define __STDC_VERSION__ ")), None)
+    default_mode = {"199901L": "gnu99", "201112L": "gnu11", "201710L": "gnu17",
+                    "202311L": "gnu23"}.get(std_version)
+    if default_mode and "#define __STRICT_ANSI__ " in macros:
+        default_mode = default_mode.replace("gnu", "c")
     output.mkdir(parents=True, exist_ok=False)
     project = output / "project"
     try:
@@ -83,6 +91,7 @@ def analyze(*, target, compile_commands, output, configuration, entries=(), reus
             },
             "provenance": {
                 "fm_agent_commit": FM_COMMIT, "codegraph_version": CODEGRAPH_VERSION, "clang_version": clang_version,
+                "clang_default_c_mode": default_mode, "clang_default_target": target_triple,
                 "databases": [{"path": str(path), "sha256": sha256(path)} for path in databases],
                 "snapshot_files": snapshot,
                 "raw_graph": "raw-graph.json",

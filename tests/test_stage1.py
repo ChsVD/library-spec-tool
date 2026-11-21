@@ -36,7 +36,7 @@ class StageOneTests(unittest.TestCase):
             'static int same(int x) { return shared(x); }\n'
             'int entry(int x) { return ref(x) + rec_a(x) + external(x) + same(x); }\n'
             'int orphan(void) { return shared(0); }\n'
-            'int indirect(int (*f)(int), int x) { return f(x); }\n'
+            'int indirect(int (*f)(int), int x) { return __builtin_expect(f(x), 1); }\n'
             '#if DISABLED\nint inactive(void) { return 0; }\n#endif\n'
         )
         (self.target / "unconfigured.c").write_text("int excluded(void) { return 0; }\n")
@@ -71,6 +71,13 @@ class StageOneTests(unittest.TestCase):
         self.assertEqual([c["name"] for c in result["coverage"]["scoped_external_calls"]], ["external"])
         self.assertEqual(result["coverage"]["out_of_configuration_sources"],
                          [{"library": "target", "path": "unconfigured.c"}])
+        snapshot = self.root / "run" / result["libraries"]["target"]["snapshot_root"]
+        raw = json.loads((self.root / "run/raw-graph.json").read_text())
+        indexed = {(row["symbol"], row["file"]) for row in raw["functions"]}
+        self.assertIn(("entry", (snapshot / "main.c").relative_to(self.root / "run/project").as_posix()), indexed)
+        ref_snapshot = self.root / "run" / result["libraries"]["lib"]["snapshot_root"]
+        self.assertIn(("ref", (ref_snapshot / "lib.c").relative_to(self.root / "run/project").as_posix()), indexed)
+        self.assertEqual(list((self.root / "run/project").rglob("main.c")), [snapshot / "main.c"])
         self.assertFalse((self.target / ".codegraph").exists())
         self.assertEqual([(nodes[e["caller"]]["name"], nodes[e["callee"]]["name"])
                           for e in result["scope"]["callback_dependencies"]], [("entry", "callback")])
@@ -82,7 +89,12 @@ class StageOneTests(unittest.TestCase):
         self.assertIn("indirect", self.selected(result))
         self.assertNotIn("inactive", self.selected(result))
         self.assertEqual(result["status"], "partial_analysis")
-        self.assertTrue(any(g["reason"] == "unresolved_indirect_call" for g in result["coverage"]["scoped_analysis_gaps"]))
+        gap, = result["coverage"]["scoped_analysis_gaps"]
+        self.assertEqual(gap["reason"], "unresolved_indirect_call")
+        builtin, = [c for c in result["coverage"]["scoped_external_calls"] if c.get("kind") == "compiler_builtin"]
+        self.assertEqual(builtin["name"], "__builtin_expect")
+        self.assertEqual(builtin["caller"], gap["caller"])
+        self.assertNotEqual(builtin["location"]["column"], gap["location"]["column"])
 
     def test_reference_header_without_separate_compilation_unit(self):
         self.database.write_text(json.dumps(self.units[:1]))

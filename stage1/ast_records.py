@@ -32,6 +32,11 @@ def collect(ast, source, directory, call_target):
         if loc:
             file = loc["path"]
         children = node.get("inner", [])
+        if (node.get("kind") == "FunctionDecl" and node.get("isImplicit")
+                and node.get("name", "").startswith("__builtin_")
+                and any(child.get("kind") == "BuiltinAttr" for child in children)):
+            declarations[node["id"]] = {"compiler_builtin": True, "name": node["name"],
+                                        "type": node.get("type", {}).get("qualType")}
         if node.get("kind") == "FunctionDecl" and loc and not node.get("isImplicit"):
             ident = node["id"]
             previous = declarations.get(node.get("previousDecl"), {})

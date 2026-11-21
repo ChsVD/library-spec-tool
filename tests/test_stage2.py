@@ -133,6 +133,85 @@ class StageTwoTests(unittest.TestCase):
         self.assertIn(("a", "b"), self.writes)
         self.assertTrue(result["functions"]["entry"]["draft"]["common_needs"])
 
+    def test_recursive_member_batches_resume_at_exact_count_and_review_both_endpoints(self):
+        for ident in ("entry", "a", "b", "c", "d", "e", "tail"):
+            self.source(ident, f"int {ident}(void) {{ return 0; }}")
+        for caller, callee in [("entry", "a"), ("a", "b"), ("b", "c"), ("c", "d"),
+                               ("d", "e"), ("e", "a"), ("e", "tail")]:
+            self.edge(caller, callee)
+        self.prepare(["entry"])
+        first = self.run_stage(stop_after_functions=4, member_batch_size=2)
+        self.assertEqual(self.writes, [("entry",), ("a", "b"), ("c",)])
+        self.assertEqual(set(first["functions"]), {"entry", "a", "b", "c"})
+        self.assertEqual(first["status"], "in_progress")
+        self.assertTrue(any(set(row["functions"]) == {"a", "b", "c", "d", "e"}
+                            for row in first["scope"]["components"]))
+        calls = {(row["caller"], row["callee"]): key for key, row in first["calls"].items()}
+        forward = calls["c", "d"]
+        backward = calls["e", "a"]
+        self.assertEqual(first["functions"]["c"]["call_checks"][forward]["status"], "unknown")
+        self.assertEqual(first["functions"]["a"]["call_checks"][backward]["status"], "unknown")
+        self.assertEqual(first["functions"]["b"]["call_checks"][calls["b", "c"]]["status"], "compatible")
+
+        self.writes.clear()
+        later = self.run_stage(resume=True, stop_after_functions=6)
+        self.assertEqual(self.writes, [("d", "e")])
+        self.assertEqual(len(later["functions"]), 6)
+        self.assertEqual(later["functions"]["entry"], first["functions"]["entry"])
+        self.assertEqual(later["functions"]["a"]["status"], "approved")
+        for ident, check in [("c", forward), ("d", forward), ("e", backward), ("a", backward)]:
+            self.assertEqual(later["functions"][ident]["call_checks"][check]["status"], "compatible")
+
+        self.writes.clear()
+        result = self.run_stage(resume=True)
+        self.assertEqual(self.writes, [("tail",)])
+        self.assertEqual(result["status"], "completed")
+
+    def test_revisions_only_rewrite_rejected_functions_and_recheck_adjacent_calls(self):
+        for name, target in (("a", "b"), ("b", "c"), ("c", "a")):
+            self.source(name, f"int {name}(void) {{ return {target}(); }}")
+            self.edge(name, target)
+        self.prepare(["a"])
+        writes, audits, originals = [], [], {}
+
+        def factory(role, ident):
+            original = self.factory(role, ident)
+
+            def model(messages, timeout):
+                data = json.loads(messages[1]["content"])
+                task = data["task"]
+                report = json.loads(original(messages, timeout))["report"]
+                if role == "write":
+                    writes.append(set(task["members"]))
+                    for draft in report["functions"]:
+                        key = draft["function_id"]
+                        if len(writes) == 1:
+                            originals[key] = dict(draft)
+                        else:
+                            self.assertEqual(data["previous_drafts"], {key: originals[key]})
+                            self.assertIn(key, data["previous_review"]["functions"])
+                            self.assertIn("a", task["peer_contracts"])
+                            draft["purpose"] = "revised " + key
+                else:
+                    pairs = {k: (v["call"]["caller"], v["call"]["callee"])
+                             for k, v in data["audit_calls"].items()}
+                    audits.append(set(pairs.values()))
+                    for row in report["functions"]:
+                        if len(audits) == 1 and row["function_id"] == "b":
+                            row.update(status="blocked", reason="missing a case")
+                    conflict = {1: ("a", "b"), 2: ("b", "c")}.get(len(audits))
+                    for row in report["call_checks"]:
+                        if pairs[row["call_id"]] == conflict:
+                            row.update(status="conflict", reason="precondition mismatch")
+                return json.dumps({"tool": "finish", "report": report})
+            return model
+
+        result = run(stage1_result=self.input, output=self.output, model_factory=factory, max_revisions=1)
+        self.assertEqual(writes, [{"a", "b", "c"}, {"b"}, {"c"}])
+        self.assertEqual(audits[1:], [{("a", "b"), ("b", "c")}, {("b", "c"), ("c", "a")}])
+        self.assertEqual(result["functions"]["a"]["draft"], originals["a"])
+        self.assertEqual(result["status"], "completed")
+
     def test_reuse_conflict_keeps_independent_result(self):
         self.source("entry", "int entry(void) { return ref(); }")
         self.source("independent", "int independent(void) { return 0; }")
@@ -148,6 +227,64 @@ class StageTwoTests(unittest.TestCase):
         self.assertEqual(result["status"], "partial")
         self.assertEqual(result["functions"]["entry"]["status"], "blocked")
         self.assertEqual(result["functions"]["independent"]["status"], "approved")
+
+    def test_reviewed_named_call_uses_id_from_read_and_reschedules(self):
+        self.check_reviewed_named_call(ambiguous=True)
+
+    def test_unique_reviewed_named_target_replaces_gap(self):
+        self.check_reviewed_named_call(ambiguous=False)
+
+    def check_reviewed_named_call(self, ambiguous):
+        self.source("entry", "int entry(void) { return helper(); }")
+        for key in ("fn-local", "fn-other"):
+            name = "helper" if ambiguous or key == "fn-local" else "other"
+            self.source(key, f"int {name}(void) {{ return 0; }}")
+            self.nodes[key].update(name=name, symbol=name)
+        self.gaps.append({"caller": "entry", "location": {"path": "entry.c", "line": 1, "column": 26},
+                          "name": "helper", "reason": "unconfirmed_call_target", "candidate_ids": []})
+        self.prepare(["entry"])
+
+        def factory(role, ident):
+            original = self.factory(role, ident)
+
+            def model(messages, timeout):
+                data = json.loads(messages[1]["content"])
+                outgoing = data["task"]["outgoing"].values()
+                propose = role == "write" and ident == "entry" and not any(c["callee"] for c in outgoing)
+                if propose and len(messages) == 2:
+                    return json.dumps({"tool": "read", "path": "project/target/fn-local.c", "start": 1, "count": 1})
+                response = json.loads(original(messages, timeout))
+                report = response["report"]
+                if propose:
+                    read = json.loads(messages[-1]["content"])
+                    definition, = read["definitions"]
+                    self.assertEqual(definition["name"], "helper")
+                    report["edge_proposals"].append({
+                        "caller": ident, "callee": definition["function_id"],
+                        "path": "project/target/entry.c", "line": 1, "column": 26,
+                        "condition": "when reached", "reason": "fixture direct call",
+                        "evidence": [{"path": path, "start": 1, "end": 1}
+                                     for path in ("project/target/entry.c", read["path"])]})
+                if role == "review":
+                    for row in report["call_checks"]:
+                        row["status"] = "compatible"
+                return json.dumps(response)
+            return model
+
+        result = run(stage1_result=self.input, output=self.output, model_factory=factory)
+        self.assertEqual(set(result["functions"]), {"entry", "fn-local"})
+        self.assertEqual(len(result["accepted_edges"]), 1)
+        if not ambiguous:
+            self.assertEqual(result["status"], "completed")
+            self.assertEqual(result["analysis_gaps"], [])
+            call, = result["calls"].values()
+            self.assertEqual(call["detail"]["source_kind"], "direct")
+            self.assertEqual(call["detail"]["resolved_stage1_gap"], self.gaps[0])
+            self.assertEqual(json.loads(self.input.read_text())["graph"]["analysis_gaps"], self.gaps)
+            return
+        self.assertEqual(result["functions"]["entry"]["status"], "conditional")
+        unresolved, = result["functions"]["entry"]["call_checks"].values()
+        self.assertEqual((unresolved["status"], unresolved["reviewed_status"]), ("unknown", "compatible"))
 
     def test_resume_rebuilds_supplemented_scope(self):
         self.source("entry", "int entry(void) { return dispatch(); }")
